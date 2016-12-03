@@ -14,8 +14,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "upload")
-public class Upload implements Serializable {
+@Table(name = "business_upload")
+public class BusinessUpload implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -31,10 +31,10 @@ public class Upload implements Serializable {
 	private String url;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "raw_data_id")
+	@JoinColumn(name = "raw_project_info_id")
 	private RawProjectInfo rawData = null;
 
-	public Upload() {
+	public BusinessUpload() {
 		super();
 	}
 

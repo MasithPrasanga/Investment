@@ -5,16 +5,16 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.investment.dao.UploadDao;
-import com.investment.entity.Upload;
+import com.investment.dao.BusinessUploadDao;
+import com.investment.entity.BusinessUpload;
 
 @Service
-public class UploadServiceImpl implements UploadService {
+public class BusinessUploadServiceImpl implements BusinessUploadService {
 
 	@Autowired
-	private UploadDao uploadDao = null;
+	private BusinessUploadDao uploadDao = null;
 
-	public Upload findById(Integer id) {
+	public BusinessUpload findById(Integer id) {
 		try {
 			return uploadDao.findById(id);
 		} catch (Exception e) {
@@ -22,7 +22,7 @@ public class UploadServiceImpl implements UploadService {
 		}
 	}
 
-	public Upload findByEmail(String email) {
+	public BusinessUpload findByEmail(String email) {
 		try {
 			return uploadDao.findByEmail(email);
 		} catch (Exception e) {
@@ -30,7 +30,7 @@ public class UploadServiceImpl implements UploadService {
 		}
 	}
 
-	public long insert(Upload entity) {
+	public long insert(BusinessUpload entity) {
 		try {
 			return uploadDao.persist(entity);
 		} catch (Exception e) {
@@ -38,7 +38,7 @@ public class UploadServiceImpl implements UploadService {
 		}
 	}
 
-	public boolean delete(Upload entity) {
+	public boolean delete(BusinessUpload entity) {
 		try {
 			uploadDao.delete(entity);
 			return true;
@@ -47,7 +47,7 @@ public class UploadServiceImpl implements UploadService {
 		}
 	}
 
-	public boolean update(Upload entyty) {
+	public boolean update(BusinessUpload entyty) {
 		try {
 			uploadDao.update(entyty);
 			return true;
@@ -56,8 +56,8 @@ public class UploadServiceImpl implements UploadService {
 		}
 	}
 	
-	public List<Upload> getAllRecords() {
-		List<Upload> uploadedList = null;
+	public List<BusinessUpload> getAllRecords() {
+		List<BusinessUpload> uploadedList = null;
 		try {
 			uploadedList = uploadDao.getAllRecords();
 		} catch (Exception e) {

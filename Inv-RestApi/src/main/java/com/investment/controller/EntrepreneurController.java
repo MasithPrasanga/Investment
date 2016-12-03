@@ -13,11 +13,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.investment.dto.UploadedRawDataDto;
+import com.investment.dto.RawProjectInfoDto;
 import com.investment.entity.RawProjectInfo;
-import com.investment.entity.Upload;
+import com.investment.entity.BusinessUpload;
 import com.investment.service.RawProjectInfoService;
-import com.investment.service.UploadService;
+import com.investment.service.BusinessUploadService;
 
 @RestController
 public class EntrepreneurController {
@@ -26,11 +26,11 @@ public class EntrepreneurController {
 	private RawProjectInfoService rawProjectInfoService = null;
 	
 	@Autowired
-	private UploadService uploadService = null;
+	private BusinessUploadService uploadService = null;
 
 	// upload urls
 	@RequestMapping(value = "/uploadurl", method = RequestMethod.POST)
-	public ResponseEntity<Void> uploadUrls(@RequestBody UploadedRawDataDto uploadedRawData) {
+	public ResponseEntity<Void> uploadUrls(@RequestBody RawProjectInfoDto uploadedRawData) {
 		
 		try{
 			List<String> urls = uploadedRawData.getUrls();
@@ -41,11 +41,11 @@ public class EntrepreneurController {
 			rawProjectInfoService.insert(rawProjectInfo);
 			
 			for(String url: urls){
-				Upload upload = new Upload();
-				upload.setDate(new Date());
-				upload.setUrl(url);
-				upload.setRawData(rawProjectInfo);
-				uploadService.insert(upload);
+				BusinessUpload businessUpload = new BusinessUpload();
+				businessUpload.setDate(new Date());
+				businessUpload.setUrl(url);
+				businessUpload.setRawData(rawProjectInfo);
+				uploadService.insert(businessUpload);
 				
 			}
 			HttpHeaders headers = new HttpHeaders();
@@ -68,7 +68,7 @@ public class EntrepreneurController {
 
 	// Get All Records (Working)
 	@RequestMapping(value = "/getallrawdata", method = RequestMethod.GET)
-	public ResponseEntity getAllRawData() {
+	public ResponseEntity<List<RawProjectInfo>> getAllRawData() {
 		List<RawProjectInfo> rawProjectInfoList = rawProjectInfoService.getAllRecords();
 		if (rawProjectInfoList.isEmpty()) {
 			return new ResponseEntity<List<RawProjectInfo>>(HttpStatus.NO_CONTENT);

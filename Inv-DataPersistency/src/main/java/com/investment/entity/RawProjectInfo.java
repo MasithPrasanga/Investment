@@ -12,7 +12,7 @@ import javax.persistence.Table;
 
 
 @Entity
-@Table(name = "rawdata")
+@Table(name = "raw_project_info")
 public class RawProjectInfo implements Serializable {
 
 	private static final long serialVersionUID = 1L;
