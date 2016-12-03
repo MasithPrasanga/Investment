@@ -1,0 +1,64 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.trader</groupId>
+		<artifactId>Inv-Root</artifactId>
+		<version>1.0-SNAPSHOT</version>
+	</parent>
+	<artifactId>Inv-DataPersistency</artifactId>
+
+	<properties>
+		<java.version>1.7</java.version>
+		<hibernate.version>4.3.11.Final</hibernate.version>
+		<hibernate-validator.version>5.3.3.Final</hibernate-validator.version>
+		<hibernate-commons-annotations.version>3.0.0.GA</hibernate-commons-annotations.version>
+		<spring.version>4.2.5.RELEASE</spring.version>
+	</properties>
+
+	<repositories>
+		<repository>
+			<id>JBoss repository</id>
+			<url>http://repository.jboss.com/maven2/</url>
+		</repository>
+	</repositories>
+
+
+	<dependencies>
+
+		<!-- Hibernate -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>${hibernate.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>hibernate-commons-annotations</groupId>
+			<artifactId>hibernate-commons-annotations</artifactId>
+			<version>${hibernate-commons-annotations.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>${hibernate-validator.version}</version>
+		</dependency>
+
+		<!-- Spring -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+
+	</dependencies>
+
+</project>
+
+
+
+
+
+
+
+
+

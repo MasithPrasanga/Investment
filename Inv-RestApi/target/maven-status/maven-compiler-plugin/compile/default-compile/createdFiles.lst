@@ -1,0 +1,5 @@
+com\investment\configuration\InvestmentConfiguration.class
+com\investment\dto\UploadedRawDataDto.class
+com\investment\controller\EntrepreneurController.class
+com\investment\controller\HelloWorldRestController.class
+com\investment\configuration\InvestmentInitializer.class

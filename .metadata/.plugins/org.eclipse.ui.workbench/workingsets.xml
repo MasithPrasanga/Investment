@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<workingSetManager>
+<workingSet editPageId="org.eclipse.ui.resourceWorkingSetPage" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1480665114923_1" label="Inv-Root" name="Inv-Root">
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/Inv-DataPersistency" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/Inv-BusinessService" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/Inv-RestApi" type="4"/>
+</workingSet>
+<workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1480665075723_0" label="Window Working Set" name="Aggregate for window 1480665075723"/>
+</workingSetManager>
