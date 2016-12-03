@@ -5,16 +5,16 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.investment.dao.RawDataDao;
-import com.investment.entity.RawData;
+import com.investment.dao.RawProjectInfoDao;
+import com.investment.entity.RawProjectInfo;
 
 @Service
-public class RawDataServiceImpl implements RawDataService {
+public class RawProjectInfoServiceImpl implements RawProjectInfoService {
 
 	@Autowired
-	private RawDataDao rawDataDao = null;
+	private RawProjectInfoDao rawDataDao = null;
 
-	public RawData findById(Integer id) {
+	public RawProjectInfo findById(Integer id) {
 		try {
 			return rawDataDao.findById(id);
 		} catch (Exception e) {
@@ -22,7 +22,7 @@ public class RawDataServiceImpl implements RawDataService {
 		}
 	}
 
-	public RawData findByEmail(String email) {
+	public RawProjectInfo findByEmail(String email) {
 		try {
 			return rawDataDao.findByEmail(email);
 		} catch (Exception e) {
@@ -30,7 +30,7 @@ public class RawDataServiceImpl implements RawDataService {
 		}
 	}
 
-	public long insert(RawData entity) {
+	public long insert(RawProjectInfo entity) {
 		try {
 			return rawDataDao.persist(entity);
 		} catch (Exception e) {
@@ -38,7 +38,7 @@ public class RawDataServiceImpl implements RawDataService {
 		}
 	}
 
-	public boolean delete(RawData entity) {
+	public boolean delete(RawProjectInfo entity) {
 		try {
 			rawDataDao.delete(entity);
 			return true;
@@ -47,7 +47,7 @@ public class RawDataServiceImpl implements RawDataService {
 		}
 	}
 
-	public boolean update(RawData entyty) {
+	public boolean update(RawProjectInfo entyty) {
 		try {
 			rawDataDao.update(entyty);
 			return true;
@@ -56,8 +56,8 @@ public class RawDataServiceImpl implements RawDataService {
 		}
 	}
 
-	public List<RawData> getAllRecords() {
-		List<RawData> rawDataList = null;
+	public List<RawProjectInfo> getAllRecords() {
+		List<RawProjectInfo> rawDataList = null;
 		try {
 			rawDataList = rawDataDao.getAllRecords();
 		} catch (Exception e) {

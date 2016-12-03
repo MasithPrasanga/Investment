@@ -32,7 +32,7 @@ public class Upload implements Serializable {
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "raw_data_id")
-	private RawData rawData = null;
+	private RawProjectInfo rawData = null;
 
 	public Upload() {
 		super();
@@ -62,11 +62,11 @@ public class Upload implements Serializable {
 		this.url = url;
 	}
 
-	public RawData getRawData() {
+	public RawProjectInfo getRawData() {
 		return rawData;
 	}
 
-	public void setRawData(RawData rawData) {
+	public void setRawData(RawProjectInfo rawData) {
 		this.rawData = rawData;
 	}
 

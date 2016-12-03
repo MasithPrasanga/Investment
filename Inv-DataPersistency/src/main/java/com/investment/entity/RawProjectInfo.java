@@ -13,7 +13,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "rawdata")
-public class RawData implements Serializable {
+public class RawProjectInfo implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -32,18 +32,18 @@ public class RawData implements Serializable {
     @Column(name="submited_date", nullable=false)
 	private Date date;
 	
-	public RawData() {
+	public RawProjectInfo() {
 		super();
 	}
 	
-	public RawData(String projectName, String adminStatus, Date date) {
+	public RawProjectInfo(String projectName, String adminStatus, Date date) {
 		super();
 		this.projectName = projectName;
 		this.adminStatus = adminStatus;
 		this.date = date;
 	}
 	
-	public RawData(int id, String projectName, String adminStatus, Date date) {
+	public RawProjectInfo(int id, String projectName, String adminStatus, Date date) {
 		super();
 		this.id = id;
 		this.projectName = projectName;
