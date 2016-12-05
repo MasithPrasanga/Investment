@@ -22,14 +22,6 @@ public class BusinessUploadServiceImpl implements BusinessUploadService {
 		}
 	}
 
-	public BusinessUpload findByEmail(String email) {
-		try {
-			return uploadDao.findByEmail(email);
-		} catch (Exception e) {
-			return null;
-		}
-	}
-
 	public long insert(BusinessUpload entity) {
 		try {
 			return uploadDao.persist(entity);

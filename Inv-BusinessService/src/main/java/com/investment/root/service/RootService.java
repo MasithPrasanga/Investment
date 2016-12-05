@@ -6,8 +6,6 @@ public interface RootService<T> {
 
 	public T findById(Integer id);
 
-	public T findByEmail(String email);
-
 	public long insert(T entity);
 
 	public boolean delete(T entity);
@@ -19,3 +17,5 @@ public interface RootService<T> {
 	boolean deleteAllRecords();
 	
 }
+
+

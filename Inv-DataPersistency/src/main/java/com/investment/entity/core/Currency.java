@@ -25,7 +25,7 @@ public class Currency implements Serializable{
 	
 	@Column(name = "name", unique = true, nullable = false)
 	private String name;
-
+	
 	public int getId() {
 		return id;
 	}

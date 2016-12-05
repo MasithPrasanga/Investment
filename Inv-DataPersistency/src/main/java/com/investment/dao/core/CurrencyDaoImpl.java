@@ -8,6 +8,16 @@ import com.investment.entity.core.Currency;
 @Repository
 public class CurrencyDaoImpl extends RootDaoImpl<Currency> implements CurrencyDao{
 
+	@Override
+	public Currency findByCode(String code) {
+		//return (Currency) getSession().createCriteria(Currency.class).add(Restrictions.like("code", code));
+		return (Currency) getSession().get(Currency.class, code);
+	}
+
 }
+
+
+
+
 
 

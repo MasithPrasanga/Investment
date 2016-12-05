@@ -22,14 +22,6 @@ public class RawProjectInfoServiceImpl implements RawProjectInfoService {
 		}
 	}
 
-	public RawProjectInfo findByEmail(String email) {
-		try {
-			return rawDataDao.findByEmail(email);
-		} catch (Exception e) {
-			return null;
-		}
-	}
-
 	public long insert(RawProjectInfo entity) {
 		try {
 			return rawDataDao.persist(entity);

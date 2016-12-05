@@ -22,14 +22,6 @@ public class CoreUserServiceImpl implements CoreUserService {
 		}
 	}
 
-	public CoreUser findByEmail(String email) {
-		try {
-			return coreUserDao.findByEmail(email);
-		} catch (Exception e) {
-			return null;
-		}
-	}
-
 	public long insert(CoreUser entity) {
 		try {
 			return coreUserDao.persist(entity);

@@ -7,8 +7,6 @@ public interface RootDao<T extends Serializable> {
 
 	public T findById(Integer id);
 
-	public T findByEmail(String email);
-
 	public Long persist(T message);
 
 	public void delete(T entity);

@@ -22,14 +22,6 @@ public class CurrencyServiceImpl implements CurrencyService {
 		}
 	}
 
-	public Currency findByEmail(String email) {
-		try {
-			return currencyDao.findByEmail(email);
-		} catch (Exception e) {
-			return null;
-		}
-	}
-
 	public long insert(Currency entity) {
 		try {
 			return currencyDao.persist(entity);
@@ -75,7 +67,32 @@ public class CurrencyServiceImpl implements CurrencyService {
 		}
 	}
 
+	@Override
+	public Currency findByCode(String code) {
+		try{
+			return currencyDao.findByCode(code);
+		}catch(Exception e){
+			return null;
+		}
+	}
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

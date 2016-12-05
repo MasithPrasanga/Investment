@@ -34,10 +34,7 @@ public abstract class RootDaoImpl<T extends Serializable> implements RootDao<T> 
 
 	}
 
-	public T findByEmail(String email) {
-		return (T) getSession().createCriteria(this.entityClass).add(Restrictions.like("email", email));
-
-	}
+	
 
 	public Long persist(T entity) {
 		Session session = getSession();
@@ -47,16 +44,16 @@ public abstract class RootDaoImpl<T extends Serializable> implements RootDao<T> 
 			tx = session.beginTransaction();
 			savedId = (Integer) session.save(entity);
 			tx.commit();
+			return (long) savedId;
 		} catch (Exception e) {
 			if (tx != null) {
 				tx.rollback();
 			}
-			e.printStackTrace();
+			return (long) -1;
 		} finally {
 			session.flush();
 			session.close();
 		}
-		return (long) savedId;
 	}
 
 	public void delete(T entity) {

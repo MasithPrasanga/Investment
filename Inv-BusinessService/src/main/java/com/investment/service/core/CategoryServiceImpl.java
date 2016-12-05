@@ -22,14 +22,6 @@ public class CategoryServiceImpl implements CategoryService {
 		}
 	}
 
-	public Category findByEmail(String email) {
-		try {
-			return categoryDao.findByEmail(email);
-		} catch (Exception e) {
-			return null;
-		}
-	}
-
 	public long insert(Category entity) {
 		try {
 			return categoryDao.persist(entity);

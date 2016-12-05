@@ -2,7 +2,7 @@ package com.investment.dto.core;
 
 import java.io.Serializable;
 
-public class Type implements Serializable{
+public class CustomerTypeDto implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
@@ -17,6 +17,7 @@ public class Type implements Serializable{
 	}
 	
 }
+
 
 
 

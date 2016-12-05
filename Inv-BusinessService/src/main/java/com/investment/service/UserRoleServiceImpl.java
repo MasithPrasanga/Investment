@@ -22,14 +22,6 @@ public class UserRoleServiceImpl implements UserRoleService {
 		}
 	}
 
-	public UserRole findByEmail(String email) {
-		try {
-			return userRoleDao.findByEmail(email);
-		} catch (Exception e) {
-			return null;
-		}
-	}
-
 	public long insert(UserRole entity) {
 		try {
 			return userRoleDao.persist(entity);

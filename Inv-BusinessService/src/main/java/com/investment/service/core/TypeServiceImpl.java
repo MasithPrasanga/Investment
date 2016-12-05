@@ -22,14 +22,6 @@ public class TypeServiceImpl implements TypeService {
 		}
 	}
 
-	public Type findByEmail(String email) {
-		try {
-			return typeDao.findByEmail(email);
-		} catch (Exception e) {
-			return null;
-		}
-	}
-
 	public long insert(Type entity) {
 		try {
 			return typeDao.persist(entity);

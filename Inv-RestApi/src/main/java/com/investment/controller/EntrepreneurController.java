@@ -19,6 +19,7 @@ import com.investment.handler.EntrepreneurHandler;
 import com.investment.service.RawProjectInfoService;
 
 @RestController
+@RequestMapping("api/v1/entrepreneur") 
 public class EntrepreneurController {
 
 	@Autowired

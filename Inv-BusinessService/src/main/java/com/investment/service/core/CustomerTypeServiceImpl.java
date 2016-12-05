@@ -22,14 +22,6 @@ public class CustomerTypeServiceImpl implements CustomerTypeService {
 		}
 	}
 
-	public CustomerType findByEmail(String email) {
-		try {
-			return customerTypeDao.findByEmail(email);
-		} catch (Exception e) {
-			return null;
-		}
-	}
-
 	public long insert(CustomerType entity) {
 		try {
 			return customerTypeDao.persist(entity);

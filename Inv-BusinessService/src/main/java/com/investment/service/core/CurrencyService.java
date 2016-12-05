@@ -5,4 +5,5 @@ import com.investment.root.service.RootService;
 
 public interface CurrencyService extends RootService<Currency>{
 
+	public Currency findByCode(String code);
 }
