@@ -15,42 +15,29 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.investment.dto.RawProjectInfoDto;
 import com.investment.entity.RawProjectInfo;
-import com.investment.entity.BusinessUpload;
+import com.investment.handler.EntrepreneurHandler;
 import com.investment.service.RawProjectInfoService;
-import com.investment.service.BusinessUploadService;
 
 @RestController
 public class EntrepreneurController {
 
 	@Autowired
 	private RawProjectInfoService rawProjectInfoService = null;
+
 	
 	@Autowired
-	private BusinessUploadService uploadService = null;
+	private EntrepreneurHandler entrepreneurHandler = null;
 
-	// upload urls
 	@RequestMapping(value = "/uploadurl", method = RequestMethod.POST)
 	public ResponseEntity<Void> uploadUrls(@RequestBody RawProjectInfoDto uploadedRawData) {
 		
 		try{
-			List<String> urls = uploadedRawData.getUrls();
-			RawProjectInfo rawProjectInfo = new RawProjectInfo();
-			rawProjectInfo.setProjectName("ProjectName"+new Date());
-			rawProjectInfo.setDate(new Date());
-			rawProjectInfo.setAdminStatus("Not Approved");
-			rawProjectInfoService.insert(rawProjectInfo);
-			
-			for(String url: urls){
-				BusinessUpload businessUpload = new BusinessUpload();
-				businessUpload.setDate(new Date());
-				businessUpload.setUrl(url);
-				businessUpload.setRawData(rawProjectInfo);
-				uploadService.insert(businessUpload);
-				
+			boolean status = entrepreneurHandler.createRawProjectInfo(uploadedRawData);
+			if(status){
+				HttpHeaders headers = new HttpHeaders();
+				return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
 			}
-			HttpHeaders headers = new HttpHeaders();
-			return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
-			
+			return null;
 		}catch(Exception e){
 			return null;
 		}
