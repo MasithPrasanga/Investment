@@ -16,7 +16,28 @@ public class TypeDto implements Serializable{
 		this.type = type;
 	}
 	
+	
+	
+	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
