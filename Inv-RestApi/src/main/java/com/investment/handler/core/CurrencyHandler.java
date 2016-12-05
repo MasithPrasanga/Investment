@@ -20,7 +20,6 @@ public class CurrencyHandler {
 			currency.setCode(currencyDto.getCode());
 			currency.setName(currencyDto.getName());
 			long status = currencyService.insert(currency);
-			System.out.println("Currency Handler Status : "+status);
 			if(status == -1){
 				return false;
 			}
@@ -30,4 +29,32 @@ public class CurrencyHandler {
 		}
 	}
 	
+	public boolean updateCurrency(int id,CurrencyDto currencyDto){
+		boolean status = false;
+		try{
+			Currency currency = new Currency();
+			currency.setId(id);
+			currency.setCode(currencyDto.getCode());
+			currency.setName(currencyDto.getName());
+			status =  currencyService.update(currency);
+			return status;
+		}catch(Exception e){
+			return status;
+		}
+	}
+	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -67,33 +67,12 @@ public class CurrencyServiceImpl implements CurrencyService {
 		}
 	}
 
-	@Override
 	public Currency findByCode(String code) {
-		try{
+		try {
 			return currencyDao.findByCode(code);
-		}catch(Exception e){
+		} catch (Exception e) {
 			return null;
 		}
 	}
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

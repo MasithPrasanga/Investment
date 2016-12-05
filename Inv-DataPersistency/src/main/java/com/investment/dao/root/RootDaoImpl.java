@@ -7,7 +7,6 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -33,9 +32,7 @@ public abstract class RootDaoImpl<T extends Serializable> implements RootDao<T> 
 		return (T) getSession().get(this.entityClass, id);
 
 	}
-
 	
-
 	public Long persist(T entity) {
 		Session session = getSession();
 		Transaction tx = null;
@@ -85,7 +82,6 @@ public abstract class RootDaoImpl<T extends Serializable> implements RootDao<T> 
 			if (tx != null) {
 				tx.rollback();
 			}
-			e.printStackTrace();
 		} finally {
 			session.flush();
 			session.close();
