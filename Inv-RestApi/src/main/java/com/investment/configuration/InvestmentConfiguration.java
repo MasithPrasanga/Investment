@@ -60,7 +60,7 @@ public class InvestmentConfiguration {
 	public LocalSessionFactoryBean getSessionFactory() {
 		LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
 		sessionFactory.setDataSource(getDataSource());
-		sessionFactory.setPackagesToScan(new String[] { "com.investment.entity" });
+		sessionFactory.setPackagesToScan(new String[] { "com.investment.entity","com.investment.entity.core" });
 		sessionFactory.setHibernateProperties(getHibernateProperties());
 		return sessionFactory;
 	}
