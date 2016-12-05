@@ -1,5 +1,8 @@
 package com.investment.dao;
 
-public interface UserRoleDao {
+import com.investment.dao.root.RootDao;
+import com.investment.entity.UserRole;
+
+public interface UserRoleDao  extends RootDao<UserRole>{
 
 }

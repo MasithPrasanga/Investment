@@ -1,5 +1,8 @@
 package com.investment.dao;
 
-public interface CoreUserDao {
+import com.investment.dao.root.RootDao;
+import com.investment.entity.CoreUser;
+
+public interface CoreUserDao  extends RootDao<CoreUser>{
 
 }
