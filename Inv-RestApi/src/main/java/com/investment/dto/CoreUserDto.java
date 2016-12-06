@@ -3,13 +3,6 @@ package com.investment.dto;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
 public class CoreUserDto implements Serializable{
 
 	private static final long serialVersionUID = 1L;
@@ -31,14 +24,11 @@ public class CoreUserDto implements Serializable{
 	private String gender;
 
 	private String accountType;
-
-	private String activationCode;
+	
+	private String activationStatus;
 	
 	private Date createdDate;
 
-	private Date activatedDate;
-
-	private String activationStatus;
 
 	public String getFirstName() {
 		return firstName;
@@ -112,12 +102,12 @@ public class CoreUserDto implements Serializable{
 		this.accountType = accountType;
 	}
 
-	public String getActivationCode() {
-		return activationCode;
+	public String getActivationStatus() {
+		return activationStatus;
 	}
 
-	public void setActivationCode(String activationCode) {
-		this.activationCode = activationCode;
+	public void setActivationStatus(String activationStatus) {
+		this.activationStatus = activationStatus;
 	}
 
 	public Date getCreatedDate() {
@@ -126,22 +116,6 @@ public class CoreUserDto implements Serializable{
 
 	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
-	}
-
-	public Date getActivatedDate() {
-		return activatedDate;
-	}
-
-	public void setActivatedDate(Date activatedDate) {
-		this.activatedDate = activatedDate;
-	}
-
-	public String getActivationStatus() {
-		return activationStatus;
-	}
-
-	public void setActivationStatus(String activationStatus) {
-		this.activationStatus = activationStatus;
 	}
 
 }

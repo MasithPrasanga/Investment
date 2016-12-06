@@ -7,7 +7,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.investment.dto.RawProjectInfoDto;
+import com.investment.dto.CoreUserDto;
+import com.investment.handler.LogInHandler;
 import com.investment.service.CoreUserService;
 import com.investment.service.UserRoleService;
 
@@ -21,12 +22,16 @@ public class LogInController {
 	@Autowired 
 	private UserRoleService userRoleService = null;
 	
+	@Autowired
+	private LogInHandler logInHandler = null;
+	
 	@RequestMapping(value = "/signup", method = RequestMethod.POST)
-	public ResponseEntity<Void> uploadUrls() {
-		
-		System.out.println("Inside the Sigup Controller");
+	public ResponseEntity<Void> uploadUrls(@RequestBody CoreUserDto coreUserDto) {
 		
 		try{
+			// validate the user by email (to be developed )			
+			boolean status = logInHandler.createNewUser(coreUserDto);
+			
 			return null;
 		}catch(Exception e){
 			return null;
