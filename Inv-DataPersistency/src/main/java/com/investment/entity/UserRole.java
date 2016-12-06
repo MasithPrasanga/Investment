@@ -53,6 +53,13 @@ public class UserRole implements Serializable{
 	public void setCoreUser(CoreUser coreUser) {
 		this.coreUser = coreUser;
 	}
+
+	@Override
+	public String toString() {
+		return "UserRole [id=" + id + ", accessType=" + accessType + ", coreUser=" + coreUser + "]";
+	}
+	
+	
 	
 }
 

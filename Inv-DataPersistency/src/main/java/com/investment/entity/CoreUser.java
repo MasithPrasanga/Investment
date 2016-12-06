@@ -172,6 +172,15 @@ public class CoreUser implements Serializable{
 		this.activationStatus = activationStatus;
 	}
 
+	@Override
+	public String toString() {
+		return "CoreUser [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", userEmail=" + userEmail
+				+ ", password=" + password + ", mobileNumber=" + mobileNumber + ", landNumber=" + landNumber
+				+ ", birthDate=" + birthDate + ", gender=" + gender + ", accountType=" + accountType
+				+ ", activationCode=" + activationCode + ", createdDate=" + createdDate + ", activatedDate="
+				+ activatedDate + ", activationStatus=" + activationStatus + "]";
+	}	
+
 }
 
 
