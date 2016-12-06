@@ -23,7 +23,7 @@ public class UserRole implements Serializable{
 	@Column(name = "id", unique = true, nullable = false)
 	private int id;
 	
-	@Column(name = "access_type", unique = true, nullable = false)
+	@Column(name = "access_type",nullable = false)
 	private String accessType;
 	
 	@ManyToOne(fetch = FetchType.LAZY)

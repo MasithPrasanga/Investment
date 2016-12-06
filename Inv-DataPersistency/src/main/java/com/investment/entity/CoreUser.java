@@ -21,44 +21,44 @@ public class CoreUser implements Serializable{
 	@Column(name = "id", unique = true, nullable = false)
 	private int id;
 	
-	@Column(name = "firstname", unique = true, nullable = false)
+	@Column(name = "firstname")
 	private String firstName;
 
-	@Column(name = "lastname", unique = true, nullable = false)
+	@Column(name = "lastname")
 	private String lastName;
 	
-	@Column(name = "email", unique = true, nullable = false)
+	@Column(name = "email")
 	private String userEmail;
 
-	@Column(name = "password", unique = true, nullable = false)
+	@Column(name = "password")
 	private String password;
 	
-	@Column(name = "mobilenumber", unique = true, nullable = false)
+	@Column(name = "mobilenumber")
 	private String mobileNumber;
 
-	@Column(name = "landnumber", unique = true, nullable = false)
+	@Column(name = "landnumber")
 	private String landNumber;
 
-	@Column(name = "birthdate", unique = true, nullable = false)
+	@Column(name = "birthdate")
 	private Date birthDate;
 	
-	@Column(name = "gender", unique = true, nullable = false)
+	@Column(name = "gender")
 	private String gender;
 
-	@Column(name = "account_type", unique = true, nullable = false)
-	private int accountType;
+	@Column(name = "account_type")
+	private String accountType;
 
-	@Column(name = "activation_code", unique = true, nullable = false)
+	@Column(name = "activation_code")
 	private String activationCode;
 	
-	@Column(name = "created_date", unique = true, nullable = false)
+	@Column(name = "created_date")
 	private Date createdDate;
 
-	@Column(name = "activated_date", unique = true, nullable = false)
+	@Column(name = "activated_date")
 	private Date activatedDate;
 
-	@Column(name = "activation_status", unique = true, nullable = false)
-	private int activationStatus;
+	@Column(name = "activation_status")
+	private String activationStatus;
 
 	public int getId() {
 		return id;
@@ -132,11 +132,11 @@ public class CoreUser implements Serializable{
 		this.gender = gender;
 	}
 
-	public int getAccountType() {
+	public String getAccountType() {
 		return accountType;
 	}
 
-	public void setAccountType(int accountType) {
+	public void setAccountType(String accountType) {
 		this.accountType = accountType;
 	}
 
@@ -164,15 +164,19 @@ public class CoreUser implements Serializable{
 		this.activatedDate = activatedDate;
 	}
 
-	public int getActivationStatus() {
+	public String getActivationStatus() {
 		return activationStatus;
 	}
 
-	public void setActivationStatus(int activationStatus) {
+	public void setActivationStatus(String activationStatus) {
 		this.activationStatus = activationStatus;
 	}
 
 }
+
+
+
+
 
 
 
