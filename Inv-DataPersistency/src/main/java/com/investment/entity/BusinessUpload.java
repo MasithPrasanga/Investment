@@ -33,6 +33,10 @@ public class BusinessUpload implements Serializable {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "raw_project_info_id")
 	private RawProjectInfo rawData = null;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "user_id")
+	private CoreUser coreUser = null;
 
 	public BusinessUpload() {
 		super();
@@ -68,6 +72,14 @@ public class BusinessUpload implements Serializable {
 
 	public void setRawData(RawProjectInfo rawData) {
 		this.rawData = rawData;
+	}
+	
+	public CoreUser getCoreUser() {
+		return coreUser;
+	}
+
+	public void setCoreUser(CoreUser coreUser) {
+		this.coreUser = coreUser;
 	}
 
 	@Override

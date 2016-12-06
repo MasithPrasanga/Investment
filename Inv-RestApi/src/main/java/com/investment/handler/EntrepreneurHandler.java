@@ -8,9 +8,12 @@ import org.springframework.stereotype.Component;
 
 import com.investment.dto.RawProjectInfoDto;
 import com.investment.entity.BusinessUpload;
+import com.investment.entity.CoreUser;
 import com.investment.entity.RawProjectInfo;
 import com.investment.service.BusinessUploadService;
+import com.investment.service.CoreUserService;
 import com.investment.service.RawProjectInfoService;
+import com.investment.util.ApiConstants;
 
 @Component
 public class EntrepreneurHandler {
@@ -20,6 +23,9 @@ public class EntrepreneurHandler {
 
 	@Autowired
 	private BusinessUploadService uploadService = null;
+	
+	@Autowired
+	private CoreUserService coreUserService = null;
 
 	public boolean createRawProjectInfo(RawProjectInfoDto uploadedRawData) {
 
@@ -28,9 +34,10 @@ public class EntrepreneurHandler {
 			RawProjectInfo rawProjectInfo = new RawProjectInfo();
 			rawProjectInfo.setProjectName("ProjectName" + new Date());
 			rawProjectInfo.setDate(new Date());
-			rawProjectInfo.setAdminStatus("Not Approved"); // add the enum and
-															// create the
-															// constants
+			rawProjectInfo.setAdminStatus(ApiConstants.AdminNotApproved);
+			System.out.println("User Id Is : "+uploadedRawData.getUserId());
+			CoreUser user = coreUserService.findById(uploadedRawData.getUserId());
+			rawProjectInfo.setCoreUser(user);
 			rawProjectInfoService.insert(rawProjectInfo);
 
 			for (String url : urls) {
@@ -38,6 +45,7 @@ public class EntrepreneurHandler {
 				businessUpload.setDate(new Date());
 				businessUpload.setUrl(url);
 				businessUpload.setRawData(rawProjectInfo);
+				businessUpload.setCoreUser(user);
 				uploadService.insert(businessUpload);
 
 			}

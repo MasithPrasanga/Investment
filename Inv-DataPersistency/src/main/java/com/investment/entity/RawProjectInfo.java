@@ -5,9 +5,12 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 
@@ -31,6 +34,10 @@ public class RawProjectInfo implements Serializable {
 	
     @Column(name="submited_date", nullable=false)
 	private Date date;
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "user_id")
+	private CoreUser coreUser = null;
 	
 	public RawProjectInfo() {
 		super();
@@ -81,6 +88,14 @@ public class RawProjectInfo implements Serializable {
 
 	public void setDate(Date date) {
 		this.date = date;
+	}
+	
+	public CoreUser getCoreUser() {
+		return coreUser;
+	}
+
+	public void setCoreUser(CoreUser coreUser) {
+		this.coreUser = coreUser;
 	}
 
 	@Override
