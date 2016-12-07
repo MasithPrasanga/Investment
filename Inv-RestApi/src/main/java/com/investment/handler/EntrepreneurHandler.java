@@ -32,12 +32,11 @@ public class EntrepreneurHandler {
 		try {
 			List<String> urls = uploadedRawData.getUrls();
 			RawProjectInfo rawProjectInfo = new RawProjectInfo();
-			rawProjectInfo.setProjectName("ProjectName" + new Date());
-			rawProjectInfo.setDate(new Date());
-			rawProjectInfo.setAdminStatus(ApiConstants.ADMIN_NOT_APPROVED);
-			System.out.println("User Id Is : "+uploadedRawData.getUserId());
 			CoreUser user = coreUserService.findById(uploadedRawData.getUserId());
 			rawProjectInfo.setCoreUser(user);
+			rawProjectInfo.setProjectName(user.getId()+" ProjectName " + new Date());
+			rawProjectInfo.setDate(new Date());
+			rawProjectInfo.setAdminStatus(ApiConstants.ADMIN_NOT_APPROVED);	
 			rawProjectInfoService.insert(rawProjectInfo);
 
 			for (String url : urls) {
