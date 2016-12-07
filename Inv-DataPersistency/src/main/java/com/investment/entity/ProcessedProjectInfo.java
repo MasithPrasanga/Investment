@@ -12,10 +12,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import com.investment.entity.core.Category;
-import com.investment.entity.core.Currency;
-import com.investment.entity.core.CustomerType;
-import com.investment.entity.core.Type;
+import com.investment.entity.metadata.Category;
+import com.investment.entity.metadata.Currency;
+import com.investment.entity.metadata.CustomerType;
+import com.investment.entity.metadata.Type;
 
 @Entity
 @Table(name = "processed_project_info")
@@ -38,7 +38,7 @@ public class ProcessedProjectInfo implements Serializable {
 	@Column(name = "share_price", nullable = false)
 	private int sharePrice;
 	
-	@OneToOne(fetch = FetchType.LAZY)
+	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "userid")
 	private CoreUser coreUser = null;
 	

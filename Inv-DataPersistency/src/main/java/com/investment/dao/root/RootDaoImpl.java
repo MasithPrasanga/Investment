@@ -24,7 +24,7 @@ public abstract class RootDaoImpl<T extends Serializable> implements RootDao<T> 
 	@Autowired
 	private SessionFactory sessionFactory;
 
-	protected Session getSession() {
+	public Session getSession() {
 		return this.sessionFactory.openSession();
 	}
 

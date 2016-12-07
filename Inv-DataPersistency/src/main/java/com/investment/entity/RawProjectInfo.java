@@ -35,7 +35,7 @@ public class RawProjectInfo implements Serializable {
     @Column(name="submited_date", nullable=false)
 	private Date date;
     
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "user_id")
 	private CoreUser coreUser = null;
 	

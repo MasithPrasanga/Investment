@@ -67,6 +67,16 @@ public class RawProjectInfoServiceImpl implements RawProjectInfoService {
 		}
 	}
 
+	@Override
+	public List<RawProjectInfo> findByUserId(Integer userid) {
+		try {
+			return (List<RawProjectInfo>) rawDataDao.findByUserId(userid);
+		} catch (Exception e) {
+			System.out.println("Service Layer Exception : "+e);
+			return null;
+		}
+	}
+
 }
 
 
