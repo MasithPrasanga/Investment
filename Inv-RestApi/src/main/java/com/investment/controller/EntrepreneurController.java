@@ -33,7 +33,7 @@ public class EntrepreneurController {
 	private EntrepreneurHandler entrepreneurHandler = null;
 
 	// uploading the files related to his new idea by entrepreneur 
-	@RequestMapping(value = "/uploadurl", method = RequestMethod.POST)
+	@RequestMapping(value = "/uploadedmediaurls", method = RequestMethod.POST)
 	public ResponseEntity<Void> uploadUrls(@RequestBody RawProjectInfoDto uploadedRawData) {
 		try {
 			boolean status = entrepreneurHandler.createRawProjectInfo(uploadedRawData);
