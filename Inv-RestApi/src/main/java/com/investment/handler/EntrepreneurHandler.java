@@ -34,7 +34,7 @@ public class EntrepreneurHandler {
 			RawProjectInfo rawProjectInfo = new RawProjectInfo();
 			rawProjectInfo.setProjectName("ProjectName" + new Date());
 			rawProjectInfo.setDate(new Date());
-			rawProjectInfo.setAdminStatus(ApiConstants.AdminNotApproved);
+			rawProjectInfo.setAdminStatus(ApiConstants.ADMIN_NOT_APPROVED);
 			System.out.println("User Id Is : "+uploadedRawData.getUserId());
 			CoreUser user = coreUserService.findById(uploadedRawData.getUserId());
 			rawProjectInfo.setCoreUser(user);

@@ -25,6 +25,7 @@ public class LogInController {
 	@Autowired
 	private LogInHandler logInHandler = null;
 	
+	// SignUp EndPoint
 	@RequestMapping(value = "/signup", method = RequestMethod.POST)
 	public ResponseEntity<Void> uploadUrls(@RequestBody CoreUserDto coreUserDto) {
 		

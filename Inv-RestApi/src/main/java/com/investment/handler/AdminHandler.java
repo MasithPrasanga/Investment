@@ -5,12 +5,15 @@ import org.springframework.stereotype.Component;
 
 import com.investment.dto.ProcessedProjectInfoDto;
 import com.investment.entity.ProcessedProjectInfo;
+import com.investment.entity.RawProjectInfo;
 import com.investment.service.CoreUserService;
 import com.investment.service.ProcessedProjectInfoService;
-import com.investment.service.core.CategoryService;
-import com.investment.service.core.CurrencyService;
-import com.investment.service.core.CustomerTypeService;
-import com.investment.service.core.TypeService;
+import com.investment.service.RawProjectInfoService;
+import com.investment.service.metadata.CategoryService;
+import com.investment.service.metadata.CurrencyService;
+import com.investment.service.metadata.CustomerTypeService;
+import com.investment.service.metadata.TypeService;
+import com.investment.util.ApiConstants;
 
 @Component
 public class AdminHandler {
@@ -33,6 +36,9 @@ public class AdminHandler {
 	@Autowired
 	private ProcessedProjectInfoService processedProjectInfoService = null;
 	
+	@Autowired
+	private RawProjectInfoService rawProjectInfoService = null;
+	
 	public boolean createProject(ProcessedProjectInfoDto processedProjectInfoDto){
 		
 		try{
@@ -51,8 +57,21 @@ public class AdminHandler {
 			processedProjectInfo.setCustomerType(customerTypeService.findById(processedProjectInfoDto.getCustomertypeid()));
 			processedProjectInfoService.insert(processedProjectInfo);
 			
+			RawProjectInfo rawProjectInfo = rawProjectInfoService.findById(processedProjectInfoDto.getRawProjectInfoId());
+			if (rawProjectInfo == null) {
+				return false;
+			}
+			RawProjectInfo updatedProjectInfo = new RawProjectInfo();
+			updatedProjectInfo.setId(rawProjectInfo.getId());;
+			updatedProjectInfo.setAdminStatus(ApiConstants.ADMIN_APPROVED);
+			updatedProjectInfo.setDate(rawProjectInfo.getDate());
+			updatedProjectInfo.setProjectName(rawProjectInfo.getProjectName());
+			updatedProjectInfo.setCoreUser(coreUserService.findById(processedProjectInfoDto.getUserid()));
+			System.out.println("RawProjectInfo Object : "+updatedProjectInfo);
+			rawProjectInfoService.update(updatedProjectInfo);
 			
 			return true;
+			
 		}catch(Exception e){
 			return false;
 		}

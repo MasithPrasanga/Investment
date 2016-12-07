@@ -16,34 +16,54 @@ import org.springframework.web.bind.annotation.RestController;
 import com.investment.dto.RawProjectInfoDto;
 import com.investment.entity.RawProjectInfo;
 import com.investment.handler.EntrepreneurHandler;
+import com.investment.service.ProcessedProjectInfoService;
 import com.investment.service.RawProjectInfoService;
 
 @RestController
-@RequestMapping("api/v1/entrepreneur") 
+@RequestMapping("api/v1/entrepreneur")
 public class EntrepreneurController {
 
 	@Autowired
 	private RawProjectInfoService rawProjectInfoService = null;
 
-	
+	@Autowired
+	private ProcessedProjectInfoService processedProjectInfoService = null;
+
 	@Autowired
 	private EntrepreneurHandler entrepreneurHandler = null;
 
+	// uploading the files related to his new idea by entrepreneur 
 	@RequestMapping(value = "/uploadurl", method = RequestMethod.POST)
 	public ResponseEntity<Void> uploadUrls(@RequestBody RawProjectInfoDto uploadedRawData) {
-		
-		try{
+		try {
 			boolean status = entrepreneurHandler.createRawProjectInfo(uploadedRawData);
-			if(status){
+			if (status) {
 				HttpHeaders headers = new HttpHeaders();
 				return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
 			}
 			return null;
-		}catch(Exception e){
-			return null;
+		} catch (Exception e) {
+			return new ResponseEntity<Void>(HttpStatus.EXPECTATION_FAILED);
 		}
-		
+
 	}
+
+	// showing all his proposals to entrepreneur
+	@RequestMapping(value = "/allproposals/{id}", method = RequestMethod.POST)
+	public ResponseEntity<List<RawProjectInfo>> getAllProposals(@PathVariable("id") int userid) {
+		try {
+			List<RawProjectInfo> rawProjectInfoList = rawProjectInfoService.findByUserId(userid);
+			if (rawProjectInfoList.isEmpty()) {
+				return new ResponseEntity<List<RawProjectInfo>>(HttpStatus.NO_CONTENT);
+			}
+			return new ResponseEntity<List<RawProjectInfo>>(rawProjectInfoList, HttpStatus.OK);
+		} catch (Exception e) {
+			System.out.println("Get All Proposals Exception : "+e);
+			return new ResponseEntity<List<RawProjectInfo>>(HttpStatus.EXPECTATION_FAILED);
+		}
+	}
+
+	// ----------------------------------------------------------------------------------------------------------------------
 
 	// Save Raw Data (Working)
 	@RequestMapping(value = "/saverawdata", method = RequestMethod.POST)
@@ -76,7 +96,8 @@ public class EntrepreneurController {
 
 	// Update RawData (Working)
 	@RequestMapping(value = "/rawdata/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<RawProjectInfo> updateRawData(@PathVariable("id") long id, @RequestBody RawProjectInfo rawProjectInfo) {
+	public ResponseEntity<RawProjectInfo> updateRawData(@PathVariable("id") long id,
+			@RequestBody RawProjectInfo rawProjectInfo) {
 		RawProjectInfo currentRawProjectInfo = rawProjectInfoService.findById((int) id);
 		if (currentRawProjectInfo == null) {
 			return new ResponseEntity<RawProjectInfo>(HttpStatus.NOT_FOUND);
@@ -105,6 +126,5 @@ public class EntrepreneurController {
 		rawProjectInfoService.deleteAllRecords();
 		return new ResponseEntity<RawProjectInfo>(HttpStatus.NO_CONTENT);
 	}
-
 
 }

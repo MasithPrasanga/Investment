@@ -3,19 +3,19 @@ package com.investment.util;
 public interface ApiConstants {
 
 	// CoreUser Activation Status
-	public static final String AdminApproved = "Approved";
-	public static final String AdminNotApproved = "NotApproved";
+	public static final String ADMIN_APPROVED = "Approved";
+	public static final String ADMIN_NOT_APPROVED = "NotApproved";
 	
 	// CoreUser AccountType
-	public static final String Admin = "Admin";
-	public static final String Entrepreneur = "Entrepreneur";
-	public static final String Investor = "Investor";
+	public static final String ADMIN = "Admin";
+	public static final String ENTREPRENEUR = "Entrepreneur";
+	public static final String INVESTOR = "Investor";
+	
 	
 	// UserRole AccessTypes
-	public static final String AdminAccess = "Admin";
-	public static final String EntrepreneurAccess = "Entrepreneur";
-	public static final String InvestorAccess = "Investor";
-	
+	public static final String ADMIN_ACCESS = "Admin";
+	public static final String ENTREPRENEUR_ACCESS = "Entrepreneur";
+	public static final String INVESTOR_ACCESS = "Investor";
 	
 }
 

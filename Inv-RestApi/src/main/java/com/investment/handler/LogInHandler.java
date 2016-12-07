@@ -38,7 +38,7 @@ public class LogInHandler {
 			System.out.println("Saved User : "+coreUserService.findById(userid));
 			// send the email to the Admin that new user as registered and himself also
 			UserRole userRole = new UserRole();
-			userRole.setAccessType(ApiConstants.AdminAccess);
+			userRole.setAccessType(ApiConstants.ADMIN_ACCESS);
 			userRole.setCoreUser(coreUserService.findById(userid));
 			userRoleService.insert(userRole);
 			return true;

@@ -31,6 +31,8 @@ public class ProcessedProjectInfoDto implements Serializable {
 	private int categoryid;
 
 	private int customertypeid;
+	
+	private int rawProjectInfoId;
 
 	public String getProjectName() {
 		return projectName;
@@ -134,6 +136,14 @@ public class ProcessedProjectInfoDto implements Serializable {
 
 	public void setCustomertypeid(int customertypeid) {
 		this.customertypeid = customertypeid;
+	}
+	
+	public int getRawProjectInfoId() {
+		return rawProjectInfoId;
+	}
+
+	public void setRawProjectInfoId(int rawProjectInfoId) {
+		this.rawProjectInfoId = rawProjectInfoId;
 	}
 
 	@Override
