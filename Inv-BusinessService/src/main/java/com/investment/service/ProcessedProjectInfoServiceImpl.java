@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.investment.dao.ProcessedProjectInfoDao;
 import com.investment.entity.ProcessedProjectInfo;
+import com.investment.util.ApiConstants;
 
 @Service
 public class ProcessedProjectInfoServiceImpl implements ProcessedProjectInfoService {
@@ -26,7 +27,7 @@ public class ProcessedProjectInfoServiceImpl implements ProcessedProjectInfoServ
 		try {
 			return processedProjectInfoDao.persist(entity);
 		} catch (Exception e) {
-			return -1;
+			return ApiConstants.PERSISTED_EXCEPTION;
 		}
 	}
 

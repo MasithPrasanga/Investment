@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.investment.dao.metadata.CategoryDao;
 import com.investment.entity.metadata.Category;
+import com.investment.util.ApiConstants;
 
 @Service
 public class CategoryServiceImpl implements CategoryService {
@@ -26,7 +27,7 @@ public class CategoryServiceImpl implements CategoryService {
 		try {
 			return categoryDao.persist(entity);
 		} catch (Exception e) {
-			return -1;
+			return ApiConstants.PERSISTED_EXCEPTION;
 		}
 	}
 

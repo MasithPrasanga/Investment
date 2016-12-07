@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.investment.dao.BusinessUploadDao;
 import com.investment.entity.BusinessUpload;
+import com.investment.util.ApiConstants;
 
 @Service
 public class BusinessUploadServiceImpl implements BusinessUploadService {
@@ -26,7 +27,7 @@ public class BusinessUploadServiceImpl implements BusinessUploadService {
 		try {
 			return uploadDao.persist(entity);
 		} catch (Exception e) {
-			return -1;
+			return ApiConstants.PERSISTED_EXCEPTION;
 		}
 	}
 

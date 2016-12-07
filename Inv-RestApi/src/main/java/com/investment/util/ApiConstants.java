@@ -17,6 +17,9 @@ public interface ApiConstants {
 	public static final String ENTREPRENEUR_ACCESS = "Entrepreneur";
 	public static final String INVESTOR_ACCESS = "Investor";
 	
+	public static final int PERSISTED_EXCEPTION = -1;
+	
+	
 }
 
 

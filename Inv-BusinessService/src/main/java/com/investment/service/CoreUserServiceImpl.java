@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.investment.dao.CoreUserDao;
 import com.investment.entity.CoreUser;
+import com.investment.util.ApiConstants;
 
 @Service
 public class CoreUserServiceImpl implements CoreUserService {
@@ -26,7 +27,7 @@ public class CoreUserServiceImpl implements CoreUserService {
 		try {
 			return coreUserDao.persist(entity);
 		} catch (Exception e) {
-			return -1;
+			return ApiConstants.PERSISTED_EXCEPTION;
 		}
 	}
 

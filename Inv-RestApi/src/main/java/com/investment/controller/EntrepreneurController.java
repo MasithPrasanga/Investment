@@ -4,7 +4,6 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.investment.dto.RawProjectInfoDto;
 import com.investment.entity.RawProjectInfo;
 import com.investment.handler.EntrepreneurHandler;
-import com.investment.service.ProcessedProjectInfoService;
 import com.investment.service.RawProjectInfoService;
 
 @RestController
@@ -27,25 +25,20 @@ public class EntrepreneurController {
 	private RawProjectInfoService rawProjectInfoService = null;
 
 	@Autowired
-	private ProcessedProjectInfoService processedProjectInfoService = null;
-
-	@Autowired
 	private EntrepreneurHandler entrepreneurHandler = null;
 
-	// uploading the files related to his new idea by entrepreneur 
+	// uploading files related to new proposal by entrepreneur
 	@RequestMapping(value = "/uploadedmediaurls", method = RequestMethod.POST)
 	public ResponseEntity<Void> uploadUrls(@RequestBody RawProjectInfoDto uploadedRawData) {
 		try {
 			boolean status = entrepreneurHandler.createRawProjectInfo(uploadedRawData);
 			if (status) {
-				HttpHeaders headers = new HttpHeaders();
-				return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
+				return new ResponseEntity<Void>(HttpStatus.CREATED);
 			}
-			return null;
+			return new ResponseEntity<Void>(HttpStatus.EXPECTATION_FAILED);
 		} catch (Exception e) {
 			return new ResponseEntity<Void>(HttpStatus.EXPECTATION_FAILED);
 		}
-
 	}
 
 	// showing all his proposals to entrepreneur

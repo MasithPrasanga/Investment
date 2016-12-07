@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.investment.dao.UserRoleDao;
 import com.investment.entity.UserRole;
+import com.investment.util.ApiConstants;
 
 @Service
 public class UserRoleServiceImpl implements UserRoleService {
@@ -26,7 +27,7 @@ public class UserRoleServiceImpl implements UserRoleService {
 		try {
 			return userRoleDao.persist(entity);
 		} catch (Exception e) {
-			return -1;
+			return ApiConstants.PERSISTED_EXCEPTION;
 		}
 	}
 

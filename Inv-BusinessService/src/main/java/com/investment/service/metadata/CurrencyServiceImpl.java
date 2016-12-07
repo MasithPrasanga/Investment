@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.investment.dao.metadata.CurrencyDao;
 import com.investment.entity.metadata.Currency;
+import com.investment.util.ApiConstants;
 
 @Service
 public class CurrencyServiceImpl implements CurrencyService {
@@ -26,7 +27,7 @@ public class CurrencyServiceImpl implements CurrencyService {
 		try {
 			return currencyDao.persist(entity);
 		} catch (Exception e) {
-			return -1;
+			return ApiConstants.PERSISTED_EXCEPTION;
 		}
 	}
 

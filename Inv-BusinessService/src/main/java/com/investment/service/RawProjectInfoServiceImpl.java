@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.investment.dao.RawProjectInfoDao;
 import com.investment.entity.RawProjectInfo;
+import com.investment.util.ApiConstants;
 
 @Service
 public class RawProjectInfoServiceImpl implements RawProjectInfoService {
@@ -26,7 +27,7 @@ public class RawProjectInfoServiceImpl implements RawProjectInfoService {
 		try {
 			return rawDataDao.persist(entity);
 		} catch (Exception e) {
-			return -1;
+			return ApiConstants.PERSISTED_EXCEPTION;
 		}
 	}
 

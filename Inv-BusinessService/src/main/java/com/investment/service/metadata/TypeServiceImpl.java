@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.investment.dao.metadata.TypeDao;
 import com.investment.entity.metadata.Type;
+import com.investment.util.ApiConstants;
 
 @Service
 public class TypeServiceImpl implements TypeService {
@@ -26,7 +27,7 @@ public class TypeServiceImpl implements TypeService {
 		try {
 			return typeDao.persist(entity);
 		} catch (Exception e) {
-			return -1;
+			return ApiConstants.PERSISTED_EXCEPTION;
 		}
 	}
 
