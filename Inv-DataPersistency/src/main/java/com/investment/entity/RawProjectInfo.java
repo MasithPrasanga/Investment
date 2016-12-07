@@ -2,7 +2,9 @@ package com.investment.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -11,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 
@@ -38,6 +41,9 @@ public class RawProjectInfo implements Serializable {
     @ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "user_id")
 	private CoreUser coreUser = null;
+    
+    @OneToMany(mappedBy = "rawData", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    private List<BusinessUpload> businessUpload;
 	
 	public RawProjectInfo() {
 		super();
@@ -98,10 +104,12 @@ public class RawProjectInfo implements Serializable {
 		this.coreUser = coreUser;
 	}
 
-	@Override
-	public String toString() {
-		return "RawData [id=" + id + ", projectName=" + projectName + ", adminStatus=" + adminStatus + ", date=" + date
-				+ "]";
+	public List<BusinessUpload> getBusinessUpload() {
+		return businessUpload;
+	}
+
+	public void setBusinessUpload(List<BusinessUpload> businessUpload) {
+		this.businessUpload = businessUpload;
 	}
 
 }

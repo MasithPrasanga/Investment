@@ -30,7 +30,7 @@ public class BusinessUpload implements Serializable {
 	@Column(name = "url", unique = true, nullable = false)
 	private String url;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(optional = false,fetch = FetchType.EAGER)
 	@JoinColumn(name = "raw_project_info_id")
 	private RawProjectInfo rawData = null;
 	
