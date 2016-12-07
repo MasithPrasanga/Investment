@@ -31,16 +31,8 @@ public class ProcessedProjectInfo implements Serializable {
 	@Column(name = "project_name", unique = true, nullable = false)
 	private String projectName;
 
-	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "typeid")
-	private Type type = null;
-
 	@Column(name = "share_price", nullable = false)
 	private int sharePrice;
-	
-	@OneToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "userid")
-	private CoreUser coreUser = null;
 	
 	@Column(name = "imageurl")
 	private String imageUrl;
@@ -57,15 +49,23 @@ public class ProcessedProjectInfo implements Serializable {
 	@Column(name="min_ammount")
 	private int mininumAmmount;
 	
-	@OneToOne(fetch = FetchType.LAZY)
+	@OneToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "typeid")
+	private Type type = null;
+	
+	@OneToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "userid")
+	private CoreUser coreUser = null;
+	
+	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "currency_id")
 	private Currency currency;
 	
-	@OneToOne(fetch = FetchType.LAZY)
+	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "category_id")
 	private Category category;
 	
-	@OneToOne(fetch = FetchType.LAZY)
+	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "customer_type_id")
 	private CustomerType customerType;
 

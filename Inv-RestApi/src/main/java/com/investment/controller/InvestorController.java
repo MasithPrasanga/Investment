@@ -18,8 +18,8 @@ public class InvestorController {
 
 	@Autowired
 	private ProcessedProjectInfoService processedProjectInfoService = null;
-	
-	// Show All the Approved project List after sign in 
+
+	// Show All the Approved project List after sign in
 	@RequestMapping(value = "/getnewprojects", method = RequestMethod.GET)
 	public ResponseEntity<List<ProcessedProjectInfo>> getAllNewProjects() {
 		List<ProcessedProjectInfo> approvedProposalList = processedProjectInfoService.getAllRecords();
@@ -28,5 +28,21 @@ public class InvestorController {
 		}
 		return new ResponseEntity<List<ProcessedProjectInfo>>(approvedProposalList, HttpStatus.OK);
 	}
+
+	// Show All the Funded Project List (To be Implemented)
+	@RequestMapping(value = "/getfundedprojects", method = RequestMethod.GET)
+	public ResponseEntity<List<ProcessedProjectInfo>> getAllFundedProjects() {
+		return new ResponseEntity<List<ProcessedProjectInfo>>(HttpStatus.NO_CONTENT);
+	}
 }
+
+
+
+
+
+
+
+
+
+
 
