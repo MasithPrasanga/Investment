@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.investment.dao.BusinessUploadDao;
 import com.investment.entity.BusinessUpload;
+import com.investment.entity.RawProjectInfo;
 import com.investment.util.ApiConstants;
 
 @Service
@@ -48,7 +49,7 @@ public class BusinessUploadServiceImpl implements BusinessUploadService {
 			return false;
 		}
 	}
-	
+
 	public List<BusinessUpload> getAllRecords() {
 		List<BusinessUpload> uploadedList = null;
 		try {
@@ -68,7 +69,18 @@ public class BusinessUploadServiceImpl implements BusinessUploadService {
 		}
 	}
 
+	public List<BusinessUpload> findListById(RawProjectInfo rawProjectInfo) {
+		try {
+			return (List<BusinessUpload>)uploadDao.findListById(rawProjectInfo);
+		} catch (Exception e) {
+			return null;
+		}
+	}
+	
 }
+
+
+
 
 
 
