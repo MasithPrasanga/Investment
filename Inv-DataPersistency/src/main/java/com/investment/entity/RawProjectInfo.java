@@ -14,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 
@@ -36,32 +37,23 @@ public class RawProjectInfo implements Serializable {
 	private String adminStatus;
 	
     @Column(name="submited_date", nullable=false)
-	private Date date;
+	private Date submitedDate;
+    
+    @Column(name="approved_date")
+	private Date approvedDate;
     
     @ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "user_id")
 	private CoreUser coreUser = null;
+    
+    @OneToOne(mappedBy = "rawProjectInfo",fetch = FetchType.EAGER)
+    private ProcessedProjectInfo processedProjectInfo = null;
     
     @OneToMany(mappedBy = "rawData", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private List<BusinessUpload> businessUpload;
 	
 	public RawProjectInfo() {
 		super();
-	}
-	
-	public RawProjectInfo(String projectName, String adminStatus, Date date) {
-		super();
-		this.projectName = projectName;
-		this.adminStatus = adminStatus;
-		this.date = date;
-	}
-	
-	public RawProjectInfo(int id, String projectName, String adminStatus, Date date) {
-		super();
-		this.id = id;
-		this.projectName = projectName;
-		this.adminStatus = adminStatus;
-		this.date = date;
 	}
 
 	public int getId() {
@@ -88,14 +80,22 @@ public class RawProjectInfo implements Serializable {
 		this.adminStatus = adminStatus;
 	}
 
-	public Date getDate() {
-		return date;
+	public Date getSubmitedDate() {
+		return submitedDate;
 	}
 
-	public void setDate(Date date) {
-		this.date = date;
+	public void setSubmitedDate(Date submitedDate) {
+		this.submitedDate = submitedDate;
 	}
-	
+
+	public Date getApprovedDate() {
+		return approvedDate;
+	}
+
+	public void setApprovedDate(Date approvedDate) {
+		this.approvedDate = approvedDate;
+	}
+
 	public CoreUser getCoreUser() {
 		return coreUser;
 	}
@@ -112,4 +112,12 @@ public class RawProjectInfo implements Serializable {
 		this.businessUpload = businessUpload;
 	}
 
+	public ProcessedProjectInfo getProcessedProjectInfo() {
+		return processedProjectInfo;
+	}
+
+	public void setProcessedProjectInfo(ProcessedProjectInfo processedProjectInfo) {
+		this.processedProjectInfo = processedProjectInfo;
+	}
+	
 }
