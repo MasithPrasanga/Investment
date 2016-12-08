@@ -46,7 +46,7 @@ public class EntrepreneurHandler {
 			CoreUser user = coreUserService.findById(uploadedRawData.getUserId());
 			rawProjectInfo.setCoreUser(user);
 			rawProjectInfo.setProjectName(user.getId() + " ProjectName " + new Date());
-			rawProjectInfo.setDate(new Date());
+			rawProjectInfo.setSubmitedDate(new Date());
 			rawProjectInfo.setAdminStatus(ApiConstants.ADMIN_NOT_APPROVED);
 			List<BusinessUpload> businessUploadList = new ArrayList<BusinessUpload>();
 			for (String url : urls) {

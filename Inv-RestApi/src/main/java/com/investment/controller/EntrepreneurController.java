@@ -1,6 +1,5 @@
 package com.investment.controller;
 
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,7 +61,7 @@ public class EntrepreneurController {
 	@RequestMapping(value = "/saverawdata", method = RequestMethod.POST)
 	public ResponseEntity<Void> saveRawData() {
 		for (int i = 1; i <= 10; i++) {
-			rawProjectInfoService.insert(new RawProjectInfo("Project " + i, "NOT APPROVED", new Date()));
+			//rawProjectInfoService.insert(new RawProjectInfo("Project " + i, "NOT APPROVED", new Date()));
 		}
 		return null;
 	}
@@ -97,7 +96,7 @@ public class EntrepreneurController {
 		}
 		currentRawProjectInfo.setProjectName(rawProjectInfo.getProjectName());
 		currentRawProjectInfo.setAdminStatus(rawProjectInfo.getAdminStatus());
-		currentRawProjectInfo.setDate(rawProjectInfo.getDate());
+		currentRawProjectInfo.setSubmitedDate(rawProjectInfo.getSubmitedDate());
 		rawProjectInfoService.update(currentRawProjectInfo);
 		return new ResponseEntity<RawProjectInfo>(rawProjectInfoService.findById((int) id), HttpStatus.OK);
 	}

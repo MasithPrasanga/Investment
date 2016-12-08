@@ -31,15 +31,18 @@ public class AdminController {
 	@Autowired
 	private RawProjectInfoService rawProjectInfoService = null;
 
-	// Saving the processed project info details
+	// processing the newly added proposals and approving it
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	public ResponseEntity<Void> saveProcessedData(@RequestBody ProcessedProjectInfoDto processedProjectInfoDto) {
 		try{
-			adminHandler.createProject(processedProjectInfoDto);	
+			boolean status = adminHandler.createProject(processedProjectInfoDto);
+			if(status){
+				return new ResponseEntity<Void>(HttpStatus.CREATED);
+			}
+			return new ResponseEntity<Void>(HttpStatus.EXPECTATION_FAILED);	
 		}catch(Exception e){
-			
+			return new ResponseEntity<Void>(HttpStatus.EXPECTATION_FAILED);
 		}
-		return null;
 	}
 
 	// showing the newly submitted proposals to the admin
