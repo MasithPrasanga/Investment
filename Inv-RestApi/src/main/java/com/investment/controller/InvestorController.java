@@ -11,11 +11,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.investment.dto.response.ProssedProjectInfoResponseDto;
-import com.investment.dto.response.RawProjectInfoResponseDto;
 import com.investment.entity.ProcessedProjectInfo;
-import com.investment.entity.RawProjectInfo;
 import com.investment.service.ProcessedProjectInfoService;
-import com.investment.util.ApiConstants;
 
 @RestController
 @RequestMapping("api/v1/investor")
