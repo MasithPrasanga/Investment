@@ -179,8 +179,8 @@ public class CoreUser implements Serializable{
 				+ ", birthDate=" + birthDate + ", gender=" + gender + ", accountType=" + accountType
 				+ ", activationCode=" + activationCode + ", createdDate=" + createdDate + ", activatedDate="
 				+ activatedDate + ", activationStatus=" + activationStatus + "]";
-	}	
-
+	}
+	
 }
 
 

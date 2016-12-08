@@ -68,6 +68,10 @@ public class ProcessedProjectInfo implements Serializable {
 	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "customer_type_id")
 	private CustomerType customerType;
+	
+	@OneToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "raw_project_info_id",nullable = false)
+	private RawProjectInfo rawProjectInfo = null;
 
 	public int getId() {
 		return id;
@@ -172,8 +176,14 @@ public class ProcessedProjectInfo implements Serializable {
 	public void setCustomerType(CustomerType customerType) {
 		this.customerType = customerType;
 	}
-	
-	
+
+	public RawProjectInfo getRawProjectInfo() {
+		return rawProjectInfo;
+	}
+
+	public void setRawProjectInfo(RawProjectInfo rawProjectInfo) {
+		this.rawProjectInfo = rawProjectInfo;
+	}
 	
 }
 
