@@ -34,14 +34,6 @@ public class BusinessUpload implements Serializable {
 	@JoinColumn(name = "raw_project_info_id")
 	private RawProjectInfo rawData = null;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "user_id")
-	private CoreUser coreUser = null;
-	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "processed_project_info_id")
-	private ProcessedProjectInfo processedProjectInfo = null;
-
 	public BusinessUpload() {
 		super();
 	}
@@ -77,23 +69,6 @@ public class BusinessUpload implements Serializable {
 	public void setRawData(RawProjectInfo rawData) {
 		this.rawData = rawData;
 	}
-	
-	public CoreUser getCoreUser() {
-		return coreUser;
-	}
-
-	public void setCoreUser(CoreUser coreUser) {
-		this.coreUser = coreUser;
-	}
-
-	public ProcessedProjectInfo getProcessedProjectInfo() {
-		return processedProjectInfo;
-	}
-
-	public void setProcessedProjectInfo(ProcessedProjectInfo processedProjectInfo) {
-		this.processedProjectInfo = processedProjectInfo;
-	}
-	
 }
 
 

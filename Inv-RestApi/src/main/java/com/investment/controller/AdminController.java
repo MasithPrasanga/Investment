@@ -38,7 +38,7 @@ public class AdminController {
 	private RawProjectInfoService rawProjectInfoService = null;
 
 	// processing the newly added proposals and approving it
-	@RequestMapping(value = "/save", method = RequestMethod.POST)
+	@RequestMapping(value = "/approveproposal", method = RequestMethod.POST)
 	public ResponseEntity<Void> saveProcessedData(@RequestBody ProcessedProjectInfoDto processedProjectInfoDto) {
 		try{
 			boolean status = adminHandler.createProject(processedProjectInfoDto);
@@ -54,7 +54,7 @@ public class AdminController {
 	// showing the newly submitted proposals to the admin (This end point is very slow)
 	@RequestMapping(value = "/newproposals", method = RequestMethod.GET)
 	public ResponseEntity<List<RawProjectInfoResponseDto>> getAllNewlySubmitedProposals() {
-
+		
 		List<RawProjectInfo> rawProjectInfoList = rawProjectInfoService.getAllRecords();
 		
 		if (rawProjectInfoList.isEmpty()) {
@@ -64,12 +64,12 @@ public class AdminController {
 		List<RawProjectInfoResponseDto> rawProjectInfoResponseList = new ArrayList<RawProjectInfoResponseDto>();
 		for(RawProjectInfo r: rawProjectInfoList){
 			if(r.getAdminStatus().equals(ApiConstants.ADMIN_NOT_APPROVED)){
-				RawProjectInfoResponseDto rawProjectInfoResponseDto = new RawProjectInfoResponseDto();
-				rawProjectInfoResponseDto.setId(r.getId());
-				rawProjectInfoResponseDto.setProjectName(r.getProjectName());
-				rawProjectInfoResponseDto.setSubmitedDate(r.getSubmitedDate());
-				rawProjectInfoResponseDto.setCoreUser(r.getCoreUser());
-				rawProjectInfoResponseList.add(rawProjectInfoResponseDto);
+				RawProjectInfoResponseDto rawProjectInfoResponse = new RawProjectInfoResponseDto();
+				rawProjectInfoResponse.setId(r.getId());
+				rawProjectInfoResponse.setProjectName(r.getProjectName());
+				rawProjectInfoResponse.setSubmitedDate(r.getSubmitedDate());
+				rawProjectInfoResponse.setCoreUser(r.getCoreUser());
+				rawProjectInfoResponseList.add(rawProjectInfoResponse);
 			}
 		}
 		

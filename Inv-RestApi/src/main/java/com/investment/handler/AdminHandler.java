@@ -68,7 +68,6 @@ public class AdminHandler {
 			processedProjectInfo.setProjectName(processedProjectInfoDto.getProjectName());
 			processedProjectInfo.setType(typeService.findById(processedProjectInfoDto.getTypeid()));
 			processedProjectInfo.setSharePrice(processedProjectInfoDto.getSharePrice());
-			processedProjectInfo.setCoreUser(coreUserService.findById(processedProjectInfoDto.getUserid()));
 			processedProjectInfo.setImageUrl(processedProjectInfoDto.getImageUrl());
 			processedProjectInfo.setVideoUrl(processedProjectInfoDto.getVideoUrl());
 			processedProjectInfo.setFullAmmount(processedProjectInfoDto.getFullAmmount());
@@ -93,20 +92,8 @@ public class AdminHandler {
 			updatedProjectInfo.setProjectName(rawProjectInfo.getProjectName());
 			updatedProjectInfo.setCoreUser(coreUserService.findById(processedProjectInfoDto.getUserid()));
 			
-			rawProjectInfoService.update(updatedProjectInfo);
+			rawProjectInfoService.update(updatedProjectInfo);		
 			
-			List<BusinessUpload> businessUploadList = new ArrayList<BusinessUpload>();
-			List<BusinessUpload> businessUploadListToBeUpdated = new ArrayList<BusinessUpload>();
-			businessUploadList = businessUploadService.getAllRecords();
-			
-			for(BusinessUpload b : businessUploadList ){
-				if(b.getRawData().getId() == rawProjectInfo.getId()){
-					b.setProcessedProjectInfo(processedProjectInfo);
-					businessUploadListToBeUpdated.add(b);
-					businessUploadService.update(b);
-				}
-			}
-				
 			transaction.commit();
 			transactionStatus  = true;
 			return transactionStatus;

@@ -54,10 +54,6 @@ public class ProcessedProjectInfo implements Serializable {
 	private Type type = null;
 	
 	@OneToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "userid")
-	private CoreUser coreUser = null;
-	
-	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "currency_id")
 	private Currency currency;
 	
@@ -103,14 +99,6 @@ public class ProcessedProjectInfo implements Serializable {
 
 	public void setSharePrice(int sharePrice) {
 		this.sharePrice = sharePrice;
-	}
-
-	public CoreUser getCoreUser() {
-		return coreUser;
-	}
-
-	public void setCoreUser(CoreUser coreUser) {
-		this.coreUser = coreUser;
 	}
 
 	public String getImageUrl() {

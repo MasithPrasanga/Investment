@@ -54,7 +54,6 @@ public class EntrepreneurHandler {
 				businessUpload.setDate(new Date());
 				businessUpload.setUrl(url);
 				businessUpload.setRawData(rawProjectInfo);
-				businessUpload.setCoreUser(user);
 				businessUploadList.add(businessUpload);
 			}
 			rawProjectInfo.setBusinessUpload(businessUploadList);
