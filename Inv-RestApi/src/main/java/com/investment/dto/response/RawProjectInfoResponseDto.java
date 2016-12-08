@@ -2,9 +2,7 @@ package com.investment.dto.response;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
-import com.investment.entity.BusinessUpload;
 import com.investment.entity.CoreUser;
 
 public class RawProjectInfoResponseDto implements Serializable{
