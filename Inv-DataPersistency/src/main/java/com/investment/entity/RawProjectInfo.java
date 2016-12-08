@@ -32,7 +32,6 @@ public class RawProjectInfo implements Serializable {
 	@Column(name = "project_name", unique = true, nullable = false)
 	private String projectName;
 
-
 	@Column(name = "admin_status", nullable = false)
 	private String adminStatus;
 	
@@ -46,7 +45,7 @@ public class RawProjectInfo implements Serializable {
 	@JoinColumn(name = "user_id")
 	private CoreUser coreUser = null;
     
-    @OneToOne(mappedBy = "rawProjectInfo",fetch = FetchType.EAGER)
+    @OneToOne(mappedBy = "rawProjectInfo",fetch = FetchType.LAZY)
     private ProcessedProjectInfo processedProjectInfo = null;
     
     @OneToMany(mappedBy = "rawData", cascade = CascadeType.ALL,fetch = FetchType.LAZY)

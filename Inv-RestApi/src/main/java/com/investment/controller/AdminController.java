@@ -12,8 +12,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.investment.dto.ProcessedProjectInfoDto;
+import com.investment.dto.response.RawProjectInfoResponseDto;
+import com.investment.entity.BusinessUpload;
 import com.investment.entity.RawProjectInfo;
 import com.investment.handler.AdminHandler;
+import com.investment.service.BusinessUploadService;
 import com.investment.service.CoreUserService;
 import com.investment.service.RawProjectInfoService;
 import com.investment.util.ApiConstants;
@@ -24,6 +27,9 @@ public class AdminController {
 
 	@Autowired
 	private CoreUserService coreUserService = null;
+	
+	@Autowired
+	private BusinessUploadService businessUploadService= null;
 	
 	@Autowired
 	private AdminHandler adminHandler = null;
@@ -45,51 +51,32 @@ public class AdminController {
 		}
 	}
 
-	// showing the newly submitted proposals to the admin
+	// showing the newly submitted proposals to the admin (This end point is very slow)
 	@RequestMapping(value = "/newproposals", method = RequestMethod.GET)
-	public ResponseEntity<List<RawProjectInfo>> getAllNewlySubmitedProposals() {
-		
+	public ResponseEntity<List<RawProjectInfoResponseDto>> getAllNewlySubmitedProposals() {
+
 		List<RawProjectInfo> rawProjectInfoList = rawProjectInfoService.getAllRecords();
-		List<RawProjectInfo> notApprovedList = new ArrayList<RawProjectInfo>();
 		
 		if (rawProjectInfoList.isEmpty()) {
-			return new ResponseEntity<List<RawProjectInfo>>(HttpStatus.NO_CONTENT);
+			return new ResponseEntity<List<RawProjectInfoResponseDto>>(HttpStatus.NO_CONTENT);
 		}
 		
-		for(RawProjectInfo rawProjectInfo :rawProjectInfoList){
-			if(rawProjectInfo.getAdminStatus().equals(ApiConstants.ADMIN_NOT_APPROVED)){
-				notApprovedList.add(rawProjectInfo);
-			}	
+		List<RawProjectInfoResponseDto> rawProjectInfoResponseList = new ArrayList<RawProjectInfoResponseDto>();
+		for(RawProjectInfo r: rawProjectInfoList){
+			if(r.getAdminStatus().equals(ApiConstants.ADMIN_NOT_APPROVED)){
+				RawProjectInfoResponseDto rawProjectInfoResponseDto = new RawProjectInfoResponseDto();
+				rawProjectInfoResponseDto.setId(r.getId());
+				rawProjectInfoResponseDto.setProjectName(r.getProjectName());
+				rawProjectInfoResponseDto.setSubmitedDate(r.getSubmitedDate());
+				rawProjectInfoResponseDto.setCoreUser(r.getCoreUser());
+				rawProjectInfoResponseList.add(rawProjectInfoResponseDto);
+			}
 		}
-		return new ResponseEntity<List<RawProjectInfo>>(notApprovedList, HttpStatus.OK);
+		
+		return new ResponseEntity<List<RawProjectInfoResponseDto>>(rawProjectInfoResponseList, HttpStatus.OK);
 	}
 	
-	/*// approving the account
-	@RequestMapping(value = "/approvesingup", method = RequestMethod.POST)
-	public ResponseEntity<Void> approveAccount() {
-		System.out.println("Inside the approve account method");
-		return null;
-	}*/
-
-
-   /* // Get Not Approved Sign Up Requests
-	@RequestMapping(value = "/singuprequests", method = RequestMethod.GET)
-	public ResponseEntity<List<CoreUser>> getAllSinnUpRequests() {
-		List<CoreUser> allCoreUserList = coreUserService.getAllRecords();
-		List<CoreUser> notApprovedList = new ArrayList<CoreUser>();
-		if (allCoreUserList.isEmpty()) {
-			return new ResponseEntity<List<CoreUser>>(HttpStatus.NO_CONTENT);
-		} else {
-			for (CoreUser user : allCoreUserList) {
-				if (user.getActivationStatus().equals(ApiConstants.AdminNotApproved)) {
-					notApprovedList.add(user);
-				}
-			}
-			return new ResponseEntity<List<CoreUser>>(notApprovedList, HttpStatus.OK);
-		}
-
-	}
-*/
+	// Get the Specific newly added proposal details
 	
 }
 
