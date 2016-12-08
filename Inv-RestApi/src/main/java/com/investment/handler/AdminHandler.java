@@ -80,7 +80,10 @@ public class AdminHandler {
 			RawProjectInfo rawProjectInfo = rawProjectInfoService.findById(processedProjectInfoDto.getRawProjectInfoId());
 			processedProjectInfo.setRawProjectInfo(rawProjectInfo);
 	
-			processedProjectInfoService.insert(processedProjectInfo);
+			int status = (int) processedProjectInfoService.insert(processedProjectInfo);
+			if(status == ApiConstants.PERSISTED_EXCEPTION){
+				return transactionStatus;  
+			}
 
 			RawProjectInfo updatedProjectInfo = new RawProjectInfo();
 			updatedProjectInfo.setId(rawProjectInfo.getId());
