@@ -68,4 +68,13 @@ public class CoreUserServiceImpl implements CoreUserService {
 		}
 	}
 
+	@Override
+	public CoreUser findByEmail(String email) {
+		try {
+			return coreUserDao.findByEmail(email);
+		} catch (Exception e) {
+			return null;
+		}
+	}
+
 }
