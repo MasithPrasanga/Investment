@@ -172,6 +172,17 @@ public class ProcessedProjectInfo implements Serializable {
 	public void setRawProjectInfo(RawProjectInfo rawProjectInfo) {
 		this.rawProjectInfo = rawProjectInfo;
 	}
+
+	@Override
+	public String toString() {
+		return "ProcessedProjectInfo [id=" + id + ", projectName=" + projectName + ", sharePrice=" + sharePrice
+				+ ", imageUrl=" + imageUrl + ", videoUrl=" + videoUrl + ", fullAmmount=" + fullAmmount + ", noOfShares="
+				+ noOfShares + ", mininumAmmount=" + mininumAmmount + ", type=" + type + ", currency=" + currency
+				+ ", category=" + category + ", customerType=" + customerType + ", rawProjectInfo=" + rawProjectInfo
+				+ "]";
+	}
+	
+	
 	
 }
 
