@@ -5,4 +5,6 @@ import com.investment.entity.CoreUser;
 
 public interface CoreUserDao  extends RootDao<CoreUser>{
 
+	public CoreUser findByEmail(String email);
+	
 }
