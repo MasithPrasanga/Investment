@@ -5,4 +5,5 @@ import com.investment.root.service.RootService;
 
 public interface ProcessedProjectInfoService extends RootService<ProcessedProjectInfo>{
 
+	public ProcessedProjectInfo findByRawProjectid(Integer rawProjectId);
 }

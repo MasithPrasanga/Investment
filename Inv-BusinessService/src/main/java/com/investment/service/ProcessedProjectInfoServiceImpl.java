@@ -68,6 +68,15 @@ public class ProcessedProjectInfoServiceImpl implements ProcessedProjectInfoServ
 		}
 	}
 
+	@Override
+	public ProcessedProjectInfo findByRawProjectid(Integer rawProjectId) {
+		try {
+			return processedProjectInfoDao.findByRawProjectid(rawProjectId);
+		} catch (Exception e) {
+			return null;
+		}
+	}
+
 }
 
 
