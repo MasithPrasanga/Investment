@@ -3,8 +3,6 @@ package com.investment.dto.response;
 import java.io.Serializable;
 import java.util.Date;
 
-import com.investment.entity.RawProjectInfo;
-
 public class RawProposalResponseDto implements Serializable{
 
 	private static final long serialVersionUID = 1L;

@@ -57,3 +57,18 @@ public class InvestorController {
 		return new ResponseEntity<List<ProcessedProjectInfo>>(HttpStatus.NO_CONTENT);
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
