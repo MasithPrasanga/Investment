@@ -73,7 +73,6 @@ public class RawProjectInfoServiceImpl implements RawProjectInfoService {
 		try {
 			return (List<RawProjectInfo>) rawDataDao.findByUserId(userid);
 		} catch (Exception e) {
-			System.out.println("Service Layer Exception : "+e);
 			return null;
 		}
 	}

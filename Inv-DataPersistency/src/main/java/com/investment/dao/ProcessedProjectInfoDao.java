@@ -5,6 +5,7 @@ import com.investment.entity.ProcessedProjectInfo;
 
 public interface ProcessedProjectInfoDao extends RootDao<ProcessedProjectInfo>{
 
+	public ProcessedProjectInfo findByRawProjectid(Integer rawProjectId);
 }
 
 
