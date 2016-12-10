@@ -31,6 +31,8 @@ public class ProcessedProjectInfoDaoImpl extends RootDaoImpl<ProcessedProjectInf
 			e.printStackTrace();
 			transaction.rollback();
 			return null;
+		}finally{
+			session.close();
 		}
 	}
 

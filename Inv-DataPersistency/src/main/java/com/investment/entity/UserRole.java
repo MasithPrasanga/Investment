@@ -26,10 +26,10 @@ public class UserRole implements Serializable{
 	@Column(name = "access_type",nullable = false)
 	private String accessType;
 	
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "user_id")
+	@ManyToOne(optional = false,fetch = FetchType.LAZY)
+	@JoinColumn(name = "user_id",nullable = false)
 	private CoreUser coreUser;
-
+	
 	public Integer getId() {
 		return id;
 	}
@@ -58,8 +58,6 @@ public class UserRole implements Serializable{
 	public String toString() {
 		return "UserRole [id=" + id + ", accessType=" + accessType + ", coreUser=" + coreUser + "]";
 	}
-	
-	
 	
 }
 
