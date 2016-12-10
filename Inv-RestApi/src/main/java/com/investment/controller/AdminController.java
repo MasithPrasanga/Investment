@@ -74,7 +74,7 @@ public class AdminController {
 		return new ResponseEntity<List<RawProjectInfoResponseDto>>(rawProjectInfoResponseList, HttpStatus.OK);
 	}
 
-	// Get the Specific newly added proposal details
+	// Get the Specific newly added proposal details (Uploaded Data)
 	@RequestMapping(value = "/singleproposaldetails/{id}", method = RequestMethod.POST)
 	public ResponseEntity<List<RawProposalResponseDto>> getSingleProposalDetails(@PathVariable("id") int rawProjectInfoId) {
 		

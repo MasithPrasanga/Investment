@@ -1,6 +1,7 @@
 package com.investment.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.investment.dto.CoreUserDto;
+import com.investment.entity.CoreUser;
 import com.investment.handler.LogInHandler;
 import com.investment.service.CoreUserService;
 import com.investment.service.UserRoleService;
@@ -30,12 +32,16 @@ public class LogInController {
 	public ResponseEntity<Void> uploadUrls(@RequestBody CoreUserDto coreUserDto) {
 		
 		try{
-			// validate the user by email (to be developed )			
+			CoreUser user = coreUserService.findByEmail(coreUserDto.getUserEmail());
+			if(user != null){
+				return new ResponseEntity<Void>(HttpStatus.ALREADY_REPORTED);
+			}
+			
 			boolean status = logInHandler.createNewUser(coreUserDto);
 			
-			return null;
+			return new ResponseEntity<Void>(HttpStatus.CREATED);
 		}catch(Exception e){
-			return null;
+			return new ResponseEntity<Void>(HttpStatus.EXPECTATION_FAILED);
 		}
 		
 	}

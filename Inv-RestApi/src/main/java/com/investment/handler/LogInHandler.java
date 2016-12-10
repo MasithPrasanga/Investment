@@ -1,5 +1,8 @@
 package com.investment.handler;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -15,17 +18,28 @@ public class LogInHandler {
 
 	@Autowired
 	private CoreUserService coreUserService = null;
-	
+
+	@Autowired
 	private UserRoleService userRoleService = null;
-	
-	public boolean createNewUser(CoreUserDto coreUserDto){
-		
-		try{
+
+	@Autowired
+	private SessionFactory sessionFactory;
+
+	public boolean createNewUser(CoreUserDto coreUserDto) {
+
+		Session session = null;
+		Transaction transaction = null;
+		boolean transactionStatus = false;
+
+		try {
+			session = sessionFactory.openSession();
+			transaction = session.beginTransaction();
+			
 			CoreUser user = new CoreUser();
 			user.setFirstName(coreUserDto.getFirstName());
 			user.setLastName(coreUserDto.getLastName());
 			user.setUserEmail(coreUserDto.getUserEmail());
-			user.setPassword(coreUserDto.getPassword());
+			user.setPassword(coreUserDto.getPassword()); // encrypt the password and save it
 			user.setMobileNumber(coreUserDto.getMobileNumber());
 			user.setLandNumber(coreUserDto.getLandNumber());
 			user.setBirthDate(coreUserDto.getBirthDate());
@@ -33,24 +47,32 @@ public class LogInHandler {
 			user.setAccountType(coreUserDto.getAccountType());
 			user.setCreatedDate(coreUserDto.getCreatedDate());
 			user.setActivationStatus(coreUserDto.getActivationStatus());
-			int userid = (int)coreUserService.insert(user);
 			
-			System.out.println("Saved User : "+coreUserService.findById(userid));
-			// send the email to the Admin that new user as registered and himself also
+			
 			UserRole userRole = new UserRole();
 			userRole.setAccessType(ApiConstants.ADMIN_ACCESS);
-			userRole.setCoreUser(coreUserService.findById(userid));
-			userRoleService.insert(userRole);
-			return true;
+			userRole.setCoreUser(user);
 			
-		}catch(Exception e){
-			System.out.println(e);
-			return false;
+			int userid = (int) coreUserService.insert(user);
+			
+			// send the email to the Admin that new user as registered and himself also
+
+			if (userid != ApiConstants.PERSISTED_EXCEPTION){
+				transactionStatus = true;
+			}
+			
+			transaction.commit();
+
+		} catch (Exception e) {
+			transaction.rollback();
+			e.printStackTrace();
+		} finally {
+			session.flush();
+			session.close();
 		}
-		
+		return transactionStatus;
 	}
 }
-
 
 
 
