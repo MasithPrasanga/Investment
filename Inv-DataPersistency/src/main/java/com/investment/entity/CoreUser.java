@@ -179,6 +179,14 @@ public class CoreUser implements Serializable{
 		this.activationStatus = activationStatus;
 	}
 
+	public List<UserRole> getUserRole() {
+		return userRole;
+	}
+
+	public void setUserRole(List<UserRole> userRole) {
+		this.userRole = userRole;
+	}
+
 	@Override
 	public String toString() {
 		return "CoreUser [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", userEmail=" + userEmail
