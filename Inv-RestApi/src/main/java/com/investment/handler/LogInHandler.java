@@ -1,5 +1,8 @@
 package com.investment.handler;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -48,10 +51,20 @@ public class LogInHandler {
 			user.setCreatedDate(coreUserDto.getCreatedDate());
 			user.setActivationStatus(coreUserDto.getActivationStatus());
 			
+			List<UserRole> userList = new ArrayList<UserRole>();
 			
-			UserRole userRole = new UserRole();
-			userRole.setAccessType(ApiConstants.ADMIN_ACCESS);
-			userRole.setCoreUser(user);
+			UserRole role1 = new UserRole();
+			role1.setAccessType(ApiConstants.ENTREPRENEUR_ACCESS);
+			role1.setCoreUser(user);
+			
+			UserRole role2 = new UserRole();
+			role2.setAccessType(ApiConstants.INVESTOR_ACCESS);
+			role2.setCoreUser(user);
+
+			userList.add(role1);
+			userList.add(role2);
+			
+			user.setUserRole(userList);
 			
 			int userid = (int) coreUserService.insert(user);
 			

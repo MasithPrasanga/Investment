@@ -36,9 +36,7 @@ public class LogInController {
 			if(user != null){
 				return new ResponseEntity<Void>(HttpStatus.ALREADY_REPORTED);
 			}
-			
 			boolean status = logInHandler.createNewUser(coreUserDto);
-			
 			return new ResponseEntity<Void>(HttpStatus.CREATED);
 		}catch(Exception e){
 			return new ResponseEntity<Void>(HttpStatus.EXPECTATION_FAILED);
