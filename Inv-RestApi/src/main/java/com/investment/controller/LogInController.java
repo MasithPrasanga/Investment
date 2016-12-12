@@ -1,5 +1,7 @@
 package com.investment.controller;
 
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,10 +12,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.investment.dto.CoreUserDto;
+import com.investment.dto.response.CoreUserResponseDto;
 import com.investment.entity.CoreUser;
 import com.investment.handler.LogInHandler;
 import com.investment.service.CoreUserService;
-import com.investment.service.UserRoleService;
+import com.investment.util.ApiConstants;
 
 @RestController
 @RequestMapping("api/v1/user")
@@ -23,21 +26,17 @@ public class LogInController {
 	private CoreUserService coreUserService = null;
 
 	@Autowired
-	private UserRoleService userRoleService = null;
-
-	@Autowired
 	private LogInHandler logInHandler = null;
 
 	// SignUp EndPoint
 	@RequestMapping(value = "/signup", method = RequestMethod.POST)
 	public ResponseEntity<Void> uploadUrls(@RequestBody CoreUserDto coreUserDto) {
 		try {
-			
-			if (coreUserDto.getUserEmail() == null || coreUserDto.getUserEmail().equals("") || coreUserDto.getPassword() == null || coreUserDto.getPassword().equals("")) {
+			if (coreUserDto.getUserEmail() == null || coreUserDto.getUserEmail().equals("")
+					|| coreUserDto.getPassword() == null || coreUserDto.getPassword().equals("")) {
 				System.out.println("Inside the Validation");
 				return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
-			} 
-			
+			}
 			CoreUser user = coreUserService.findByEmail(coreUserDto.getUserEmail());
 			if (user != null) {
 				System.out.println("Inside already reported");
@@ -45,98 +44,42 @@ public class LogInController {
 			}
 			
 			boolean status = logInHandler.createNewUser(coreUserDto);
-			
 			return new ResponseEntity<Void>(HttpStatus.CREATED);
-			
+
 		} catch (Exception e) {
-			System.out.println("Exception is : "+e);
+			System.out.println("Exception is : " + e);
 			e.printStackTrace();
 			return new ResponseEntity<Void>(HttpStatus.EXPECTATION_FAILED);
 		}
 	}
-	
 
-	@RequestMapping(value = "account/activate/{activationCode}", method = RequestMethod.GET, produces = {"application/json" })
-	public String userActivation(@PathVariable String activationCode) {
-	
-
-		System.out.println("Inside the Activation Method");
-		
-	/*	MobileActivationResponse json = new MobileActivationResponse();
-		CoreUser user = null;*/
-
-		/*try {
-			Date localDate = new Date();
-			DateTimeZone tz = DateTimeZone.getDefault();
-			Date utcDate = new Date(tz.convertLocalToUTC(localDate.getTime(), false));
-
+	@RequestMapping(value = "account/activate/{activationCode}", method = RequestMethod.GET)
+	public ResponseEntity<CoreUserResponseDto> userActivation(@PathVariable String activationCode) {
+		CoreUserResponseDto actiavtionResponse = new CoreUserResponseDto();
+		CoreUser user = null;
+		try {
 			if (activationCode == null) {
-				json.setMessage("Invalid activation code " + activationCode);
-				json.setCode(E2E.FAILED);
+				actiavtionResponse.setMessage(ApiConstants.INVALID_ACTIVATION_CODE);
 			}
-
-			LOGGER.info("Looking for user with activation code " + activationCode);
-			user = userManager.findByActivationCode(activationCode);
-
+			user = coreUserService.findByActivationCode(activationCode);
 			if (user == null) {
-				json.setMessage("Account is not found for the activation code " + activationCode);
-				json.setCode(E2E.FAILED);
+				actiavtionResponse.setMessage(ApiConstants.NO_ACCOUNT_TO_ACTIVATE);
 			}
-
-			LOGGER.info("Found the user with activation code " + user.getUserEmail());
-
-			if (user.isActive()) {
-				json.setMessage("Your allready activated !!!!");
-				json.setCode(E2E.SUCUESS);
+			if (user.getActivationStatus().equals(ApiConstants.ADMIN_APPROVED)) {
+				actiavtionResponse.setMessage(ApiConstants.ALREADY_ACTIVATED_ACCOUNT);
 			} else {
-				if (UserAccountType.PERSONAL.getType() == user.getAccountType()) {
-					user.setActivationStatus(UserStatus.CONSUMER_ACTIVATION_CONFIRMED.getType());
-					user.setActive(true);
-					user.setActivatedOn(utcDate);
-					user = userManager.addUser(user);
-
-					// Preference initialization
-					userSalesCategoryManager.initializePreferenceTypes(user);
-
-					json.setUsername(user.getFirstName());
-					json.setEmail(user.getUserEmail());
-					json.setId(user.getId());
-					json.setCode(E2E.SUCUESS);
-					json.setMessage("Your Account activated !!!");
-
-				}
+				user.setActivatedDate(new Date());
+				user.setActivationStatus(ApiConstants.ADMIN_APPROVED);
+				boolean updateStatus = coreUserService.update(user);
+				actiavtionResponse.setMessage(ApiConstants.ACCOUNT_ACTIAVAED);
 			}
-
 		} catch (Exception e) {
-			json = new MobileActivationResponse();
-			json.setMessage("Your Account activatiion failed Please contact admintrator ");
-			json.setCode(E2E.SUCUESS);
-			LOGGER.error("Account regestration failed ", e);
+			actiavtionResponse.setMessage(ApiConstants.ACTIVATION_FAILED);
 		}
-*/
-		/*model.addAttribute("ActivationResponse", json);*/
-		return "activation";
+
+		return new ResponseEntity<CoreUserResponseDto>(actiavtionResponse, HttpStatus.OK);
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
