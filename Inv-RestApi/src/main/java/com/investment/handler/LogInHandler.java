@@ -25,9 +25,6 @@ public class LogInHandler {
 	private CoreUserService coreUserService = null;
 
 	@Autowired
-	private UserRoleService userRoleService = null;
-
-	@Autowired
 	private SessionFactory sessionFactory;
 
 	public boolean createNewUser(CoreUserDto coreUserDto) {
@@ -79,6 +76,9 @@ public class LogInHandler {
 			int userid = (int) coreUserService.insert(user);
 			
 			// send the email to the Admin that new user as registered and himself also
+			
+			System.out.println("Activation url : " + getActivationCode() + "/" + user.getActivationCode());
+			coreUserDto.setActivationCode(getActivationCode() + "/" + user.getActivationCode());
 
 			if (userid != ApiConstants.PERSISTED_EXCEPTION){
 				transactionStatus = true;
@@ -96,6 +96,10 @@ public class LogInHandler {
 		return transactionStatus;
 	}
 	
+	private String getActivationCode() {	
+			return "http://" + "localhost" + ":"+"8090"+ "/api/v1/account/activate/";
+	}
+
 }
 
 
