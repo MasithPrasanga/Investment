@@ -34,12 +34,10 @@ public class LogInController {
 		try {
 			if (coreUserDto.getUserEmail() == null || coreUserDto.getUserEmail().equals("")
 					|| coreUserDto.getPassword() == null || coreUserDto.getPassword().equals("")) {
-				System.out.println("Inside the Validation");
 				return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
 			}
 			CoreUser user = coreUserService.findByEmail(coreUserDto.getUserEmail());
 			if (user != null) {
-				System.out.println("Inside already reported");
 				return new ResponseEntity<Void>(HttpStatus.ALREADY_REPORTED);
 			}
 			
@@ -47,7 +45,6 @@ public class LogInController {
 			return new ResponseEntity<Void>(HttpStatus.CREATED);
 
 		} catch (Exception e) {
-			System.out.println("Exception is : " + e);
 			e.printStackTrace();
 			return new ResponseEntity<Void>(HttpStatus.EXPECTATION_FAILED);
 		}

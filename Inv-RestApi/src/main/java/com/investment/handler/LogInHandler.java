@@ -36,17 +36,17 @@ public class LogInHandler {
 		try {
 			session = sessionFactory.openSession();
 			transaction = session.beginTransaction();
-			
+
 			CoreUser user = new CoreUser();
 			user.setFirstName(coreUserDto.getFirstName());
 			user.setLastName(coreUserDto.getLastName());
 			user.setUserEmail(coreUserDto.getUserEmail());
-			
+
 			// set the encripted password
 			StandardPasswordEncoder encoder = new StandardPasswordEncoder();
 			String encriptedPassword = encoder.encode(coreUserDto.getPassword());
 			user.setPassword(encriptedPassword);
-			
+
 			user.setMobileNumber(coreUserDto.getMobileNumber());
 			user.setLandNumber(coreUserDto.getLandNumber());
 			user.setBirthDate(coreUserDto.getBirthDate());
@@ -54,36 +54,40 @@ public class LogInHandler {
 			user.setAccountType(coreUserDto.getAccountType());
 			user.setCreatedDate(coreUserDto.getCreatedDate());
 			user.setActivationStatus(ApiConstants.ADMIN_NOT_APPROVED);
-			
+
 			// set activation link
 			String activationCode = CommonUtil.generateUserActivationKey();
 			user.setActivationCode(activationCode);
-			
+
 			List<UserRole> userList = new ArrayList<UserRole>();
-			
+
 			UserRole role1 = new UserRole();
-			if(user.getAccountType().equals(ApiConstants.ENTREPRENEUR)){
+			if (user.getAccountType().equals(ApiConstants.ENTREPRENEUR)) {
 				role1.setAccessType(ApiConstants.ENTREPRENEUR_ACCESS);
-			}
-			else if(user.getAccountType().equals(ApiConstants.INVESTOR)){
+			} else if (user.getAccountType().equals(ApiConstants.INVESTOR)) {
 				role1.setAccessType(ApiConstants.INVESTOR_ACCESS);
 			}
-			
+
 			role1.setCoreUser(user);
 			userList.add(role1);
 			user.setUserRole(userList);
-			
-			int userid = (int) coreUserService.insert(user);
-			
-			// send the email to the Admin that new user as registered and himself also
-			
-			System.out.println("Activation url : " + getActivationCode() + "/" + user.getActivationCode());
-			coreUserDto.setActivationCode(getActivationCode() + "/" + user.getActivationCode());
 
-			if (userid != ApiConstants.PERSISTED_EXCEPTION){
+			int userid = (int) coreUserService.insert(user);
+
+			System.out.println("Activation url : " + getLocalActivationCode() + "/" + user.getActivationCode());
+			coreUserDto.setActivationCode(getLocalActivationCode() + "/" + user.getActivationCode());
+			
+			//System.out.println("Activation url : " + getActivationCode() + "/" + user.getActivationCode());
+			//coreUserDto.setActivationCode(getActivationCode() + "/" + user.getActivationCode());
+
+			// send the email
+			
+			
+			
+			if (userid != ApiConstants.PERSISTED_EXCEPTION) {
 				transactionStatus = true;
 			}
-			
+
 			transaction.commit();
 
 		} catch (Exception e) {
@@ -95,23 +99,13 @@ public class LogInHandler {
 		}
 		return transactionStatus;
 	}
-	
-	private String getActivationCode() {	
-			return "http://" + "localhost" + ":"+"8090"+ "/api/v1/user/account/activate/";
+
+	private String getLocalActivationCode() {
+		return "http://" + "localhost" + ":" + "8090" + "/api/v1/user/account/activate/";
 	}
-	
-	
+
+	private String getActivationCode() {
+		return "http://" + "54.169.191.223" + ":" + "8080" + "/api/v1/user/account/activate/";
+	}
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
