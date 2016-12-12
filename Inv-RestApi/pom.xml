@@ -137,6 +137,11 @@
 			<artifactId>spring-security-crypto</artifactId>
 			<version>${spring-security-crypto.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>com.trader</groupId>
+			<artifactId>Inv-Email</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 
 
