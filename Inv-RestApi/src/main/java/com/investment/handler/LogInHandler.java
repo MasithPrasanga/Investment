@@ -54,16 +54,15 @@ public class LogInHandler {
 			List<UserRole> userList = new ArrayList<UserRole>();
 			
 			UserRole role1 = new UserRole();
-			role1.setAccessType(ApiConstants.ENTREPRENEUR_ACCESS);
+			if(user.getAccountType().equals(ApiConstants.ENTREPRENEUR)){
+				role1.setAccessType(ApiConstants.ENTREPRENEUR_ACCESS);
+			}
+			else if(user.getAccountType().equals(ApiConstants.INVESTOR)){
+				role1.setAccessType(ApiConstants.INVESTOR_ACCESS);
+			}
+			
 			role1.setCoreUser(user);
-			
-			UserRole role2 = new UserRole();
-			role2.setAccessType(ApiConstants.INVESTOR_ACCESS);
-			role2.setCoreUser(user);
-
 			userList.add(role1);
-			userList.add(role2);
-			
 			user.setUserRole(userList);
 			
 			int userid = (int) coreUserService.insert(user);
