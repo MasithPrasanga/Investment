@@ -7,6 +7,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.StandardPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import com.investment.dto.CoreUserDto;
@@ -15,6 +16,7 @@ import com.investment.entity.UserRole;
 import com.investment.service.CoreUserService;
 import com.investment.service.UserRoleService;
 import com.investment.util.ApiConstants;
+import com.investment.util.CommonUtil;
 
 @Component
 public class LogInHandler {
@@ -42,14 +44,23 @@ public class LogInHandler {
 			user.setFirstName(coreUserDto.getFirstName());
 			user.setLastName(coreUserDto.getLastName());
 			user.setUserEmail(coreUserDto.getUserEmail());
-			user.setPassword(coreUserDto.getPassword()); // encrypt the password and save it
+			
+			// set the encripted password
+			StandardPasswordEncoder encoder = new StandardPasswordEncoder();
+			String encriptedPassword = encoder.encode(coreUserDto.getPassword());
+			user.setPassword(encriptedPassword);
+			
 			user.setMobileNumber(coreUserDto.getMobileNumber());
 			user.setLandNumber(coreUserDto.getLandNumber());
 			user.setBirthDate(coreUserDto.getBirthDate());
 			user.setGender(coreUserDto.getGender());
 			user.setAccountType(coreUserDto.getAccountType());
 			user.setCreatedDate(coreUserDto.getCreatedDate());
-			user.setActivationStatus(coreUserDto.getActivationStatus());
+			user.setActivationStatus(ApiConstants.ADMIN_NOT_APPROVED);
+			
+			// set activation link
+			String activationCode = CommonUtil.generateUserActivationKey();
+			user.setActivationCode(activationCode);
 			
 			List<UserRole> userList = new ArrayList<UserRole>();
 			
@@ -84,6 +95,7 @@ public class LogInHandler {
 		}
 		return transactionStatus;
 	}
+	
 }
 
 
