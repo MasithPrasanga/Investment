@@ -68,7 +68,6 @@ public class CoreUserServiceImpl implements CoreUserService {
 		}
 	}
 
-	@Override
 	public CoreUser findByEmail(String email) {
 		try {
 			return coreUserDao.findByEmail(email);
@@ -77,4 +76,19 @@ public class CoreUserServiceImpl implements CoreUserService {
 		}
 	}
 
+	public CoreUser findByActivationCode(String activationCode) {
+		try {
+			return coreUserDao.findByActivationCode(activationCode);
+		} catch (Exception e) {
+			return null;
+		}
+	}
+	
 }
+
+
+
+
+
+
+
