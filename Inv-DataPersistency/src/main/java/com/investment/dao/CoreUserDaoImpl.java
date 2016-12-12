@@ -16,10 +16,11 @@ public class CoreUserDaoImpl extends RootDaoImpl<CoreUser> implements CoreUserDa
 	@Autowired
 	private SessionFactory sessionFactory;
 	
-	@Override
+	Transaction transaction = null;
+	Session session = null;
+	
 	public CoreUser findByEmail(String email) {
-		Transaction transaction = null;
-		Session session = null;
+	
 		try {
 			session = sessionFactory.openSession();
 			transaction = session.beginTransaction();
@@ -35,7 +36,27 @@ public class CoreUserDaoImpl extends RootDaoImpl<CoreUser> implements CoreUserDa
 		}finally{
 			session.close();
 		}
+		
 	}
+
+	public CoreUser findByActivationCode(String activationCode) {
+		try {
+			session = sessionFactory.openSession();
+			transaction = session.beginTransaction();
+			String hql = "FROM CoreUser C WHERE C.activationCode = "+"'"+activationCode+"'";
+			Query query = session.createQuery(hql);
+			CoreUser coreuser = (CoreUser) query.uniqueResult();
+			transaction.commit();
+			return coreuser;
+		} catch (Exception e) {
+			e.printStackTrace();
+			transaction.rollback();
+			return null;
+		}finally{
+			session.close();
+		}
+	}
+	
 }
 
 
