@@ -27,6 +27,8 @@ public class CoreUserDto implements Serializable{
 	
 	private String activationStatus;
 	
+	private String activationCode;
+	
 	private Date createdDate;
 
 
@@ -108,6 +110,14 @@ public class CoreUserDto implements Serializable{
 
 	public void setActivationStatus(String activationStatus) {
 		this.activationStatus = activationStatus;
+	}
+
+	public String getActivationCode() {
+		return activationCode;
+	}
+
+	public void setActivationCode(String activationCode) {
+		this.activationCode = activationCode;
 	}
 
 	public Date getCreatedDate() {
