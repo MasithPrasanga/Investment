@@ -8,5 +8,6 @@
   	<module>Inv-DataPersistency</module>
   	<module>Inv-BusinessService</module>
   	<module>Inv-RestApi</module>
+  	<module>Inv-Email</module>
   </modules>
 </project>
