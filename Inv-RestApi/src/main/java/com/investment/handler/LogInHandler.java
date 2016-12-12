@@ -97,8 +97,10 @@ public class LogInHandler {
 	}
 	
 	private String getActivationCode() {	
-			return "http://" + "localhost" + ":"+"8090"+ "/api/v1/account/activate/";
+			return "http://" + "localhost" + ":"+"8090"+ "/api/v1/user/account/activate/";
 	}
+	
+	
 
 }
 
