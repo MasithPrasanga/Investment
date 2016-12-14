@@ -5,6 +5,7 @@ import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.StandardPasswordEncoder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.investment.dto.CoreUserDto;
 import com.investment.dto.response.CoreUserResponseDto;
+import com.investment.dto.response.SignInResponseDto;
 import com.investment.entity.CoreUser;
 import com.investment.handler.LogInHandler;
 import com.investment.service.CoreUserService;
@@ -30,7 +32,7 @@ public class LogInController {
 
 	// SignUp EndPoint
 	@RequestMapping(value = "/signup", method = RequestMethod.POST)
-	public ResponseEntity<Void> uploadUrls(@RequestBody CoreUserDto coreUserDto) {
+	public ResponseEntity<Void> SignUp(@RequestBody CoreUserDto coreUserDto) {
 		try {
 			if (coreUserDto.getUserEmail() == null || coreUserDto.getUserEmail().equals("")
 					|| coreUserDto.getPassword() == null || coreUserDto.getPassword().equals("")) {
@@ -40,13 +42,52 @@ public class LogInController {
 			if (user != null) {
 				return new ResponseEntity<Void>(HttpStatus.ALREADY_REPORTED);
 			}
-			
+
 			boolean status = logInHandler.createNewUser(coreUserDto);
 			return new ResponseEntity<Void>(HttpStatus.CREATED);
 
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<Void>(HttpStatus.EXPECTATION_FAILED);
+		}
+	}
+
+	// SignIn EndPoint
+	@RequestMapping(value = "/signin", method = RequestMethod.POST)
+	public ResponseEntity<SignInResponseDto> SignIn(@RequestBody CoreUserDto coreUserDto) {
+		SignInResponseDto signInResponse = new SignInResponseDto();
+		try {
+			if (coreUserDto.getUserEmail() == null || coreUserDto.getUserEmail().equals("")
+					|| coreUserDto.getPassword() == null || coreUserDto.getPassword().equals("")) {
+				signInResponse.setStatus(HttpStatus.BAD_REQUEST);
+				return new ResponseEntity<SignInResponseDto>(signInResponse,HttpStatus.BAD_REQUEST);
+			}
+			CoreUser user = coreUserService.findByEmail(coreUserDto.getUserEmail());
+			if (user == null) {
+				signInResponse.setStatus(HttpStatus.NOT_FOUND);
+				return new ResponseEntity<SignInResponseDto>(signInResponse,HttpStatus.NOT_FOUND);
+			}
+			
+			if(user.getActivationStatus().equals(ApiConstants.ADMIN_NOT_APPROVED)){
+				signInResponse.setStatus(HttpStatus.UNAUTHORIZED);
+				return new ResponseEntity<SignInResponseDto>(signInResponse,HttpStatus.UNAUTHORIZED);
+			}
+			
+			
+			if(coreUserDto.getUserEmail().equals(user.getUserEmail())){
+				StandardPasswordEncoder encoder = new StandardPasswordEncoder();
+				boolean correctPsd = encoder.matches(coreUserDto.getPassword(),user.getPassword());
+				if(correctPsd){
+					signInResponse.setUserEmail(user.getUserEmail());
+					signInResponse.setStatus(HttpStatus.ACCEPTED);
+					signInResponse.setAccountType(user.getAccountType());
+				}
+			}
+			return new ResponseEntity<SignInResponseDto>(signInResponse,HttpStatus.ACCEPTED);
+
+		} catch (Exception e) {
+			signInResponse.setStatus(HttpStatus.EXPECTATION_FAILED);
+			return new ResponseEntity<SignInResponseDto>(signInResponse,HttpStatus.EXPECTATION_FAILED);
 		}
 	}
 
@@ -77,11 +118,3 @@ public class LogInController {
 		return new ResponseEntity<CoreUserResponseDto>(actiavtionResponse, HttpStatus.OK);
 	}
 }
-
-
-
-
-
-
-
-
