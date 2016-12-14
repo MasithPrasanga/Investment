@@ -81,9 +81,11 @@ public class LogInController {
 					signInResponse.setUserEmail(user.getUserEmail());
 					signInResponse.setStatus(HttpStatus.ACCEPTED);
 					signInResponse.setAccountType(user.getAccountType());
+					return new ResponseEntity<SignInResponseDto>(signInResponse, HttpStatus.ACCEPTED);
 				}
 			}
-			return new ResponseEntity<SignInResponseDto>(signInResponse, HttpStatus.ACCEPTED);
+			signInResponse.setStatus(HttpStatus.NOT_ACCEPTABLE);
+			return new ResponseEntity<SignInResponseDto>(signInResponse, HttpStatus.NOT_ACCEPTABLE);
 
 		} catch (Exception e) {
 			signInResponse.setStatus(HttpStatus.EXPECTATION_FAILED);
@@ -155,3 +157,38 @@ public class LogInController {
 		return new ResponseEntity<CoreUserResponseDto>(actiavtionResponse, HttpStatus.OK);
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
