@@ -68,7 +68,6 @@ public class RawProjectInfoServiceImpl implements RawProjectInfoService {
 		}
 	}
 
-	@Override
 	public List<RawProjectInfo> findByUserId(Integer userid) {
 		try {
 			return (List<RawProjectInfo>) rawDataDao.findByUserId(userid);
