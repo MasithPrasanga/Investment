@@ -39,15 +39,79 @@ public class Investment implements Serializable {
 	
 	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "investor_id",nullable = false)
-	private CoreUser investorId;
+	private CoreUser investor;
 	
 	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "entrepreneur_id",nullable = false)
-	private CoreUser entrepreneurId;
+	private CoreUser entrepreneur;
 	
 	@ManyToOne(optional = false,fetch = FetchType.EAGER)
 	@JoinColumn(name = "processed_project_info_id",nullable = false)
-	private ProcessedProjectInfo processedProject = null;	
+	private ProcessedProjectInfo processedProject = null;
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public Date getInvestedDate() {
+		return investedDate;
+	}
+
+	public void setInvestedDate(Date investedDate) {
+		this.investedDate = investedDate;
+	}
+
+	public Integer getInvestedAmouont() {
+		return investedAmouont;
+	}
+
+	public void setInvestedAmouont(Integer investedAmouont) {
+		this.investedAmouont = investedAmouont;
+	}
+
+	public Integer getNoOfShares() {
+		return noOfShares;
+	}
+
+	public void setNoOfShares(Integer noOfShares) {
+		this.noOfShares = noOfShares;
+	}
+
+	public Integer getPresentageOfFullAmount() {
+		return presentageOfFullAmount;
+	}
+
+	public void setPresentageOfFullAmount(Integer presentageOfFullAmount) {
+		this.presentageOfFullAmount = presentageOfFullAmount;
+	}
+	
+	public CoreUser getInvestor() {
+		return investor;
+	}
+
+	public void setInvestor(CoreUser investor) {
+		this.investor = investor;
+	}
+
+	public CoreUser getEntrepreneur() {
+		return entrepreneur;
+	}
+
+	public void setEntrepreneur(CoreUser entrepreneur) {
+		this.entrepreneur = entrepreneur;
+	}
+
+	public ProcessedProjectInfo getProcessedProject() {
+		return processedProject;
+	}
+
+	public void setProcessedProject(ProcessedProjectInfo processedProject) {
+		this.processedProject = processedProject;
+	}	
 
 }
 
