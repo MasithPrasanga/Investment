@@ -68,10 +68,12 @@ public class InvestmentServiceImpl implements InvestmentService {
 		}
 	}
 
+	public List<Investment> findByInvestorId(Integer investorId) {
+		try {
+			return investmentDao.findByInvestorId(investorId);
+		} catch (Exception e) {
+			return null;
+		}
+	}
+
 }
-
-
-
-
-
-
