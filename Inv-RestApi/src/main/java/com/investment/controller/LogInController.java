@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.investment.dto.request.PasswordResetRequestDto;
+import com.investment.dto.request.ResetPasswordRequestDto;
 import com.investment.dto.request.UserRequestDto;
-import com.investment.dto.response.PasswordResetResponseDto;
+import com.investment.dto.response.ResetPasswordResponseDto;
 import com.investment.dto.response.SignInResponseDto;
 import com.investment.dto.response.UserResponseDto;
 import com.investment.entity.CoreUser;
@@ -63,7 +63,7 @@ public class LogInController {
 		}
 	}
 
-	// SignIn EndPoint
+	// SignIn EndPoint (R)
 	@RequestMapping(value = "/signin", method = RequestMethod.POST)
 	public ResponseEntity<SignInResponseDto> SignIn(@RequestBody UserRequestDto userRequest) {
 		SignInResponseDto signInResponse = new SignInResponseDto();
@@ -105,8 +105,8 @@ public class LogInController {
 
 	// Reset Password EndPoint
 	@RequestMapping(value = "/resetpassword", method = RequestMethod.POST)
-	public ResponseEntity<PasswordResetResponseDto> ResetPassword( @RequestBody PasswordResetRequestDto resetPasswordRequest) {
-		PasswordResetResponseDto passwordResetResponse = new PasswordResetResponseDto();
+	public ResponseEntity<ResetPasswordResponseDto> ResetPassword( @RequestBody ResetPasswordRequestDto resetPasswordRequest) {
+		ResetPasswordResponseDto resetPasswordResponse = new ResetPasswordResponseDto();
 		try {
 			if (resetPasswordRequest.getEmail() == null 
 					|| resetPasswordRequest.getEmail().equals("")
@@ -115,13 +115,13 @@ public class LogInController {
 					|| resetPasswordRequest.getNewPassword() == null
 					|| resetPasswordRequest.getNewPassword().equals("")) {
 
-				passwordResetResponse.setStatus(HttpStatus.BAD_REQUEST);
-				return new ResponseEntity<PasswordResetResponseDto>(passwordResetResponse, HttpStatus.BAD_REQUEST);
+				resetPasswordResponse.setStatus(HttpStatus.BAD_REQUEST);
+				return new ResponseEntity<ResetPasswordResponseDto>(resetPasswordResponse, HttpStatus.BAD_REQUEST);
 			}
 			CoreUser user = coreUserService.findByEmail(resetPasswordRequest.getEmail());
 			if (user == null) {
-				passwordResetResponse.setStatus(HttpStatus.NOT_FOUND);
-				return new ResponseEntity<PasswordResetResponseDto>(passwordResetResponse, HttpStatus.NOT_FOUND);
+				resetPasswordResponse.setStatus(HttpStatus.NOT_FOUND);
+				return new ResponseEntity<ResetPasswordResponseDto>(resetPasswordResponse, HttpStatus.NOT_FOUND);
 			}
 			StandardPasswordEncoder encoder = new StandardPasswordEncoder();
 			boolean correctPsd = encoder.matches(resetPasswordRequest.getCurrentPassword(), user.getPassword());
@@ -130,43 +130,46 @@ public class LogInController {
 				String en = psdEncorder.encode(resetPasswordRequest.getNewPassword());
 				user.setPassword(en);	
 				coreUserService.update(user);
-				passwordResetResponse.setStatus(HttpStatus.OK);
+				resetPasswordResponse.setStatus(HttpStatus.OK);
 			}
-			return new ResponseEntity<PasswordResetResponseDto>(passwordResetResponse, HttpStatus.OK);
+			return new ResponseEntity<ResetPasswordResponseDto>(resetPasswordResponse, HttpStatus.OK);
 
 		} catch (Exception e) {
-			passwordResetResponse.setStatus(HttpStatus.EXPECTATION_FAILED);
-			return new ResponseEntity<PasswordResetResponseDto>(passwordResetResponse, HttpStatus.EXPECTATION_FAILED);
+			resetPasswordResponse.setStatus(HttpStatus.EXPECTATION_FAILED);
+			return new ResponseEntity<ResetPasswordResponseDto>(resetPasswordResponse, HttpStatus.EXPECTATION_FAILED);
 		}
 	}
 
+	// Activating Account End Point (R)
 	@RequestMapping(value = "account/activate/{activationCode}", method = RequestMethod.GET)
 	public ResponseEntity<UserResponseDto> userActivation(@PathVariable String activationCode) {
 		UserResponseDto actiavtionResponse = new UserResponseDto();
 		CoreUser user = null;
 		try {
 			if (activationCode == null) {
-				//actiavtionResponse.setStatus(ApiConstants.INVALID_ACTIVATION_CODE);
+				actiavtionResponse.setMessage(ApiConstants.INVALID_ACTIVATION_CODE);
 			}
 			user = coreUserService.findByActivationCode(activationCode);
 			if (user == null) {
-				//actiavtionResponse.setStatus(ApiConstants.NO_ACCOUNT_TO_ACTIVATE);
+				actiavtionResponse.setMessage(ApiConstants.NO_ACCOUNT_TO_ACTIVATE);
 			}
 			if (user.getActivationStatus().equals(ApiConstants.ADMIN_APPROVED)) {
-				//actiavtionResponse.setStatus(ApiConstants.ALREADY_ACTIVATED_ACCOUNT);
+				actiavtionResponse.setMessage(ApiConstants.ALREADY_ACTIVATED_ACCOUNT);
 			} else {
 				user.setActivatedDate(new Date());
 				user.setActivationStatus(ApiConstants.ADMIN_APPROVED);
-				boolean updateStatus = coreUserService.update(user);
-				//actiavtionResponse.setStatus(ApiConstants.ACCOUNT_ACTIAVAED);
+				coreUserService.update(user);
+			    actiavtionResponse.setMessage(ApiConstants.ACCOUNT_ACTIAVAED);
 			}
 		} catch (Exception e) {
-			//actiavtionResponse.setStatus(ApiConstants.ACTIVATION_FAILED);
+			actiavtionResponse.setMessage(ApiConstants.ACTIVATION_FAILED);
 		}
 
 		return new ResponseEntity<UserResponseDto>(actiavtionResponse, HttpStatus.OK);
 	}
 }
+
+
 
 
 

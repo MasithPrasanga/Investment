@@ -2,7 +2,7 @@ package com.investment.dto.request;
 
 import java.io.Serializable;
 
-public class PasswordResetRequestDto implements Serializable{
+public class ResetPasswordRequestDto implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
