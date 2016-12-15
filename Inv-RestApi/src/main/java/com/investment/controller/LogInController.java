@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.investment.dto.CoreUserDto;
-import com.investment.dto.PasswordResetRequestDto;
+import com.investment.dto.request.UserRequestDto;
+import com.investment.dto.request.PasswordResetRequestDto;
 import com.investment.dto.response.CoreUserResponseDto;
 import com.investment.dto.response.PasswordResetResponseDto;
 import com.investment.dto.response.SignInResponseDto;
@@ -32,9 +32,9 @@ public class LogInController {
 	@Autowired
 	private LogInHandler logInHandler = null;
 
-	// SignUp EndPoint
+	// SignUp (User Registration End Point)
 	@RequestMapping(value = "/signup", method = RequestMethod.POST)
-	public ResponseEntity<Void> SignUp(@RequestBody CoreUserDto coreUserDto) {
+	public ResponseEntity<Void> SignUp(@RequestBody UserRequestDto coreUserDto) {
 		try {
 			if (coreUserDto.getUserEmail() == null || coreUserDto.getUserEmail().equals("")
 					|| coreUserDto.getPassword() == null || coreUserDto.getPassword().equals("")) {
@@ -55,7 +55,7 @@ public class LogInController {
 
 	// SignIn EndPoint
 	@RequestMapping(value = "/signin", method = RequestMethod.POST)
-	public ResponseEntity<SignInResponseDto> SignIn(@RequestBody CoreUserDto coreUserDto) {
+	public ResponseEntity<SignInResponseDto> SignIn(@RequestBody UserRequestDto coreUserDto) {
 		SignInResponseDto signInResponse = new SignInResponseDto();
 		try {
 			if (coreUserDto.getUserEmail() == null || coreUserDto.getUserEmail().equals("")

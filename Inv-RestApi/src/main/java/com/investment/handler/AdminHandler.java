@@ -10,7 +10,7 @@ import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.investment.dto.ProcessedProjectInfoDto;
+import com.investment.dto.request.ProcessedProjectInfoDto;
 import com.investment.entity.BusinessUpload;
 import com.investment.entity.ProcessedProjectInfo;
 import com.investment.entity.RawProjectInfo;

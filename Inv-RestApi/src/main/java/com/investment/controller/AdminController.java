@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.investment.dto.ProcessedProjectInfoDto;
+import com.investment.dto.request.ProcessedProjectInfoDto;
 import com.investment.dto.response.RawProjectInfoResponseDto;
 import com.investment.dto.response.RawProposalResponseDto;
 import com.investment.entity.BusinessUpload;

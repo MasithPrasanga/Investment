@@ -1,4 +1,4 @@
-package com.investment.dto;
+package com.investment.dto.request;
 
 import java.io.Serializable;
 

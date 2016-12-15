@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.StandardPasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import com.investment.dto.CoreUserDto;
+import com.investment.dto.request.UserRequestDto;
 import com.investment.entity.CoreUser;
 import com.investment.entity.UserRole;
 import com.investment.service.CoreUserService;
@@ -27,7 +27,7 @@ public class LogInHandler {
 	@Autowired
 	private SessionFactory sessionFactory;
 
-	public boolean createNewUser(CoreUserDto coreUserDto) {
+	public boolean createNewUser(UserRequestDto coreUserDto) {
 
 		Session session = null;
 		Transaction transaction = null;

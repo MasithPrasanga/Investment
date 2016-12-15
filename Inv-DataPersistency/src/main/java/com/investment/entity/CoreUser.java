@@ -2,16 +2,12 @@ package com.investment.entity;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -63,9 +59,6 @@ public class CoreUser implements Serializable{
 
 	@Column(name = "activation_status")
 	private String activationStatus;
-
-    @OneToMany(mappedBy = "coreUser", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    private List<UserRole> userRole = null;
 	
 	public int getId() {
 		return id;
@@ -179,14 +172,6 @@ public class CoreUser implements Serializable{
 		this.activationStatus = activationStatus;
 	}
 
-	public List<UserRole> getUserRole() {
-		return userRole;
-	}
-
-	public void setUserRole(List<UserRole> userRole) {
-		this.userRole = userRole;
-	}
-
 	@Override
 	public String toString() {
 		return "CoreUser [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", userEmail=" + userEmail
@@ -194,7 +179,7 @@ public class CoreUser implements Serializable{
 				+ ", birthDate=" + birthDate + ", gender=" + gender + ", accountType=" + accountType
 				+ ", activationCode=" + activationCode + ", createdDate=" + createdDate + ", activatedDate="
 				+ activatedDate + ", activationStatus=" + activationStatus + "]";
-	}
+	}	
 	
 }
 

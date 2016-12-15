@@ -1,9 +1,9 @@
-package com.investment.dto;
+package com.investment.dto.request;
 
 import java.io.Serializable;
 import java.util.Date;
 
-public class CoreUserDto implements Serializable{
+public class UserRequestDto implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
