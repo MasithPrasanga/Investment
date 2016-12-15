@@ -65,15 +65,15 @@ public class LogInController {
 
 	// SignIn EndPoint
 	@RequestMapping(value = "/signin", method = RequestMethod.POST)
-	public ResponseEntity<SignInResponseDto> SignIn(@RequestBody UserRequestDto coreUserDto) {
+	public ResponseEntity<SignInResponseDto> SignIn(@RequestBody UserRequestDto userRequest) {
 		SignInResponseDto signInResponse = new SignInResponseDto();
 		try {
-			if (coreUserDto.getUserEmail() == null || coreUserDto.getUserEmail().equals("")
-					|| coreUserDto.getPassword() == null || coreUserDto.getPassword().equals("")) {
+			if (userRequest.getUserEmail() == null || userRequest.getUserEmail().equals("")
+					|| userRequest.getPassword() == null || userRequest.getPassword().equals("")) {
 				signInResponse.setStatus(HttpStatus.BAD_REQUEST);
 				return new ResponseEntity<SignInResponseDto>(signInResponse, HttpStatus.BAD_REQUEST);
 			}
-			CoreUser user = coreUserService.findByEmail(coreUserDto.getUserEmail());
+			CoreUser user = coreUserService.findByEmail(userRequest.getUserEmail());
 			if (user == null) {
 				signInResponse.setStatus(HttpStatus.NOT_FOUND);
 				return new ResponseEntity<SignInResponseDto>(signInResponse, HttpStatus.NOT_FOUND);
@@ -84,9 +84,9 @@ public class LogInController {
 				return new ResponseEntity<SignInResponseDto>(signInResponse, HttpStatus.UNAUTHORIZED);
 			}
 
-			if (coreUserDto.getUserEmail().equals(user.getUserEmail())) {
+			if (userRequest.getUserEmail().equals(user.getUserEmail())) {
 				StandardPasswordEncoder encoder = new StandardPasswordEncoder();
-				boolean correctPsd = encoder.matches(coreUserDto.getPassword(), user.getPassword());
+				boolean correctPsd = encoder.matches(userRequest.getPassword(), user.getPassword());
 				if (correctPsd) {
 					signInResponse.setUserEmail(user.getUserEmail());
 					signInResponse.setStatus(HttpStatus.ACCEPTED);
