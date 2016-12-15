@@ -10,6 +10,9 @@
         <dependent-module archiveName="Inv-DataPersistency-1.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/Inv-DataPersistency/Inv-DataPersistency">
             <dependency-type>uses</dependency-type>
         </dependent-module>
+        <dependent-module archiveName="Inv-Email-1.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/Inv-Email/Inv-Email">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
         <property name="context-root" value="Inv-RestApi"/>
         <property name="java-output-path" value="/Inv-RestApi/target/classes"/>
     </wb-module>
