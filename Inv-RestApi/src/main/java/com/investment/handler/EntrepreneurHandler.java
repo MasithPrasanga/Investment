@@ -10,7 +10,7 @@ import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.investment.dto.request.RawProjectInfoDto;
+import com.investment.dto.request.RawProjectInfoRequestDto;
 import com.investment.entity.BusinessUpload;
 import com.investment.entity.CoreUser;
 import com.investment.entity.RawProjectInfo;
@@ -30,7 +30,7 @@ public class EntrepreneurHandler {
 	@Autowired
 	private SessionFactory sessionFactory;
 
-	public boolean createRawProjectInfo(RawProjectInfoDto uploadedRawData) {
+	public boolean createRawProjectInfo(RawProjectInfoRequestDto uploadedRawData) {
 
 		Session session = null;
 		Transaction transaction = null;

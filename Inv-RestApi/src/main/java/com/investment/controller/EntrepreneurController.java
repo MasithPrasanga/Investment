@@ -12,10 +12,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.investment.dto.request.RawProjectInfoDto;
+import com.investment.dto.request.RawProjectInfoRequestDto;
+import com.investment.dto.response.CoreUserResponseDto;
 import com.investment.dto.response.EntrepreneurProjectsDto;
 import com.investment.dto.response.ProssedProjectInfoResponseDto;
 import com.investment.dto.response.RawProjectInfoResponseDto;
+import com.investment.dto.response.root.RootResponse;
+import com.investment.entity.CoreUser;
 import com.investment.entity.ProcessedProjectInfo;
 import com.investment.entity.RawProjectInfo;
 import com.investment.handler.EntrepreneurHandler;
@@ -42,15 +45,19 @@ public class EntrepreneurController {
 
 	// uploading files related to new proposal by entrepreneur
 	@RequestMapping(value = "/uploadedmediaurls", method = RequestMethod.POST)
-	public ResponseEntity<Void> uploadUrls(@RequestBody RawProjectInfoDto uploadedRawData) {
+	public ResponseEntity<RootResponse> uploadUrls(@RequestBody RawProjectInfoRequestDto uploadedRawData) {
+		RootResponse response = new RootResponse();
 		try {
 			boolean status = entrepreneurHandler.createRawProjectInfo(uploadedRawData);
 			if (status) {
-				return new ResponseEntity<Void>(HttpStatus.CREATED);
+				response.setStatus(HttpStatus.CREATED);
+				return new ResponseEntity<RootResponse>(response,HttpStatus.CREATED);
 			}
-			return new ResponseEntity<Void>(HttpStatus.EXPECTATION_FAILED);
+			response.setStatus(HttpStatus.EXPECTATION_FAILED);
+			return new ResponseEntity<RootResponse>(response,HttpStatus.EXPECTATION_FAILED);
 		} catch (Exception e) {
-			return new ResponseEntity<Void>(HttpStatus.EXPECTATION_FAILED);
+			response.setStatus(HttpStatus.EXPECTATION_FAILED);
+			return new ResponseEntity<RootResponse>(response,HttpStatus.EXPECTATION_FAILED);
 		}
 	}
 
@@ -69,11 +76,22 @@ public class EntrepreneurController {
 			List<ProssedProjectInfoResponseDto> prossedProjectInfoResponseDtoList = new ArrayList<ProssedProjectInfoResponseDto>();
 
 			List<RawProjectInfo> rawProjectInfoList = rawProjectInfoService.findByUserId(userid);
+			
 			if (rawProjectInfoList.isEmpty()) {
 				return new ResponseEntity<EntrepreneurProjectsDto>(HttpStatus.NO_CONTENT);
 			}
 
-			entrepreneurProjectsDto.setCoreUser(coreUserService.findById(userid));
+			CoreUserResponseDto user = new CoreUserResponseDto();
+			CoreUser coreUser = coreUserService.findById(userid);
+			user.setFirstName(coreUser.getFirstName());
+			user.setLastName(coreUser.getLastName());
+			user.setUserEmail(coreUser.getUserEmail());
+			user.setMobileNumber(coreUser.getMobileNumber());
+			user.setLandNumber(coreUser.getLandNumber());
+			user.setBirthDate(coreUser.getBirthDate());
+			user.setGender(coreUser.getGender());
+			user.setAccountType(coreUser.getAccountType());
+			entrepreneurProjectsDto.setCoreUser(user);
 
 			for (RawProjectInfo r : rawProjectInfoList) {
 				if (r.getAdminStatus().equals(ApiConstants.ADMIN_NOT_APPROVED)) {
