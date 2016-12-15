@@ -12,11 +12,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.investment.dto.request.UserRequestDto;
 import com.investment.dto.request.PasswordResetRequestDto;
-import com.investment.dto.response.CoreUserResponseDto;
+import com.investment.dto.request.UserRequestDto;
 import com.investment.dto.response.PasswordResetResponseDto;
 import com.investment.dto.response.SignInResponseDto;
+import com.investment.dto.response.UserResponseDto;
 import com.investment.entity.CoreUser;
 import com.investment.handler.LogInHandler;
 import com.investment.service.CoreUserService;
@@ -27,29 +27,39 @@ import com.investment.util.ApiConstants;
 public class LogInController {
 
 	@Autowired
+	private LogInHandler logInHandler = null;
+	
+	@Autowired
 	private CoreUserService coreUserService = null;
 
-	@Autowired
-	private LogInHandler logInHandler = null;
-
-	// SignUp (User Registration End Point)
+	// SignUp (User Registration End Point) (R)
 	@RequestMapping(value = "/signup", method = RequestMethod.POST)
-	public ResponseEntity<Void> SignUp(@RequestBody UserRequestDto coreUserDto) {
+	public ResponseEntity<UserResponseDto> SignUp(@RequestBody UserRequestDto userRequest) {
+		UserResponseDto userResponse = new UserResponseDto();
 		try {
-			if (coreUserDto.getUserEmail() == null || coreUserDto.getUserEmail().equals("")
-					|| coreUserDto.getPassword() == null || coreUserDto.getPassword().equals("")) {
-				return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
+			if (userRequest.getUserEmail() == null || userRequest.getUserEmail().equals("")
+					|| userRequest.getPassword() == null || userRequest.getPassword().equals("")) {
+				userResponse.setStatus(HttpStatus.BAD_REQUEST);
+				return new ResponseEntity<UserResponseDto>(userResponse,HttpStatus.BAD_REQUEST);
 			}
-			CoreUser user = coreUserService.findByEmail(coreUserDto.getUserEmail());
+			CoreUser user = coreUserService.findByEmail(userRequest.getUserEmail());
 			if (user != null) {
-				return new ResponseEntity<Void>(HttpStatus.ALREADY_REPORTED);
+				userResponse.setStatus(HttpStatus.ALREADY_REPORTED);
+				return new ResponseEntity<UserResponseDto>(userResponse,HttpStatus.ALREADY_REPORTED);
 			}
-			boolean status = logInHandler.createNewUser(coreUserDto);
-			return new ResponseEntity<Void>(HttpStatus.CREATED);
-
+			boolean status = logInHandler.createNewUser(userRequest);
+			if(status){
+				userResponse.setStatus(HttpStatus.CREATED);
+				return new ResponseEntity<UserResponseDto>(userResponse,HttpStatus.CREATED);
+			}
+			else{
+				userResponse.setStatus(HttpStatus.EXPECTATION_FAILED);
+				return new ResponseEntity<UserResponseDto>(userResponse,HttpStatus.EXPECTATION_FAILED);
+			}
+			
 		} catch (Exception e) {
-			e.printStackTrace();
-			return new ResponseEntity<Void>(HttpStatus.EXPECTATION_FAILED);
+			userResponse.setStatus(HttpStatus.EXPECTATION_FAILED);
+			return new ResponseEntity<UserResponseDto>(userResponse,HttpStatus.EXPECTATION_FAILED);
 		}
 	}
 
@@ -131,30 +141,30 @@ public class LogInController {
 	}
 
 	@RequestMapping(value = "account/activate/{activationCode}", method = RequestMethod.GET)
-	public ResponseEntity<CoreUserResponseDto> userActivation(@PathVariable String activationCode) {
-		CoreUserResponseDto actiavtionResponse = new CoreUserResponseDto();
+	public ResponseEntity<UserResponseDto> userActivation(@PathVariable String activationCode) {
+		UserResponseDto actiavtionResponse = new UserResponseDto();
 		CoreUser user = null;
 		try {
 			if (activationCode == null) {
-				actiavtionResponse.setMessage(ApiConstants.INVALID_ACTIVATION_CODE);
+				//actiavtionResponse.setStatus(ApiConstants.INVALID_ACTIVATION_CODE);
 			}
 			user = coreUserService.findByActivationCode(activationCode);
 			if (user == null) {
-				actiavtionResponse.setMessage(ApiConstants.NO_ACCOUNT_TO_ACTIVATE);
+				//actiavtionResponse.setStatus(ApiConstants.NO_ACCOUNT_TO_ACTIVATE);
 			}
 			if (user.getActivationStatus().equals(ApiConstants.ADMIN_APPROVED)) {
-				actiavtionResponse.setMessage(ApiConstants.ALREADY_ACTIVATED_ACCOUNT);
+				//actiavtionResponse.setStatus(ApiConstants.ALREADY_ACTIVATED_ACCOUNT);
 			} else {
 				user.setActivatedDate(new Date());
 				user.setActivationStatus(ApiConstants.ADMIN_APPROVED);
 				boolean updateStatus = coreUserService.update(user);
-				actiavtionResponse.setMessage(ApiConstants.ACCOUNT_ACTIAVAED);
+				//actiavtionResponse.setStatus(ApiConstants.ACCOUNT_ACTIAVAED);
 			}
 		} catch (Exception e) {
-			actiavtionResponse.setMessage(ApiConstants.ACTIVATION_FAILED);
+			//actiavtionResponse.setStatus(ApiConstants.ACTIVATION_FAILED);
 		}
 
-		return new ResponseEntity<CoreUserResponseDto>(actiavtionResponse, HttpStatus.OK);
+		return new ResponseEntity<UserResponseDto>(actiavtionResponse, HttpStatus.OK);
 	}
 }
 
