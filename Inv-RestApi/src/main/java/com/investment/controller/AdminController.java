@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.investment.dto.request.ProcessedProjectInfoDto;
 import com.investment.dto.response.RawProjectInfoResponseDto;
 import com.investment.dto.response.RawProposalResponseDto;
+import com.investment.dto.response.root.RootResponse;
 import com.investment.entity.BusinessUpload;
 import com.investment.entity.RawProjectInfo;
 import com.investment.handler.AdminHandler;
@@ -37,15 +38,19 @@ public class AdminController {
 
 	// processing the newly added proposals and approving it
 	@RequestMapping(value = "/approveproposal", method = RequestMethod.POST)
-	public ResponseEntity<Void> saveProcessedData(@RequestBody ProcessedProjectInfoDto processedProjectInfoDto) {
+	public ResponseEntity<RootResponse> saveProcessedData(@RequestBody ProcessedProjectInfoDto processedProjectInfoDto) {
+		RootResponse response = new RootResponse();
 		try {
 			boolean status = adminHandler.createProject(processedProjectInfoDto);
 			if (status) {
-				return new ResponseEntity<Void>(HttpStatus.CREATED);
+				response.setStatus(HttpStatus.CREATED);
+				return new ResponseEntity<RootResponse>(response,HttpStatus.CREATED);
 			}
-			return new ResponseEntity<Void>(HttpStatus.EXPECTATION_FAILED);
+			response.setStatus(HttpStatus.EXPECTATION_FAILED);
+			return new ResponseEntity<RootResponse>(response,HttpStatus.EXPECTATION_FAILED);
 		} catch (Exception e) {
-			return new ResponseEntity<Void>(HttpStatus.EXPECTATION_FAILED);
+			response.setStatus(HttpStatus.EXPECTATION_FAILED);
+			return new ResponseEntity<RootResponse>(response,HttpStatus.EXPECTATION_FAILED);
 		}
 	}
 

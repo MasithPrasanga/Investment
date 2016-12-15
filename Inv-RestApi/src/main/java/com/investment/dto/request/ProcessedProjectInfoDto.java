@@ -2,7 +2,9 @@ package com.investment.dto.request;
 
 import java.io.Serializable;
 
-public class ProcessedProjectInfoDto implements Serializable {
+import com.investment.dto.response.root.RootResponse;
+
+public class ProcessedProjectInfoDto extends RootResponse implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
