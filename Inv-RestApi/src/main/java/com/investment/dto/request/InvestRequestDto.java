@@ -45,6 +45,12 @@ public class InvestRequestDto implements Serializable{
 	public void setProcessedProjectInfoId(int processedProjectInfoId) {
 		this.processedProjectInfoId = processedProjectInfoId;
 	}
+
+	@Override
+	public String toString() {
+		return "InvestRequestDto [investedAmount=" + investedAmount + ", investorId=" + investorId + ", entrepreneurId="
+				+ entrepreneurId + ", processedProjectInfoId=" + processedProjectInfoId + "]";
+	}
 	
 }
 
