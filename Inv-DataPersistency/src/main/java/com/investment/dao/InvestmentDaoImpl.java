@@ -17,6 +17,7 @@ public class InvestmentDaoImpl extends RootDaoImpl<Investment> implements Invest
 
 	@Autowired
 	private SessionFactory sessionFactory;
+	@SuppressWarnings("unchecked")
 	public List<Investment> findByInvestorId(Integer investorId) {
 		Transaction transaction = null;
 		Session session = null;

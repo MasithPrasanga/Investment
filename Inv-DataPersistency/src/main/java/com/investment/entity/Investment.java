@@ -35,7 +35,7 @@ public class Investment implements Serializable {
 	private Integer noOfShares;
 	
 	@Column(name = "precentage_of_full_amount", nullable = false)
-	private Integer presentageOfFullAmount;
+	private double presentageOfFullAmount;
 	
 	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "investor_id",nullable = false)
@@ -81,11 +81,11 @@ public class Investment implements Serializable {
 		this.noOfShares = noOfShares;
 	}
 
-	public Integer getPresentageOfFullAmount() {
+	public double getPresentageOfFullAmount() {
 		return presentageOfFullAmount;
 	}
 
-	public void setPresentageOfFullAmount(Integer presentageOfFullAmount) {
+	public void setPresentageOfFullAmount(double presentageOfFullAmount) {
 		this.presentageOfFullAmount = presentageOfFullAmount;
 	}
 	

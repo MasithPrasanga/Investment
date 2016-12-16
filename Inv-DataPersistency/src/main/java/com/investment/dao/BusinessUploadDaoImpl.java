@@ -19,6 +19,7 @@ public class BusinessUploadDaoImpl extends RootDaoImpl<BusinessUpload> implement
 	@Autowired
 	private SessionFactory sessionFactory;
 	
+	@SuppressWarnings("unchecked")
 	public List<BusinessUpload> findListById(RawProjectInfo rawProjectInfo) {
 		
 		Transaction transaction = null;
