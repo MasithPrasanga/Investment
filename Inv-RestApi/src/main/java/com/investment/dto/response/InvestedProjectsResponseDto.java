@@ -21,7 +21,7 @@ public class InvestedProjectsResponseDto implements Serializable{
 	private Date investedDate;
 	private Integer investedAmouont;
 	private Integer investedNoOfShares;
-	private Integer investedPrecentage;
+	private double investedPrecentage;
 	private CoreUserResponseDto entrepreneur;
 	
 	public String getProjectName() {
@@ -108,10 +108,10 @@ public class InvestedProjectsResponseDto implements Serializable{
 	public void setInvestedNoOfShares(Integer investedNoOfShares) {
 		this.investedNoOfShares = investedNoOfShares;
 	}
-	public Integer getInvestedPrecentage() {
+	public double getInvestedPrecentage() {
 		return investedPrecentage;
 	}
-	public void setInvestedPrecentage(Integer investedPrecentage) {
+	public void setInvestedPrecentage(double investedPrecentage) {
 		this.investedPrecentage = investedPrecentage;
 	}
 	public CoreUserResponseDto getEntrepreneur() {
