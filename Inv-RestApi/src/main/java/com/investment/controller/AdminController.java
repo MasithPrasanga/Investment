@@ -60,7 +60,7 @@ public class AdminController {
 				rawProjectInfoResponse.setId(r.getId());
 				rawProjectInfoResponse.setProjectName(r.getProjectName());
 				rawProjectInfoResponse.setSubmitedDate(r.getSubmitedDate());
-				rawProjectInfoResponse.setCoreUser(r.getCoreUser());
+				rawProjectInfoResponse.setCoreUser(adminHandler.createCoreUserResponse(r.getCoreUser()));
 				rawProjectInfoResponseList.add(rawProjectInfoResponse);
 			}
 		}
