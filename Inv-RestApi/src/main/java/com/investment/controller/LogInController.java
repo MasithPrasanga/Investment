@@ -40,26 +40,31 @@ public class LogInController {
 			if (userRequest.getUserEmail() == null || userRequest.getUserEmail().equals("")
 					|| userRequest.getPassword() == null || userRequest.getPassword().equals("")) {
 				userResponse.setHttpStatus(HttpStatus.BAD_REQUEST);
+				userResponse.setMessage(ApiConstants.INCORRECT_CREDENTIALS);
 				return new ResponseEntity<UserResponseDto>(userResponse,HttpStatus.BAD_REQUEST);
 			}
 			CoreUser user = coreUserService.findByEmail(userRequest.getUserEmail());
 			if (user != null) {
 				userResponse.setHttpStatus(HttpStatus.ALREADY_REPORTED);
+				userResponse.setMessage(ApiConstants.ALREADY_REGISTERED);
 				return new ResponseEntity<UserResponseDto>(userResponse,HttpStatus.ALREADY_REPORTED);
 			}
 			boolean status = logInHandler.createNewUser(userRequest);
 			if(status){
 				userResponse.setHttpStatus(HttpStatus.CREATED);
+				userResponse.setMessage(ApiConstants.SUCCESSFULLY_REGISTERED);
 				return new ResponseEntity<UserResponseDto>(userResponse,HttpStatus.CREATED);
 			}
 			else{
 				userResponse.setHttpStatus(HttpStatus.EXPECTATION_FAILED);
+				userResponse.setMessage(ApiConstants.EXCEPTION_FAILED);
 				return new ResponseEntity<UserResponseDto>(userResponse,HttpStatus.EXPECTATION_FAILED);
 			}
 			
 		} catch (Exception e) {
-			userResponse.setHttpStatus(HttpStatus.EXPECTATION_FAILED);
-			return new ResponseEntity<UserResponseDto>(userResponse,HttpStatus.EXPECTATION_FAILED);
+			userResponse.setMessage(ApiConstants.INTERNAL_SERVER_ERROR);
+			userResponse.setHttpStatus(HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<UserResponseDto>(userResponse,HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
