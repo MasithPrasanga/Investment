@@ -55,7 +55,6 @@ public class InvestorController {
 			processedProjectInfoResponse.setSharePrice(p.getSharePrice());
 			processedProjectInfoResponse.setImageUrl(p.getImageUrl());
 			processedProjectInfoResponse.setVideoUrl(p.getVideoUrl());
-
 			processedProjectInfoResponse.setFullAmmount(p.getFullAmmount());
 			processedProjectInfoResponse.setNoOfShares(p.getNoOfShares());
 			processedProjectInfoResponse.setMininumAmmount(p.getMininumAmmount());
@@ -63,7 +62,7 @@ public class InvestorController {
 			processedProjectInfoResponse.setCurrency(p.getCurrency());
 			processedProjectInfoResponse.setCategory(p.getCategory());
 			processedProjectInfoResponse.setCustomerType(p.getCustomerType());
-			processedProjectInfoResponse.setCoreUser(p.getRawProjectInfo().getCoreUser());
+			processedProjectInfoResponse.setCoreUser(investorHandler.createCoreUserResponse(p.getRawProjectInfo().getCoreUser()));
 			prossedProjectInfoResponseList.add(processedProjectInfoResponse);
 		}
 
@@ -133,6 +132,8 @@ public class InvestorController {
 		}
 	}
 }
+
+
 
 
 
