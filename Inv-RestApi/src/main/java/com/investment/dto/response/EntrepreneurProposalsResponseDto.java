@@ -3,22 +3,24 @@ package com.investment.dto.response;
 import java.io.Serializable;
 import java.util.List;
 
-public class EntrepreneurProjectsDto implements Serializable{
+import com.investment.dto.response.root.RootResponse;
+
+public class EntrepreneurProposalsResponseDto extends RootResponse implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 
-	private CoreUserResponseDto coreUser = null;
+	private CoreUserResponseDto entrepreneur = null;
 	
 	private List<RawProjectInfoResponseDto> rawProjectList = null;
 	
 	private List<ProssedProjectInfoResponseDto> processedProjectList = null;
 	
-	public CoreUserResponseDto getCoreUser() {
-		return coreUser;
+	public CoreUserResponseDto getEntrepreneur() {
+		return entrepreneur;
 	}
 
-	public void setCoreUser(CoreUserResponseDto coreUser) {
-		this.coreUser = coreUser;
+	public void setEntrepreneur(CoreUserResponseDto entrepreneur) {
+		this.entrepreneur = entrepreneur;
 	}
 
 	public List<RawProjectInfoResponseDto> getRawProjectList() {
