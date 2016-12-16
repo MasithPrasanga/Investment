@@ -8,15 +8,16 @@ public class RootResponse implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
-	private HttpStatus status;
+	private HttpStatus httpStatus;
 
-	public HttpStatus getStatus() {
-		return status;
+	public HttpStatus getHttpStatus() {
+		return httpStatus;
 	}
 
-	public void setStatus(HttpStatus status) {
-		this.status = status;
+	public void setHttpStatus(HttpStatus httpStatus) {
+		this.httpStatus = httpStatus;
 	}
+
 }
 
 

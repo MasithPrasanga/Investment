@@ -43,13 +43,13 @@ public class AdminController {
 		try {
 			boolean status = adminHandler.createProject(processedProjectInfoDto);
 			if (status) {
-				response.setStatus(HttpStatus.CREATED);
+				response.setHttpStatus(HttpStatus.CREATED);
 				return new ResponseEntity<RootResponse>(response,HttpStatus.CREATED);
 			}
-			response.setStatus(HttpStatus.EXPECTATION_FAILED);
+			response.setHttpStatus(HttpStatus.EXPECTATION_FAILED);
 			return new ResponseEntity<RootResponse>(response,HttpStatus.EXPECTATION_FAILED);
 		} catch (Exception e) {
-			response.setStatus(HttpStatus.EXPECTATION_FAILED);
+			response.setHttpStatus(HttpStatus.EXPECTATION_FAILED);
 			return new ResponseEntity<RootResponse>(response,HttpStatus.EXPECTATION_FAILED);
 		}
 	}
@@ -65,9 +65,10 @@ public class AdminController {
 		}
 
 		List<RawProjectInfoResponseDto> rawProjectInfoResponseList = new ArrayList<RawProjectInfoResponseDto>();
+		RawProjectInfoResponseDto rawProjectInfoResponse = null;
 		for (RawProjectInfo r : rawProjectInfoList) {
 			if (r.getAdminStatus().equals(ApiConstants.ADMIN_NOT_APPROVED)) {
-				RawProjectInfoResponseDto rawProjectInfoResponse = new RawProjectInfoResponseDto();
+				rawProjectInfoResponse = new RawProjectInfoResponseDto();
 				rawProjectInfoResponse.setId(r.getId());
 				rawProjectInfoResponse.setProjectName(r.getProjectName());
 				rawProjectInfoResponse.setSubmitedDate(r.getSubmitedDate());

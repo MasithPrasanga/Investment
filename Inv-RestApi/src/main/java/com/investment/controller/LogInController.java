@@ -39,26 +39,26 @@ public class LogInController {
 		try {
 			if (userRequest.getUserEmail() == null || userRequest.getUserEmail().equals("")
 					|| userRequest.getPassword() == null || userRequest.getPassword().equals("")) {
-				userResponse.setStatus(HttpStatus.BAD_REQUEST);
+				userResponse.setHttpStatus(HttpStatus.BAD_REQUEST);
 				return new ResponseEntity<UserResponseDto>(userResponse,HttpStatus.BAD_REQUEST);
 			}
 			CoreUser user = coreUserService.findByEmail(userRequest.getUserEmail());
 			if (user != null) {
-				userResponse.setStatus(HttpStatus.ALREADY_REPORTED);
+				userResponse.setHttpStatus(HttpStatus.ALREADY_REPORTED);
 				return new ResponseEntity<UserResponseDto>(userResponse,HttpStatus.ALREADY_REPORTED);
 			}
 			boolean status = logInHandler.createNewUser(userRequest);
 			if(status){
-				userResponse.setStatus(HttpStatus.CREATED);
+				userResponse.setHttpStatus(HttpStatus.CREATED);
 				return new ResponseEntity<UserResponseDto>(userResponse,HttpStatus.CREATED);
 			}
 			else{
-				userResponse.setStatus(HttpStatus.EXPECTATION_FAILED);
+				userResponse.setHttpStatus(HttpStatus.EXPECTATION_FAILED);
 				return new ResponseEntity<UserResponseDto>(userResponse,HttpStatus.EXPECTATION_FAILED);
 			}
 			
 		} catch (Exception e) {
-			userResponse.setStatus(HttpStatus.EXPECTATION_FAILED);
+			userResponse.setHttpStatus(HttpStatus.EXPECTATION_FAILED);
 			return new ResponseEntity<UserResponseDto>(userResponse,HttpStatus.EXPECTATION_FAILED);
 		}
 	}
@@ -70,17 +70,17 @@ public class LogInController {
 		try {
 			if (userRequest.getUserEmail() == null || userRequest.getUserEmail().equals("")
 					|| userRequest.getPassword() == null || userRequest.getPassword().equals("")) {
-				signInResponse.setStatus(HttpStatus.BAD_REQUEST);
+				signInResponse.setHttpStatus(HttpStatus.BAD_REQUEST);
 				return new ResponseEntity<SignInResponseDto>(signInResponse, HttpStatus.BAD_REQUEST);
 			}
 			CoreUser user = coreUserService.findByEmail(userRequest.getUserEmail());
 			if (user == null) {
-				signInResponse.setStatus(HttpStatus.NOT_FOUND);
+				signInResponse.setHttpStatus(HttpStatus.NOT_FOUND);
 				return new ResponseEntity<SignInResponseDto>(signInResponse, HttpStatus.NOT_FOUND);
 			}
 
 			if (user.getActivationStatus().equals(ApiConstants.ADMIN_NOT_APPROVED)) {
-				signInResponse.setStatus(HttpStatus.UNAUTHORIZED);
+				signInResponse.setHttpStatus(HttpStatus.UNAUTHORIZED);
 				return new ResponseEntity<SignInResponseDto>(signInResponse, HttpStatus.UNAUTHORIZED);
 			}
 
@@ -89,16 +89,16 @@ public class LogInController {
 				boolean correctPsd = encoder.matches(userRequest.getPassword(), user.getPassword());
 				if (correctPsd) {
 					signInResponse.setUserEmail(user.getUserEmail());
-					signInResponse.setStatus(HttpStatus.ACCEPTED);
+					signInResponse.setHttpStatus(HttpStatus.ACCEPTED);
 					signInResponse.setAccountType(user.getAccountType());
 					return new ResponseEntity<SignInResponseDto>(signInResponse, HttpStatus.ACCEPTED);
 				}
 			}
-			signInResponse.setStatus(HttpStatus.NOT_ACCEPTABLE);
+			signInResponse.setHttpStatus(HttpStatus.NOT_ACCEPTABLE);
 			return new ResponseEntity<SignInResponseDto>(signInResponse, HttpStatus.NOT_ACCEPTABLE);
 
 		} catch (Exception e) {
-			signInResponse.setStatus(HttpStatus.EXPECTATION_FAILED);
+			signInResponse.setHttpStatus(HttpStatus.EXPECTATION_FAILED);
 			return new ResponseEntity<SignInResponseDto>(signInResponse, HttpStatus.EXPECTATION_FAILED);
 		}
 	}
@@ -115,12 +115,12 @@ public class LogInController {
 					|| resetPasswordRequest.getNewPassword() == null
 					|| resetPasswordRequest.getNewPassword().equals("")) {
 
-				resetPasswordResponse.setStatus(HttpStatus.BAD_REQUEST);
+				resetPasswordResponse.setHttpStatus(HttpStatus.BAD_REQUEST);
 				return new ResponseEntity<ResetPasswordResponseDto>(resetPasswordResponse, HttpStatus.BAD_REQUEST);
 			}
 			CoreUser user = coreUserService.findByEmail(resetPasswordRequest.getEmail());
 			if (user == null) {
-				resetPasswordResponse.setStatus(HttpStatus.NOT_FOUND);
+				resetPasswordResponse.setHttpStatus(HttpStatus.NOT_FOUND);
 				return new ResponseEntity<ResetPasswordResponseDto>(resetPasswordResponse, HttpStatus.NOT_FOUND);
 			}
 			StandardPasswordEncoder encoder = new StandardPasswordEncoder();
@@ -130,12 +130,12 @@ public class LogInController {
 				String en = psdEncorder.encode(resetPasswordRequest.getNewPassword());
 				user.setPassword(en);	
 				coreUserService.update(user);
-				resetPasswordResponse.setStatus(HttpStatus.OK);
+				resetPasswordResponse.setHttpStatus(HttpStatus.OK);
 			}
 			return new ResponseEntity<ResetPasswordResponseDto>(resetPasswordResponse, HttpStatus.OK);
 
 		} catch (Exception e) {
-			resetPasswordResponse.setStatus(HttpStatus.EXPECTATION_FAILED);
+			resetPasswordResponse.setHttpStatus(HttpStatus.EXPECTATION_FAILED);
 			return new ResponseEntity<ResetPasswordResponseDto>(resetPasswordResponse, HttpStatus.EXPECTATION_FAILED);
 		}
 	}
@@ -149,6 +149,7 @@ public class LogInController {
 			if (activationCode == null) {
 				actiavtionResponse.setMessage(ApiConstants.INVALID_ACTIVATION_CODE);
 			}
+			/*----------move------ */
 			user = coreUserService.findByActivationCode(activationCode);
 			if (user == null) {
 				actiavtionResponse.setMessage(ApiConstants.NO_ACCOUNT_TO_ACTIVATE);

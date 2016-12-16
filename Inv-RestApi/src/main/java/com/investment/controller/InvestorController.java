@@ -77,13 +77,13 @@ public class InvestorController {
 		try {
 			long id = investmentService.insert(investorHandler.makeInvestment(investmentRequest));
 			if(id == ApiConstants.PERSISTED_EXCEPTION){
-				investmentResponse.setStatus(HttpStatus.EXPECTATION_FAILED);
+				investmentResponse.setHttpStatus(HttpStatus.EXPECTATION_FAILED);
 				return new ResponseEntity<InvestmentResponseDto>(investmentResponse,HttpStatus.EXPECTATION_FAILED);
 			}
-			investmentResponse.setStatus(HttpStatus.CREATED);
+			investmentResponse.setHttpStatus(HttpStatus.CREATED);
 			return new ResponseEntity<InvestmentResponseDto>(investmentResponse,HttpStatus.CREATED);	
 		} catch (Exception e) {
-			investmentResponse.setStatus(HttpStatus.EXPECTATION_FAILED);
+			investmentResponse.setHttpStatus(HttpStatus.EXPECTATION_FAILED);
 			return new ResponseEntity<InvestmentResponseDto>(investmentResponse,HttpStatus.EXPECTATION_FAILED);
 		}
 	}

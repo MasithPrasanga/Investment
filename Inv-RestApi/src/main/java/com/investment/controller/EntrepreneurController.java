@@ -50,13 +50,13 @@ public class EntrepreneurController {
 		try {
 			boolean status = entrepreneurHandler.createRawProjectInfo(uploadedRawData);
 			if (status) {
-				response.setStatus(HttpStatus.CREATED);
+				response.setHttpStatus(HttpStatus.CREATED);
 				return new ResponseEntity<RootResponse>(response,HttpStatus.CREATED);
 			}
-			response.setStatus(HttpStatus.EXPECTATION_FAILED);
+			response.setHttpStatus(HttpStatus.EXPECTATION_FAILED);
 			return new ResponseEntity<RootResponse>(response,HttpStatus.EXPECTATION_FAILED);
 		} catch (Exception e) {
-			response.setStatus(HttpStatus.EXPECTATION_FAILED);
+			response.setHttpStatus(HttpStatus.EXPECTATION_FAILED);
 			return new ResponseEntity<RootResponse>(response,HttpStatus.EXPECTATION_FAILED);
 		}
 	}
