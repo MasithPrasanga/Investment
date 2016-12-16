@@ -8,9 +8,19 @@ public class SignInResponseDto extends RootResponse implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
+	private String message;
+	
 	private String userEmail;
 	
 	private String accountType;
+
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
+	}
 
 	public String getUserEmail() {
 		return userEmail;
@@ -29,9 +39,6 @@ public class SignInResponseDto extends RootResponse implements Serializable{
 	}
 	
 }
-
-
-
 
 
 

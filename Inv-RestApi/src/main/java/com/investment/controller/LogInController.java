@@ -76,16 +76,19 @@ public class LogInController {
 			if (userRequest.getUserEmail() == null || userRequest.getUserEmail().equals("")
 					|| userRequest.getPassword() == null || userRequest.getPassword().equals("")) {
 				signInResponse.setHttpStatus(HttpStatus.BAD_REQUEST);
+				signInResponse.setMessage(ApiConstants.INCORRECT_CREDENTIALS);
 				return new ResponseEntity<SignInResponseDto>(signInResponse, HttpStatus.BAD_REQUEST);
 			}
 			CoreUser user = coreUserService.findByEmail(userRequest.getUserEmail());
 			if (user == null) {
 				signInResponse.setHttpStatus(HttpStatus.NOT_FOUND);
+				signInResponse.setMessage(ApiConstants.USER_NOT_FOUND);
 				return new ResponseEntity<SignInResponseDto>(signInResponse, HttpStatus.NOT_FOUND);
 			}
 
 			if (user.getActivationStatus().equals(ApiConstants.ADMIN_NOT_APPROVED)) {
 				signInResponse.setHttpStatus(HttpStatus.UNAUTHORIZED);
+				signInResponse.setMessage(ApiConstants.UNREGISTERED_ACCOUNT);
 				return new ResponseEntity<SignInResponseDto>(signInResponse, HttpStatus.UNAUTHORIZED);
 			}
 
@@ -96,15 +99,18 @@ public class LogInController {
 					signInResponse.setUserEmail(user.getUserEmail());
 					signInResponse.setHttpStatus(HttpStatus.ACCEPTED);
 					signInResponse.setAccountType(user.getAccountType());
+					signInResponse.setMessage(ApiConstants.SUCCESSFULLY_SIGNIN);
 					return new ResponseEntity<SignInResponseDto>(signInResponse, HttpStatus.ACCEPTED);
 				}
 			}
 			signInResponse.setHttpStatus(HttpStatus.NOT_ACCEPTABLE);
+			signInResponse.setMessage(ApiConstants.INCORRECT_CREDENTIALS);
 			return new ResponseEntity<SignInResponseDto>(signInResponse, HttpStatus.NOT_ACCEPTABLE);
 
 		} catch (Exception e) {
-			signInResponse.setHttpStatus(HttpStatus.EXPECTATION_FAILED);
-			return new ResponseEntity<SignInResponseDto>(signInResponse, HttpStatus.EXPECTATION_FAILED);
+			signInResponse.setHttpStatus(HttpStatus.INTERNAL_SERVER_ERROR);
+			signInResponse.setMessage(ApiConstants.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<SignInResponseDto>(signInResponse, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
