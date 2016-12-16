@@ -62,7 +62,8 @@ public class InvestorController {
 			processedProjectInfoResponse.setCurrency(p.getCurrency());
 			processedProjectInfoResponse.setCategory(p.getCategory());
 			processedProjectInfoResponse.setCustomerType(p.getCustomerType());
-			processedProjectInfoResponse.setCoreUser(investorHandler.createCoreUserResponse(p.getRawProjectInfo().getCoreUser()));
+			CoreUserResponseDto entrepreneur = investorHandler.createCoreUserResponse(p.getRawProjectInfo().getCoreUser());
+			processedProjectInfoResponse.setCoreUser(entrepreneur);
 			prossedProjectInfoResponseList.add(processedProjectInfoResponse);
 		}
 
@@ -113,14 +114,7 @@ public class InvestorController {
 				
 				CoreUserResponseDto entrepreneur = new CoreUserResponseDto();
 				CoreUser user = inv.getProcessedProject().getRawProjectInfo().getCoreUser();
-				entrepreneur.setFirstName(user.getFirstName());
-				entrepreneur.setLastName(user.getLastName());
-				entrepreneur.setUserEmail(user.getUserEmail());
-				entrepreneur.setMobileNumber(user.getMobileNumber());
-				entrepreneur.setLandNumber(user.getLandNumber());
-				entrepreneur.setBirthDate(user.getBirthDate());
-				entrepreneur.setGender(user.getGender());
-				entrepreneur.setAccountType(user.getAccountType());
+				entrepreneur = investorHandler.createCoreUserResponse(user);
 				investedProject.setEntrepreneur(entrepreneur);
 				
 				investedProjectList.add(investedProject);

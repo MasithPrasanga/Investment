@@ -3,8 +3,6 @@ package com.investment.dto.response;
 import java.io.Serializable;
 import java.util.List;
 
-import com.investment.entity.CoreUser;
-
 public class EntrepreneurProjectsDto implements Serializable{
 
 	private static final long serialVersionUID = 1L;
