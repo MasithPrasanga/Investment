@@ -2,13 +2,13 @@ package com.investment.dto.response;
 
 import java.io.Serializable;
 
-import com.investment.entity.CoreUser;
+import com.investment.dto.response.root.RootResponse;
 import com.investment.entity.metadata.Category;
 import com.investment.entity.metadata.Currency;
 import com.investment.entity.metadata.CustomerType;
 import com.investment.entity.metadata.Type;
 
-public class ProssedProjectInfoResponseDto implements Serializable{
+public class ProssedProjectInfoResponseDto extends RootResponse implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
@@ -36,7 +36,7 @@ public class ProssedProjectInfoResponseDto implements Serializable{
 	
 	private CustomerType customerType;
 	
-	private CoreUser coreUser;
+	private CoreUserResponseDto coreUser;
 
 	public int getId() {
 		return id;
@@ -134,11 +134,11 @@ public class ProssedProjectInfoResponseDto implements Serializable{
 		this.customerType = customerType;
 	}
 
-	public CoreUser getCoreUser() {
+	public CoreUserResponseDto getCoreUser() {
 		return coreUser;
 	}
 
-	public void setCoreUser(CoreUser coreUser) {
+	public void setCoreUser(CoreUserResponseDto coreUser) {
 		this.coreUser = coreUser;
 	}
 	
