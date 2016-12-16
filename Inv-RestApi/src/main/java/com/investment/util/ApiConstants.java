@@ -25,6 +25,10 @@ public interface ApiConstants {
 	public static final String SUCCESSFULLY_REGISTERED = "User Successfully Registered";
 	public static final String EXCEPTION_FAILED = "Exception Failed";
 	public static final String INTERNAL_SERVER_ERROR = "Internal Server Error";
+	public static final String USER_NOT_FOUND = "User Not Found";
+	public static final String UNREGISTERED_ACCOUNT = "Account has not been approved !!! please contact admin";
+	public static final String SUCCESSFULLY_SIGNIN = "Successfully Sign In";
+	public static final String PASSWORD_SUCCESSFULLY_CHANGED = "Password Successfully Changed";
 	
 	// User Activation
 	public static final String INVALID_ACTIVATION_CODE = "Invalid Activation Code";

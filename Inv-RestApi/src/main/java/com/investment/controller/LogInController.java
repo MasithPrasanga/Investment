@@ -127,11 +127,13 @@ public class LogInController {
 					|| resetPasswordRequest.getNewPassword().equals("")) {
 
 				resetPasswordResponse.setHttpStatus(HttpStatus.BAD_REQUEST);
+				resetPasswordResponse.setMessage(ApiConstants.INCORRECT_CREDENTIALS);
 				return new ResponseEntity<ResetPasswordResponseDto>(resetPasswordResponse, HttpStatus.BAD_REQUEST);
 			}
 			CoreUser user = coreUserService.findByEmail(resetPasswordRequest.getEmail());
 			if (user == null) {
 				resetPasswordResponse.setHttpStatus(HttpStatus.NOT_FOUND);
+				resetPasswordResponse.setMessage(ApiConstants.USER_NOT_FOUND);
 				return new ResponseEntity<ResetPasswordResponseDto>(resetPasswordResponse, HttpStatus.NOT_FOUND);
 			}
 			StandardPasswordEncoder encoder = new StandardPasswordEncoder();
@@ -141,13 +143,15 @@ public class LogInController {
 				String en = psdEncorder.encode(resetPasswordRequest.getNewPassword());
 				user.setPassword(en);	
 				coreUserService.update(user);
+				resetPasswordResponse.setMessage(ApiConstants.PASSWORD_SUCCESSFULLY_CHANGED);
 				resetPasswordResponse.setHttpStatus(HttpStatus.OK);
 			}
 			return new ResponseEntity<ResetPasswordResponseDto>(resetPasswordResponse, HttpStatus.OK);
 
 		} catch (Exception e) {
-			resetPasswordResponse.setHttpStatus(HttpStatus.EXPECTATION_FAILED);
-			return new ResponseEntity<ResetPasswordResponseDto>(resetPasswordResponse, HttpStatus.EXPECTATION_FAILED);
+			resetPasswordResponse.setMessage(ApiConstants.INTERNAL_SERVER_ERROR);
+			resetPasswordResponse.setHttpStatus(HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<ResetPasswordResponseDto>(resetPasswordResponse, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -160,7 +164,6 @@ public class LogInController {
 			if (activationCode == null) {
 				actiavtionResponse.setMessage(ApiConstants.INVALID_ACTIVATION_CODE);
 			}
-			/*----------move------ */
 			user = coreUserService.findByActivationCode(activationCode);
 			if (user == null) {
 				actiavtionResponse.setMessage(ApiConstants.NO_ACCOUNT_TO_ACTIVATE);
