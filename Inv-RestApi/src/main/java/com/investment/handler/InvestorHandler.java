@@ -30,7 +30,8 @@ public class InvestorHandler extends RootHandler{
 		investment.setNoOfShares(investmentRequest.getInvestedAmount()/processedProjectInfo.getSharePrice());
 		investment.setInvestor(coreUserService.findById(investmentRequest.getInvestorId()));
 		investment.setEntrepreneur(coreUserService.findById(investmentRequest.getEntrepreneurId()));
-		investment.setPresentageOfFullAmount((investmentRequest.getInvestedAmount()/processedProjectInfo.getFullAmmount())*100);
+		double precentage =(double)investmentRequest.getInvestedAmount()/processedProjectInfo.getFullAmmount();
+		investment.setPresentageOfFullAmount(precentage*100);
 		return investment;
 	}
 

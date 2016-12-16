@@ -4,10 +4,12 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.crypto.password.StandardPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import com.investment.dto.request.UserRequestDto;
+import com.investment.emai.service.MailServicePlay;
 import com.investment.entity.CoreUser;
 import com.investment.service.CoreUserService;
 import com.investment.util.ApiConstants;
@@ -18,6 +20,10 @@ public class LogInHandler {
 
 	@Autowired
 	private SessionFactory sessionFactory;
+	
+	@Autowired
+	@Qualifier("MailServicePlayImpl")
+	private MailServicePlay mailService;
 	
 	@Autowired
 	private CoreUserService coreUserService = null;
@@ -61,6 +67,9 @@ public class LogInHandler {
 			//System.out.println("Activation url : " + getActivationCode() + "/" + user.getActivationCode());
 			//coreUserDto.setActivationCode(getActivationCode() + "/" + user.getActivationCode());
 			// send the email
+			
+			//mailService.sendUserMandrill(user,userRequest.getActivationCode(), "Investment_Activation", "activate");
+			
 			if (userid != ApiConstants.PERSISTED_EXCEPTION) {
 				transactionStatus = true;
 			}
