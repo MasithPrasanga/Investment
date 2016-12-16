@@ -2,18 +2,18 @@ package com.investment.handler;
 
 import java.util.Date;
 
-import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.investment.dto.request.InvestRequestDto;
 import com.investment.entity.Investment;
 import com.investment.entity.ProcessedProjectInfo;
+import com.investment.handler.root.RootHandler;
 import com.investment.service.CoreUserService;
 import com.investment.service.ProcessedProjectInfoService;
 
 @Component
-public class InvestorHandler {
+public class InvestorHandler extends RootHandler{
 	
 	@Autowired
 	private CoreUserService coreUserService = null;

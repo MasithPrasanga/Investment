@@ -1,8 +1,6 @@
 package com.investment.handler;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -11,9 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.investment.dto.request.ProcessedProjectInfoDto;
-import com.investment.entity.BusinessUpload;
 import com.investment.entity.ProcessedProjectInfo;
 import com.investment.entity.RawProjectInfo;
+import com.investment.handler.root.RootHandler;
 import com.investment.service.BusinessUploadService;
 import com.investment.service.CoreUserService;
 import com.investment.service.ProcessedProjectInfoService;
@@ -25,7 +23,7 @@ import com.investment.service.metadata.TypeService;
 import com.investment.util.ApiConstants;
 
 @Component
-public class AdminHandler {
+public class AdminHandler extends RootHandler{
 
 	@Autowired
 	private TypeService typeService = null;
@@ -108,5 +106,26 @@ public class AdminHandler {
 
 		return transactionStatus;
 	}
+	
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
