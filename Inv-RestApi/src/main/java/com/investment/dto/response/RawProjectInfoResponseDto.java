@@ -15,7 +15,7 @@ public class RawProjectInfoResponseDto implements Serializable{
 
 	private Date submitedDate;
     
-	private CoreUser coreUser = null;
+	private CoreUserResponseDto coreUser = null;
 
 	public int getId() {
 		return id;
@@ -41,11 +41,11 @@ public class RawProjectInfoResponseDto implements Serializable{
 		this.submitedDate = submitedDate;
 	}
 
-	public CoreUser getCoreUser() {
+	public CoreUserResponseDto getCoreUser() {
 		return coreUser;
 	}
 
-	public void setCoreUser(CoreUser coreUser) {
+	public void setCoreUser(CoreUserResponseDto coreUser) {
 		this.coreUser = coreUser;
 	}
 
