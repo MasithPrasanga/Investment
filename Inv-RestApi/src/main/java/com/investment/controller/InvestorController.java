@@ -30,12 +30,11 @@ import com.investment.util.ApiConstants;
 public class InvestorController {
 	
 	@Autowired
-	private InvestmentService investmentService = null;
-
-	@Autowired
 	private InvestorHandler investorHandler = null;
 	
-	
+	@Autowired
+	private InvestmentService investmentService = null;
+
 	@Autowired
 	private ProcessedProjectInfoService processedProjectInfoService = null;
 
@@ -49,21 +48,9 @@ public class InvestorController {
 		}
 		List<ProssedProjectInfoResponseDto> prossedProjectInfoResponseList = new ArrayList<ProssedProjectInfoResponseDto>();
 		for (ProcessedProjectInfo p : processedProjectInfoList) {
-			ProssedProjectInfoResponseDto processedProjectInfoResponse = new ProssedProjectInfoResponseDto();
-			processedProjectInfoResponse.setId(p.getId());
-			processedProjectInfoResponse.setProjectName(p.getProjectName());
-			processedProjectInfoResponse.setSharePrice(p.getSharePrice());
-			processedProjectInfoResponse.setImageUrl(p.getImageUrl());
-			processedProjectInfoResponse.setVideoUrl(p.getVideoUrl());
-			processedProjectInfoResponse.setFullAmmount(p.getFullAmmount());
-			processedProjectInfoResponse.setNoOfShares(p.getNoOfShares());
-			processedProjectInfoResponse.setMininumAmmount(p.getMininumAmmount());
-			processedProjectInfoResponse.setType(p.getType());
-			processedProjectInfoResponse.setCurrency(p.getCurrency());
-			processedProjectInfoResponse.setCategory(p.getCategory());
-			processedProjectInfoResponse.setCustomerType(p.getCustomerType());
+			ProssedProjectInfoResponseDto processedProjectInfoResponse = investorHandler.createProjectInfoResponse(p);	
 			CoreUserResponseDto entrepreneur = investorHandler.createCoreUserResponse(p.getRawProjectInfo().getCoreUser());
-			processedProjectInfoResponse.setCoreUser(entrepreneur);
+			processedProjectInfoResponse.setEntrepreneur(entrepreneur);
 			prossedProjectInfoResponseList.add(processedProjectInfoResponse);
 		}
 
@@ -93,34 +80,17 @@ public class InvestorController {
 	public ResponseEntity<List<InvestedProjectsResponseDto>> getInvestedProjects(@PathVariable("id") int investorId) {
 		try{
 			List<Investment> investmentList = investmentService.findByInvestorId(investorId);
-			List<InvestedProjectsResponseDto> investedProjectList = new ArrayList<InvestedProjectsResponseDto>();
+			List<InvestedProjectsResponseDto> responseList = new ArrayList<InvestedProjectsResponseDto>();
+			
 			for(Investment inv : investmentList){
-				InvestedProjectsResponseDto investedProject = new InvestedProjectsResponseDto();
-				investedProject.setProjectName(inv.getProcessedProject().getProjectName());
-				investedProject.setSingleSharePrice(inv.getProcessedProject().getSharePrice());
-				investedProject.setImageUrl(inv.getProcessedProject().getImageUrl());
-				investedProject.setVideoUrl(inv.getProcessedProject().getVideoUrl());
-				investedProject.setFullAmmountCanInvest(inv.getProcessedProject().getFullAmmount());
-				investedProject.setNoOfSharesCanBuy(inv.getProcessedProject().getNoOfShares());
-				investedProject.setMininumAmmountCanInvest(inv.getProcessedProject().getMininumAmmount());
-				investedProject.setType(inv.getProcessedProject().getType().getType());
-				investedProject.setCurrency(inv.getProcessedProject().getCurrency().getName());
-				investedProject.setCustomerType(inv.getProcessedProject().getCustomerType().getType());
-				investedProject.setCategory(inv.getProcessedProject().getCategory().getName());
-				investedProject.setInvestedDate(inv.getInvestedDate());
-				investedProject.setInvestedAmouont(inv.getInvestedAmouont());
-				investedProject.setInvestedNoOfShares(inv.getNoOfShares());
-				investedProject.setInvestedPrecentage(inv.getPresentageOfFullAmount());
-				
+				InvestedProjectsResponseDto response = investorHandler.createInvestedProjectResponse(inv);
 				CoreUserResponseDto entrepreneur = new CoreUserResponseDto();
 				CoreUser user = inv.getProcessedProject().getRawProjectInfo().getCoreUser();
 				entrepreneur = investorHandler.createCoreUserResponse(user);
-				investedProject.setEntrepreneur(entrepreneur);
-				
-				investedProjectList.add(investedProject);
+				response.setEntrepreneur(entrepreneur);
+				responseList.add(response);
 			}
-			
-			return new ResponseEntity<List<InvestedProjectsResponseDto>>(investedProjectList,HttpStatus.OK);
+			return new ResponseEntity<List<InvestedProjectsResponseDto>>(responseList,HttpStatus.OK);
 		}catch(Exception e){
 			return new ResponseEntity<List<InvestedProjectsResponseDto>>(HttpStatus.EXPECTATION_FAILED);
 		}
