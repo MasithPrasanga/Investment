@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.investment.dto.request.InvestRequestDto;
+import com.investment.dto.response.InvestedProjectsResponseDto;
 import com.investment.entity.Investment;
 import com.investment.entity.ProcessedProjectInfo;
 import com.investment.handler.root.RootHandler;
@@ -34,7 +35,26 @@ public class InvestorHandler extends RootHandler{
 		investment.setPresentageOfFullAmount(precentage*100);
 		return investment;
 	}
-
+	
+	public InvestedProjectsResponseDto createInvestedProjectResponse(Investment investment){
+		InvestedProjectsResponseDto dto = new InvestedProjectsResponseDto();
+		dto.setProjectName(investment.getProcessedProject().getProjectName());
+		dto.setSingleSharePrice(investment.getProcessedProject().getSharePrice());
+		dto.setImageUrl(investment.getProcessedProject().getImageUrl());
+		dto.setVideoUrl(investment.getProcessedProject().getVideoUrl());
+		dto.setFullAmmountCanInvest(investment.getProcessedProject().getFullAmmount());
+		dto.setNoOfSharesCanBuy(investment.getProcessedProject().getNoOfShares());
+		dto.setMininumAmmountCanInvest(investment.getProcessedProject().getMininumAmmount());
+		dto.setType(investment.getProcessedProject().getType().getType());
+		dto.setCurrency(investment.getProcessedProject().getCurrency().getName());
+		dto.setCustomerType(investment.getProcessedProject().getCustomerType().getType());
+		dto.setCategory(investment.getProcessedProject().getCategory().getName());
+		dto.setInvestedDate(investment.getInvestedDate());
+		dto.setInvestedAmouont(investment.getInvestedAmouont());
+		dto.setInvestedNoOfShares(investment.getNoOfShares());
+		dto.setInvestedPrecentage(investment.getPresentageOfFullAmount());
+		return dto;
+	}
 }
 
 
