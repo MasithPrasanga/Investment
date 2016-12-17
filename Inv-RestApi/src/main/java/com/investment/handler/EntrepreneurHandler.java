@@ -39,16 +39,12 @@ public class EntrepreneurHandler extends RootHandler {
 	private ProcessedProjectInfoService processedProjectInfoService = null;
 
 	public boolean createRawProjectInfo(RawProjectInfoRequestDto uploadedRawData) {
-
 		Session session = null;
 		Transaction transaction = null;
 		boolean transactionStatus = false;
-
 		try {
-
 			session = sessionFactory.openSession();
 			transaction = session.beginTransaction();
-
 			List<String> urls = uploadedRawData.getUrls();
 			RawProjectInfo rawProjectInfo = new RawProjectInfo();
 			CoreUser user = coreUserService.findById(uploadedRawData.getUserId());
@@ -65,15 +61,11 @@ public class EntrepreneurHandler extends RootHandler {
 				businessUploadList.add(businessUpload);
 			}
 			rawProjectInfo.setBusinessUpload(businessUploadList);
-
 			int saveedId = (int) rawProjectInfoService.insert(rawProjectInfo);
-
 			transaction.commit();
-
 			if (saveedId != ApiConstants.PERSISTED_EXCEPTION) {
 				transactionStatus = true;
 			}
-
 		} catch (Exception e) {
 			transaction.rollback();
 			e.printStackTrace();
@@ -81,7 +73,6 @@ public class EntrepreneurHandler extends RootHandler {
 			session.flush();
 			session.close();
 		}
-
 		return transactionStatus;
 
 	}
@@ -96,22 +87,9 @@ public class EntrepreneurHandler extends RootHandler {
 	
 	public ProssedProjectInfoResponseDto createProcessedProjectResponse(RawProjectInfo rawProposal) {
 		ProcessedProjectInfo processedProjectInfo = processedProjectInfoService.findByRawProjectid(rawProposal.getId());
-		ProssedProjectInfoResponseDto dto = new ProssedProjectInfoResponseDto();
-		dto.setId(processedProjectInfo.getId());
-		dto.setProjectName(processedProjectInfo.getProjectName());
-		dto.setSharePrice(processedProjectInfo.getSharePrice());
-		dto.setImageUrl(processedProjectInfo.getImageUrl());
-		dto.setVideoUrl(processedProjectInfo.getVideoUrl());
-		dto.setFullAmmount(processedProjectInfo.getFullAmmount());
-		dto.setNoOfShares(processedProjectInfo.getNoOfShares());
-		dto.setMininumAmmount(processedProjectInfo.getMininumAmmount());
-		dto.setType(processedProjectInfo.getType());
-		dto.setCurrency(processedProjectInfo.getCurrency());
-		dto.setCategory(processedProjectInfo.getCategory());
-		dto.setCustomerType(processedProjectInfo.getCustomerType());
+		ProssedProjectInfoResponseDto dto = createProjectInfoResponse(processedProjectInfo);
 		return dto;
 	}
-	
 }
 
 
