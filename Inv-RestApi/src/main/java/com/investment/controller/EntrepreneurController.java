@@ -18,11 +18,9 @@ import com.investment.dto.response.EntrepreneurProposalsResponseDto;
 import com.investment.dto.response.ProssedProjectInfoResponseDto;
 import com.investment.dto.response.RawProjectInfoResponseDto;
 import com.investment.dto.response.root.RootResponse;
-import com.investment.entity.ProcessedProjectInfo;
 import com.investment.entity.RawProjectInfo;
 import com.investment.handler.EntrepreneurHandler;
 import com.investment.service.CoreUserService;
-import com.investment.service.ProcessedProjectInfoService;
 import com.investment.service.RawProjectInfoService;
 import com.investment.util.ApiConstants;
 
@@ -32,9 +30,6 @@ public class EntrepreneurController {
 
 	@Autowired
 	private RawProjectInfoService rawProjectInfoService = null;
-
-	@Autowired
-	private ProcessedProjectInfoService processedProjectInfoService = null;
 
 	@Autowired
 	private CoreUserService coreUserService = null;
