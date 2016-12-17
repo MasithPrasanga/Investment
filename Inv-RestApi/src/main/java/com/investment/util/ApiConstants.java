@@ -37,7 +37,9 @@ public interface ApiConstants {
 	public static final String ACTIVATION_FAILED = "Activation Failed Please Contact Admin";
 	public static final String ACCOUNT_ACTIAVAED = "Account Activated";
 
-	
+	// investment
+	public static final String CAN_INVEST = "Yes";
+	public static final String CAN_NOT_INVEST = "No";
 	
 	
 }
