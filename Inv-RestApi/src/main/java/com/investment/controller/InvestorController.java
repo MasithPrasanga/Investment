@@ -19,42 +19,31 @@ import com.investment.dto.response.InvestmentResponseDto;
 import com.investment.dto.response.ProssedProjectInfoResponseDto;
 import com.investment.entity.CoreUser;
 import com.investment.entity.Investment;
-import com.investment.entity.ProcessedProjectInfo;
 import com.investment.handler.InvestorHandler;
 import com.investment.service.InvestmentService;
-import com.investment.service.ProcessedProjectInfoService;
-import com.investment.util.ApiConstants;
 
 @RestController
 @RequestMapping("api/v1/investor")
 public class InvestorController {
-	
+
 	@Autowired
 	private InvestorHandler investorHandler = null;
-	
+
 	@Autowired
 	private InvestmentService investmentService = null;
 
-	@Autowired
-	private ProcessedProjectInfoService processedProjectInfoService = null;
-
 	// Show All the Approved project List to investor after sign in
-	@RequestMapping(value = "/getnewproposals", method = RequestMethod.GET)
-	public ResponseEntity<List<ProssedProjectInfoResponseDto>> getAllNewProjects() {
-
-		List<ProcessedProjectInfo> processedProjectInfoList = processedProjectInfoService.getAllRecords();
-		if (processedProjectInfoList.isEmpty()) {
-			return new ResponseEntity<List<ProssedProjectInfoResponseDto>>(HttpStatus.NO_CONTENT);
+	@RequestMapping(value = "/getnewproposals/{id}", method = RequestMethod.POST)
+	public ResponseEntity<List<ProssedProjectInfoResponseDto>> getAllNewProjects(@PathVariable("id") int investorId) {
+		try{
+			List<ProssedProjectInfoResponseDto> responseList = investorHandler.getProjectsToBeInvested(investorId);
+			if(responseList.isEmpty()){
+				return new ResponseEntity<List<ProssedProjectInfoResponseDto>>(HttpStatus.NO_CONTENT);
+			}
+			return new ResponseEntity<List<ProssedProjectInfoResponseDto>>(responseList,HttpStatus.OK);
+		}catch(Exception e){
+			return new ResponseEntity<List<ProssedProjectInfoResponseDto>>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		List<ProssedProjectInfoResponseDto> prossedProjectInfoResponseList = new ArrayList<ProssedProjectInfoResponseDto>();
-		for (ProcessedProjectInfo p : processedProjectInfoList) {
-			ProssedProjectInfoResponseDto processedProjectInfoResponse = investorHandler.createProjectInfoResponse(p);	
-			CoreUserResponseDto entrepreneur = investorHandler.createCoreUserResponse(p.getRawProjectInfo().getCoreUser());
-			processedProjectInfoResponse.setEntrepreneur(entrepreneur);
-			prossedProjectInfoResponseList.add(processedProjectInfoResponse);
-		}
-
-		return new ResponseEntity<List<ProssedProjectInfoResponseDto>>(prossedProjectInfoResponseList, HttpStatus.OK);
 	}
 
 	// Investing on a project
@@ -62,27 +51,27 @@ public class InvestorController {
 	public ResponseEntity<InvestmentResponseDto> invest(@RequestBody InvestRequestDto investmentRequest) {
 		InvestmentResponseDto investmentResponse = new InvestmentResponseDto();
 		try {
-			long id = investmentService.insert(investorHandler.makeInvestment(investmentRequest));
-			if(id == ApiConstants.PERSISTED_EXCEPTION){
-				investmentResponse.setHttpStatus(HttpStatus.EXPECTATION_FAILED);
-				return new ResponseEntity<InvestmentResponseDto>(investmentResponse,HttpStatus.EXPECTATION_FAILED);
+			boolean status = investorHandler.makeInvestment(investmentRequest);
+			if (status) {
+				investmentResponse.setHttpStatus(HttpStatus.CREATED);
+				return new ResponseEntity<InvestmentResponseDto>(investmentResponse, HttpStatus.CREATED);
 			}
-			investmentResponse.setHttpStatus(HttpStatus.CREATED);
-			return new ResponseEntity<InvestmentResponseDto>(investmentResponse,HttpStatus.CREATED);	
-		} catch (Exception e) {
 			investmentResponse.setHttpStatus(HttpStatus.EXPECTATION_FAILED);
-			return new ResponseEntity<InvestmentResponseDto>(investmentResponse,HttpStatus.EXPECTATION_FAILED);
+			return new ResponseEntity<InvestmentResponseDto>(investmentResponse, HttpStatus.EXPECTATION_FAILED);
+		} catch (Exception e) {
+			investmentResponse.setHttpStatus(HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<InvestmentResponseDto>(investmentResponse, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
-	// Show All the invested Project List 
+	// Show All the invested Project List
 	@RequestMapping(value = "/investedprojects/{id}", method = RequestMethod.POST)
 	public ResponseEntity<List<InvestedProjectsResponseDto>> getInvestedProjects(@PathVariable("id") int investorId) {
-		try{
+		try {
 			List<Investment> investmentList = investmentService.findByInvestorId(investorId);
 			List<InvestedProjectsResponseDto> responseList = new ArrayList<InvestedProjectsResponseDto>();
-			
-			for(Investment inv : investmentList){
+
+			for (Investment inv : investmentList) {
 				InvestedProjectsResponseDto response = investorHandler.createInvestedProjectResponse(inv);
 				CoreUserResponseDto entrepreneur = new CoreUserResponseDto();
 				CoreUser user = inv.getProcessedProject().getRawProjectInfo().getCoreUser();
@@ -90,29 +79,9 @@ public class InvestorController {
 				response.setEntrepreneur(entrepreneur);
 				responseList.add(response);
 			}
-			return new ResponseEntity<List<InvestedProjectsResponseDto>>(responseList,HttpStatus.OK);
-		}catch(Exception e){
+			return new ResponseEntity<List<InvestedProjectsResponseDto>>(responseList, HttpStatus.OK);
+		} catch (Exception e) {
 			return new ResponseEntity<List<InvestedProjectsResponseDto>>(HttpStatus.EXPECTATION_FAILED);
 		}
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
