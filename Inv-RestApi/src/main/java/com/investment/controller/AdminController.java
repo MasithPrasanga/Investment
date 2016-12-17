@@ -54,7 +54,7 @@ public class AdminController {
 		for (RawProjectInfo r : rawProjectInfoList) {
 			if (r.getAdminStatus().equals(ApiConstants.ADMIN_NOT_APPROVED)) {
 				response = adminHandler.createRawDataResponse(r);
-				response.setCoreUser(adminHandler.createCoreUserResponse(r.getCoreUser()));
+				response.setEntrepreneur(adminHandler.createCoreUserResponse(r.getCoreUser()));
 				responseList.add(response);	
 			}
 		}
