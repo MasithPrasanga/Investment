@@ -9,10 +9,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.investment.dto.request.ProcessedProjectInfoDto;
+import com.investment.dto.response.ProssedProjectInfoResponseDto;
+import com.investment.dto.response.RawProjectInfoResponseDto;
+import com.investment.dto.response.RawProposalResponseDto;
+import com.investment.entity.BusinessUpload;
 import com.investment.entity.ProcessedProjectInfo;
 import com.investment.entity.RawProjectInfo;
 import com.investment.handler.root.RootHandler;
-import com.investment.service.BusinessUploadService;
 import com.investment.service.CoreUserService;
 import com.investment.service.ProcessedProjectInfoService;
 import com.investment.service.RawProjectInfoService;
@@ -27,6 +30,9 @@ public class AdminHandler extends RootHandler{
 
 	@Autowired
 	private TypeService typeService = null;
+	
+	@Autowired
+	private SessionFactory sessionFactory;
 
 	@Autowired
 	private CoreUserService coreUserService = null;
@@ -45,12 +51,6 @@ public class AdminHandler extends RootHandler{
 
 	@Autowired
 	private RawProjectInfoService rawProjectInfoService = null;
-	
-	@Autowired
-	private BusinessUploadService businessUploadService = null;
-
-	@Autowired
-	private SessionFactory sessionFactory;
 
 	public boolean createProject(ProcessedProjectInfoDto processedProjectInfoDto) {
 
@@ -107,6 +107,21 @@ public class AdminHandler extends RootHandler{
 		return transactionStatus;
 	}
 	
+	public RawProjectInfoResponseDto createRawDataResponse(RawProjectInfo rawData){
+		RawProjectInfoResponseDto dto = new RawProjectInfoResponseDto();
+		dto.setId(rawData.getId());
+		dto.setProjectName(rawData.getProjectName());
+		dto.setSubmitedDate(rawData.getSubmitedDate());
+		return dto;
+	}
+	
+	public RawProposalResponseDto createSingleProposalDetails(BusinessUpload businessUpload){
+		RawProposalResponseDto dto = new RawProposalResponseDto();
+		dto.setId(businessUpload.getId());
+		dto.setDate(businessUpload.getDate());
+		dto.setUrl(businessUpload.getUrl());
+		return dto;
+	}
 
 }
 
