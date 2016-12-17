@@ -43,11 +43,17 @@ public class ProcessedProjectInfo implements Serializable {
 	@Column(name="full_amount")
 	private int fullAmmount;
 	
+	@Column(name="invested_amount")
+	private int investedAmount;
+	
 	@Column(name="noofshares")
 	private int noOfShares;
 	
 	@Column(name="min_ammount")
 	private int mininumAmmount;
+	
+	@Column(name="can_invest")
+	private String canInvest;
 	
 	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "typeid")
@@ -173,15 +179,21 @@ public class ProcessedProjectInfo implements Serializable {
 		this.rawProjectInfo = rawProjectInfo;
 	}
 
-	@Override
-	public String toString() {
-		return "ProcessedProjectInfo [id=" + id + ", projectName=" + projectName + ", sharePrice=" + sharePrice
-				+ ", imageUrl=" + imageUrl + ", videoUrl=" + videoUrl + ", fullAmmount=" + fullAmmount + ", noOfShares="
-				+ noOfShares + ", mininumAmmount=" + mininumAmmount + ", type=" + type + ", currency=" + currency
-				+ ", category=" + category + ", customerType=" + customerType + ", rawProjectInfo=" + rawProjectInfo
-				+ "]";
+	public int getInvestedAmount() {
+		return investedAmount;
 	}
-	
+
+	public void setInvestedAmount(int investedAmount) {
+		this.investedAmount = investedAmount;
+	}
+
+	public String getCanInvest() {
+		return canInvest;
+	}
+
+	public void setCanInvest(String canInvest) {
+		this.canInvest = canInvest;
+	}
 	
 	
 }
