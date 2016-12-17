@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.investment.dto.request.ProcessedProjectInfoDto;
-import com.investment.dto.response.ProssedProjectInfoResponseDto;
 import com.investment.dto.response.RawProjectInfoResponseDto;
 import com.investment.dto.response.RawProposalResponseDto;
 import com.investment.entity.BusinessUpload;
@@ -71,6 +70,7 @@ public class AdminHandler extends RootHandler{
 			processedProjectInfo.setFullAmmount(processedProjectInfoDto.getFullAmmount());
 			processedProjectInfo.setNoOfShares(processedProjectInfoDto.getNoOfShares());
 			processedProjectInfo.setMininumAmmount(processedProjectInfoDto.getMininumAmmount());
+			processedProjectInfo.setCanInvest(ApiConstants.CAN_INVEST);
 			processedProjectInfo.setCurrency(currencyService.findById(processedProjectInfoDto.getCurrencyid()));
 			processedProjectInfo.setCategory(categoryService.findById(processedProjectInfoDto.getCategoryid()));
 			processedProjectInfo.setCustomerType(customerTypeService.findById(processedProjectInfoDto.getCustomertypeid()));
