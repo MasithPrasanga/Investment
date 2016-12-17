@@ -34,10 +34,10 @@ public class AdminController {
 	private AdminHandler adminHandler = null;
 
 	@Autowired
-	private BusinessUploadService businessUploadService = null;
-
-	@Autowired
 	private RawProjectInfoService rawProjectInfoService = null;
+	
+	@Autowired
+	private BusinessUploadService businessUploadService = null;
 
 	@Autowired
 	private ProcessedProjectInfoService processedProjectInfoService = null;
@@ -45,47 +45,35 @@ public class AdminController {
 	// showing all the proposals to be approved
 	@RequestMapping(value = "/newproposals", method = RequestMethod.GET)
 	public ResponseEntity<List<RawProjectInfoResponseDto>> getAllNewlySubmitedProposals() {
-
 		List<RawProjectInfo> rawProjectInfoList = rawProjectInfoService.getAllRecords();
-
 		if (rawProjectInfoList.isEmpty()) {
 			return new ResponseEntity<List<RawProjectInfoResponseDto>>(HttpStatus.NO_CONTENT);
 		}
-
-		List<RawProjectInfoResponseDto> rawProjectInfoResponseList = new ArrayList<RawProjectInfoResponseDto>();
-		RawProjectInfoResponseDto rawProjectInfoResponse = null;
+		List<RawProjectInfoResponseDto> responseList = new ArrayList<RawProjectInfoResponseDto>();
+		RawProjectInfoResponseDto response = null;
 		for (RawProjectInfo r : rawProjectInfoList) {
 			if (r.getAdminStatus().equals(ApiConstants.ADMIN_NOT_APPROVED)) {
-				rawProjectInfoResponse = new RawProjectInfoResponseDto();
-				rawProjectInfoResponse.setId(r.getId());
-				rawProjectInfoResponse.setProjectName(r.getProjectName());
-				rawProjectInfoResponse.setSubmitedDate(r.getSubmitedDate());
-				rawProjectInfoResponse.setCoreUser(adminHandler.createCoreUserResponse(r.getCoreUser()));
-				rawProjectInfoResponseList.add(rawProjectInfoResponse);
+				response = adminHandler.createRawDataResponse(r);
+				response.setCoreUser(adminHandler.createCoreUserResponse(r.getCoreUser()));
+				responseList.add(response);	
 			}
 		}
-
-		return new ResponseEntity<List<RawProjectInfoResponseDto>>(rawProjectInfoResponseList, HttpStatus.OK);
+		return new ResponseEntity<List<RawProjectInfoResponseDto>>(responseList, HttpStatus.OK);
 	}
 
 	// Get the Specific not approved added proposal details (Uploaded Data)
 	@RequestMapping(value = "/singleproposaldetails/{id}", method = RequestMethod.POST)
 	public ResponseEntity<List<RawProposalResponseDto>> getSingleProposalDetails(
 			@PathVariable("id") int rawProjectInfoId) {
-
 		try {
 			RawProjectInfo rawProjectInfo = rawProjectInfoService.findById(rawProjectInfoId);
 			List<BusinessUpload> allBusinessUploadList = businessUploadService.findListById(rawProjectInfo);
-			List<RawProposalResponseDto> rawProposalResponseList = new ArrayList<RawProposalResponseDto>();
+			List<RawProposalResponseDto> responseList = new ArrayList<RawProposalResponseDto>();
 			for (BusinessUpload b : allBusinessUploadList) {
-				RawProposalResponseDto rawProposalResponseDto = new RawProposalResponseDto();
-				rawProposalResponseDto.setId(b.getId());
-				rawProposalResponseDto.setDate(b.getDate());
-				rawProposalResponseDto.setUrl(b.getUrl());
-				rawProposalResponseList.add(rawProposalResponseDto);
+				RawProposalResponseDto response = adminHandler.createSingleProposalDetails(b);			
+				responseList.add(response);
 			}
-			return new ResponseEntity<List<RawProposalResponseDto>>(rawProposalResponseList, HttpStatus.OK);
-
+			return new ResponseEntity<List<RawProposalResponseDto>>(responseList, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<List<RawProposalResponseDto>>(HttpStatus.EXPECTATION_FAILED);
 		}
@@ -116,30 +104,16 @@ public class AdminController {
 		List<ProcessedProjectInfo> approvedProposalList = processedProjectInfoService.getAllRecords();
 		List<ProssedProjectInfoResponseDto> responseList = new ArrayList<ProssedProjectInfoResponseDto>();
 		try {
-			
 			if(approvedProposalList.isEmpty()){
 				return new ResponseEntity<List<ProssedProjectInfoResponseDto>>(HttpStatus.NO_CONTENT);
 			}
-			
 			ProssedProjectInfoResponseDto response = null;
 			for(ProcessedProjectInfo data : approvedProposalList){
-				response = new ProssedProjectInfoResponseDto();
-				response.setProjectName(data.getProjectName());
-				response.setSharePrice(data.getSharePrice());
-				response.setImageUrl(data.getImageUrl());
-				response.setVideoUrl(data.getVideoUrl());
-				response.setNoOfShares(data.getNoOfShares());
-				response.setMininumAmmount(data.getMininumAmmount());
-				response.setCoreUser(adminHandler.createCoreUserResponse(data.getRawProjectInfo().getCoreUser()));
-				response.setCurrency(data.getCurrency());
-				response.setCustomerType(data.getCustomerType());
-				response.setType(data.getType());
-				response.setCategory(data.getCategory());
+				response = adminHandler.createProjectInfoResponse(data);
+				response.setEntrepreneur(adminHandler.createCoreUserResponse(data.getRawProjectInfo().getCoreUser()));
 				responseList.add(response);
 			}
-			
 			return new ResponseEntity<List<ProssedProjectInfoResponseDto>>(responseList,HttpStatus.OK);
-				
 		} catch (Exception e) {
 			return new ResponseEntity<List<ProssedProjectInfoResponseDto>>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
