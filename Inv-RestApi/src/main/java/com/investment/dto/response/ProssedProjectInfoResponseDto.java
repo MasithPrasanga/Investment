@@ -36,7 +36,7 @@ public class ProssedProjectInfoResponseDto extends RootResponse implements Seria
 	
 	private CustomerType customerType;
 	
-	private CoreUserResponseDto coreUser;
+	private CoreUserResponseDto entrepreneur;
 
 	public int getId() {
 		return id;
@@ -134,12 +134,12 @@ public class ProssedProjectInfoResponseDto extends RootResponse implements Seria
 		this.customerType = customerType;
 	}
 
-	public CoreUserResponseDto getCoreUser() {
-		return coreUser;
+	public CoreUserResponseDto getEntrepreneur() {
+		return entrepreneur;
 	}
 
-	public void setCoreUser(CoreUserResponseDto coreUser) {
-		this.coreUser = coreUser;
+	public void setEntrepreneur(CoreUserResponseDto entrepreneur) {
+		this.entrepreneur = entrepreneur;
 	}
 	
 }
